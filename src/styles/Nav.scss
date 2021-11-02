@@ -1,0 +1,22 @@
+nav {
+  background-color: var(--nav-bg-color);
+  width: var(--nav-width);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .link {
+    color: var(--text-color);
+
+    svg {
+      fill: var(--text-color);
+      height: 30px;
+      width: 30px;
+      padding: 10px;
+    }
+
+    p {
+      display: none;
+    }
+  }
+}
