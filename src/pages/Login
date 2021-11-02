@@ -1,0 +1,32 @@
+import { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useUserContext } from '../hooks/UserContext';
+import AlertList from '../components/AlertList';
+
+function Login(){
+
+
+
+
+
+
+
+
+    return (
+        <div>
+            <h1>Login</h1>
+            <form className>
+                <label for="UsernameInput">Bruger navn</label>
+                <input id="UsernameInput" className="LoginInput"></input>
+                <label for="PasswordInput"></label>
+                <input id="PasswordInput" className="LoginInput"></input>
+            </form>
+        </div>
+    );
+}
+
+
+
+
+
+export default Login;
