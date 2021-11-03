@@ -31,7 +31,7 @@ const onLogin = (e) => {
           <input type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
           <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
           <button onClick={onLogin}>Login</button>
-          <p>Dont have an account? <Link to="/navigatetest">Register</Link></p>
+          <p>Dont have an account? <Link to="/register">Register</Link></p>
 
       </div>
     </div>
