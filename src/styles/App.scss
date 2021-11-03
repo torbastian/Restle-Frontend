@@ -1,6 +1,17 @@
 .App {
   display: flex;
-  --nav-bg-color: black;
+  --nav-bg-color: #26262a;
   --nav-width: 50px;
+
+  --bg-color: #1e1e22;
   --text-color: white;
+
+  font-family: "Roboto", sans-serif;
+
+  background-color: var(--bg-color);
+  color: var(--text-color);
+
+  #content {
+    width: 100%;
+  }
 }

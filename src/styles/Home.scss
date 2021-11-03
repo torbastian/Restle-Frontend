@@ -1,0 +1,15 @@
+.home {
+  width: min-content;
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: auto;
+
+  .call-to-action {
+    width: 400px;
+
+    p {
+      font-size: 16px;
+    }
+  }
+}
