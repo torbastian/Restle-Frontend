@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import { FaUser } from 'react-icons/fa';
+import { FaUser, FaSquare } from 'react-icons/fa';
 import '../styles/Nav.scss';
 import { useState } from 'react';
 import { ReactComponent as Logo } from '../Restle_Logo.svg';
@@ -17,6 +17,11 @@ function Nav() {
       <Link className='link' to='/login'>
         <FaUser />
         <p>Login</p>
+      </Link>
+
+      <Link className='link' to='/board_overview'>
+        <FaSquare />
+        <p>Board List</p>
       </Link>
     </nav>
   )
