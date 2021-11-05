@@ -1,3 +1,5 @@
+import '../styles/Date.scss';
+
 function DateDisplay({ date, short = false }) {
 
   function parseDate() {
@@ -23,9 +25,9 @@ function DateDisplay({ date, short = false }) {
     var parsedDate;
 
     if (
-      d.getDate() == today.getDate() &&
-      d.getMonth() == today.getMonth() &&
-      d.getFullYear() == today.getFullYear()
+      d.getDate() === today.getDate() &&
+      d.getMonth() === today.getMonth() &&
+      d.getFullYear() === today.getFullYear()
     ) {
       parsedDate = d.toLocaleString('da-DK', {
         hour: "2-digit",
@@ -43,7 +45,7 @@ function DateDisplay({ date, short = false }) {
   }
 
   return (
-    <p>
+    <p className="date">
       {short ? parseDateShort() : parseDate()}
     </p>
   )

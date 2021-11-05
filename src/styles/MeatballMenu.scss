@@ -1,0 +1,12 @@
+.meatball-menu {
+  display: flex;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  color: var(--text-color);
+  width: 30px;
+
+  svg {
+    font-size: 20px;
+  }
+}

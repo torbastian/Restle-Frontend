@@ -72,7 +72,7 @@ function BoardList() {
   }
 
   return (
-    <div>
+    <div className="board-list">
       <h1 className="title">
         Boards
       </h1>
