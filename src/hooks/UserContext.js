@@ -25,7 +25,7 @@ function UserProvider({ children }) {
   }
 
   function findUser() {
-    return fetch(process.env.REACT_APP_API_URL + '/user', {
+    fetch(process.env.REACT_APP_API_URL + '/user', {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -42,7 +42,9 @@ function UserProvider({ children }) {
           return true;
         });
       }
-    });
+    }).catch(() => {
+      console.log("Failed to fetch user");
+    })
   }
 
   return (

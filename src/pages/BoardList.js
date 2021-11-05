@@ -1,7 +1,11 @@
 import { useRef, useState, useEffect } from "react";
+import { usePopup } from "../hooks/PopupContext";
+import NewBoard from "../popup-content/NewBoard";
 
 function BoardList() {
-  const [BoardListState, setBoardListState] = useState(null);
+  const { createPopup } = usePopup();
+  const [OwnedBoards, setOwnedBoards] = useState(null);
+  const [MemberBoards, setMemberBoards] = useState(null);
   const ws = useRef(null);
 
   useEffect(() => {
@@ -25,7 +29,8 @@ function BoardList() {
       switch (data.response) {
         //Modtag boards
         case 'BOARD_LIST_RESPONSE':
-          setBoardListState(data.boardList);
+          setOwnedBoards(data.owned);
+          setMemberBoards(data.memeberOf);
           break;
 
         default:
@@ -35,19 +40,46 @@ function BoardList() {
 
     return () => {
       //Når siden bliver unloadet, send en forespørgelse om at unsubscribe og luk forbindelsen
-      ws.current.send(JSON.stringify({
-        request: 'USUBSCRIBE_BOARD_LIST'
-      }));
+      if (ws.current.readyState === WebSocket.OPEN) {
+        ws.current.send(JSON.stringify({
+          request: 'USUBSCRIBE_BOARD_LIST'
+        }));
+      }
 
       ws.current.close();
     }
   }, []);
 
+  function createNewBoard(newBoardDetails) {
+    if (ws.current.readyState === WebSocket.OPEN) {
+
+      ws.current.send(JSON.stringify({
+        request: 'NEW_BOARD',
+        details: newBoardDetails
+      }));
+    }
+  }
+
+  function newBoardDialogue() {
+    createPopup(<NewBoard />, "New Board", createNewBoard);
+  }
+
   return (
     <div>
-      <h1>
-        Board List
+      <h1 className="title">
+        Boards
       </h1>
+      <section className="board-section">
+        <div className="board-section-header">
+          <h2>Dine Boards</h2>
+          <div className="controls">
+            <button className="btn" onClick={newBoardDialogue}>+ Ny Board</button>
+          </div>
+        </div>
+        <div className="boards">
+
+        </div>
+      </section>
     </div>
   )
 }

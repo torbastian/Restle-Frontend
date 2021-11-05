@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --nav-bg-color: #26262a;
+  --nav-width: 50px;
+
+  --bg-color: #1e1e22;
+  --text-color: white;
+  --border-1: #414141;
+  --nav-highlight: #1968fa;
+}
+
+html {
+  height: 100vh;
+}
+
+.btn {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 2px solid var(--border-1);
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 5px;
+}
+
+.frm {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}

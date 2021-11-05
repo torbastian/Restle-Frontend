@@ -5,21 +5,24 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import BoardList from './pages/BoardList';
 import UserProvider from './hooks/UserContext';
+import PopupProvider from './hooks/PopupContext';
 
 function App() {
   return (
     <Router>
       <UserProvider>
-        <div className="App">
-          <Nav />
-          <div id="content">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/board_overview" component={BoardList} />
-            </Switch>
+        <PopupProvider>
+          <div className="App">
+            <Nav />
+            <div id="content">
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/login" component={Login} />
+                <Route path="/board_overview" component={BoardList} />
+              </Switch>
+            </div>
           </div>
-        </div>
+        </PopupProvider>
       </UserProvider>
     </Router>
   );

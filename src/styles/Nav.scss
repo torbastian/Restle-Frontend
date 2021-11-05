@@ -13,7 +13,7 @@ nav {
     width: var(--nav-width);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0s;
+    transition: opacity 0.1s;
     border-right: solid;
     border-image: linear-gradient(to bottom, var(--nav-highlight), transparent, transparent, transparent) 1;
   }
@@ -38,6 +38,12 @@ nav {
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.205);
+    }
+  }
+
+  &:hover {
+    &::after {
+      opacity: 1;
     }
   }
 }
