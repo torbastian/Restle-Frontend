@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
+import BoardCard from "../components/BoardCard";
 import { usePopup } from "../hooks/PopupContext";
 import NewBoard from "../popup-content/NewBoard";
+import '../styles/BoardList.scss';
 
 function BoardList() {
   const { createPopup } = usePopup();
@@ -29,8 +31,13 @@ function BoardList() {
       switch (data.response) {
         //Modtag boards
         case 'BOARD_LIST_RESPONSE':
-          setOwnedBoards(data.owned);
-          setMemberBoards(data.memeberOf);
+          if (data.owned !== undefined) {
+            setOwnedBoards(data.owned.object);
+          }
+
+          if (data.memeberOf !== undefined) {
+            setMemberBoards(data.memeberOf.object);
+          }
           break;
 
         default:
@@ -77,7 +84,14 @@ function BoardList() {
           </div>
         </div>
         <div className="boards">
-
+          {OwnedBoards != null &&
+            OwnedBoards.map((board, index) =>
+              <BoardCard
+                key={board._id}
+                board={board}
+              />
+            )
+          }
         </div>
       </section>
     </div>

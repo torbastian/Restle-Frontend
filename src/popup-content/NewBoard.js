@@ -8,7 +8,7 @@ function NewBoard(popupData) {
     e.preventDefault();
 
     const boardDetails = {
-      titel: title,
+      title: title,
       description: description
     }
 
