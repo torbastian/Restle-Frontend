@@ -38,7 +38,7 @@ function Login() {
 
   return (
    <div id="Login">
-    <div className="box">
+    <div className="login-con">
 	   <form>
 		  <span className="text-center">Login</span>
 	     <div className="input-container">
