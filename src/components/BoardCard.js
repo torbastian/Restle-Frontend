@@ -1,3 +1,4 @@
+import { FaWrench } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import '../styles/BoardCard.scss';
 import DateDisplay from './Date';
@@ -14,7 +15,20 @@ function BoardCard({ board }) {
     <div className="board-card" onClick={navigateToBoard}>
       <div className="header">
         <h1>{board.title}</h1>
-        <MeatballMenu />
+        <MeatballMenu options={[
+          {
+            icon: <FaWrench />,
+            title: 'Edit'
+          },
+          {
+            icon: <FaWrench />,
+            title: 'Edit'
+          },
+          {
+            icon: <FaWrench />,
+            title: 'Edit'
+          }
+        ]} />
       </div>
       <DateDisplay date={board.last_edited} />
       <p className="description">{board.description}</p>
