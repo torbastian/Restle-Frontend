@@ -9,8 +9,11 @@
   --nav-bg-color: #26262a;
   --nav-bg-hover: #3c3c42;
   --nav-width: 50px;
+  --nav-expand-width: 180px;
 
   --bg-color: #1e1e22;
+  --bg-hover: #303036;
+
   --text-color: #e2e2e2;
   --text-subtle: #5f5f5f;
   --border-1: #414141;
@@ -32,6 +35,16 @@ html {
   padding: 5px 10px;
   border-radius: 4px;
   margin: 5px;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background-color: var(--bg-hover);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: auto;
+  }
 }
 
 .frm {
@@ -42,4 +55,12 @@ html {
 .btn-container {
   display: flex;
   justify-content: space-between;
+}
+
+.controls {
+  & > .btn {
+    margin-left: 0;
+  }
+
+  margin-bottom: 10px;
 }

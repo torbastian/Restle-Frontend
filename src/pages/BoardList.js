@@ -32,11 +32,11 @@ function BoardList() {
         //Modtag boards
         case 'BOARD_LIST_RESPONSE':
           if (data.owned !== undefined) {
-            setOwnedBoards(data.owned.object);
+            setOwnedBoards(data.owned);
           }
 
           if (data.memeberOf !== undefined) {
-            setMemberBoards(data.memeberOf.object);
+            setMemberBoards(data.memeberOf);
           }
           break;
 

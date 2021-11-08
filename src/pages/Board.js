@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import { useState } from "react/cjs/react.development";
+import Loading from '../components/Loading';
 
 function Board() {
   const { id } = useParams();
@@ -50,12 +51,23 @@ function Board() {
 
   }, []);
 
-  return (
-    <div>
-      <h1>{id}</h1>
-      <pre>{JSON.stringify(board, null, 2)}</pre>
-    </div>
-  )
+
+  if (board !== null) {
+    return (
+      <div>
+        <h1>{board.title}</h1>
+        <div className="controls">
+          <button className="btn">Rediger</button>
+          <button className="btn">+ Ny Liste</button>
+        </div>
+        <pre>{JSON.stringify(board, null, 2)}</pre>
+      </div>
+    )
+  } else {
+    return (
+      <Loading />
+    )
+  }
 }
 
 export default Board;
