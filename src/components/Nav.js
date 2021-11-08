@@ -9,7 +9,7 @@ function Nav() {
 
   return (
     <nav className={expand ? 'expand' : ''}>
-      <button className="expand-btn">
+      <button className="expand-btn" onClick={() => setExpand(!expand)}>
         <FaChevronRight />
       </button>
 
