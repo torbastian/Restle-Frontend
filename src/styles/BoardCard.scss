@@ -1,0 +1,23 @@
+.board-card {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--border-1);
+  border-radius: 4px;
+  padding: 10px;
+  width: 200px;
+  height: 180px;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  .description {
+    margin-top: 5px;
+  }
+}

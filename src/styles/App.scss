@@ -1,6 +1,15 @@
 .App {
   display: flex;
-  --nav-bg-color: black;
-  --nav-width: 50px;
-  --text-color: white;
+
+  background-color: var(--bg-color);
+  color: var(--text-color);
+
+  #content {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 68px;
+  }
 }

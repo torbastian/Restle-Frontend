@@ -1,0 +1,31 @@
+.popup-container {
+  display: grid;
+  place-content: center;
+  position: fixed;
+  height: 100vh;
+  max-height: 100%;
+  width: 100vw;
+  max-width: 100%;
+  z-index: 100;
+}
+
+.background {
+  background-color: black;
+  opacity: 0.5;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--nav-bg-color);
+  color: var(--text-color);
+
+  .title-bar {
+    display: flex;
+    justify-content: space-between;
+  }
+}
