@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import ColorSelector from '../components/ColorSelector';
+import { ChromePicker } from 'react-color';
+import '../styles/Register.scss';
 
 
 function Register() {
@@ -10,6 +12,7 @@ function Register() {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [colour, setColour] = useState("#fff");
+	const [showColorPicker, setShowColorPicker] = useState(false);
 
 	function onSubmit(e) {
 		e.preventDefault();
@@ -38,20 +41,44 @@ function Register() {
 		<div id="Register">
 			<div className="register-con">
 				<form className="user-frm" onSubmit={onSubmit}>
-					<h1>Sign Up</h1>
-					<input type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
-					<input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-					<input type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
-					<input type="text" name="firstname" placeholder="First Name" onChange={(e) => setFirstName(e.target.value)}/>
-					<input type="text" name="lastName" placeholder="Last Name" onChange={(e) => setLastName(e.target.value)}/>
-					<ColorSelector
-						user={{ first_name: firstName, last_name: lastName, colour: colour }}
-						color={colour} setColor={setColour}
-						showBackground={true}
-						showTitle={true}
-					/>
-					<p>Already have an Account? <Link to="/login">Sign In</Link></p>
-					<input type="submit" value="Register" />
+				    <span className="text-center">Sign up</span>
+					<div className="input-container">
+		            <input type="text" required="" onChange={(e) => setUsername(e.target.value)}/>
+		            <label>Username</label>		
+	                </div>
+					<div className="input-container">
+		            <input type="password" required="" onChange={(e) => setPassword(e.target.value)}/>
+		            <label>Password</label>		
+	                </div>
+					<div className="input-container">
+		            <input type="text" required="" onChange={(e) => setEmail(e.target.value)}/>
+		            <label>Email</label>		
+	                </div>
+					<div className="input-container">
+		            <input type="text" required="" onChange={(e) => setFirstName(e.target.value)}/>
+		            <label>First name</label>		
+	                </div>
+					<div className="input-container">
+		            <input type="text" required="" onChange={(e) => setLastName(e.target.value)}/>
+		            <label>Last name</label>		
+	                </div>
+					<div className="input-container">
+		            <input type="text" required="" value={colour} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}/>
+		            <label>Colour</label>
+					{showColorPicker && (
+						<ChromePicker
+						color={colour}
+						onChange={updatedColor => setColour(updatedColor.hex)}
+						/>
+					)}
+								
+	                </div>
+					
+
+
+
+					<button type="button" className="btn" onClick={onSubmit}>Register</button>
+                    <Link to="/login"><button type="button" className="btn">Cancel</button></Link> 
 				</form>
 			</div>
 		</div>
