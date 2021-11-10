@@ -1,9 +1,15 @@
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import { useState } from "react/cjs/react.development";
+import List from "../components/List";
 import Loading from '../components/Loading';
+import { usePopup } from "../hooks/PopupContext";
+import NewCard from "../popup-content/NewCard";
+import NewList from "../popup-content/NewList";
+import '../styles/Board.scss';
 
 function Board() {
+  const { createPopup } = usePopup();
   const { id } = useParams();
   const [board, setBoard] = useState(null);
   const ws = useRef(null);
@@ -51,16 +57,51 @@ function Board() {
 
   }, []);
 
+  function createNewList(newListDetails) {
+    if (ws.current.readyState === WebSocket.OPEN) {
+      console.log('New List');
+      ws.current.send(JSON.stringify({
+        request: 'NEW_LIST',
+        boardId: board._id,
+        details: newListDetails
+      }));
+    }
+  }
+
+  function createNewCard(newCardDetails, listId) {
+    if (ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        request: 'NEW_CARD',
+        listId: listId,
+        details: newCardDetails
+      }));
+    }
+  }
+
+  function newListDialogue() {
+    createPopup(<NewList />, "Ny Liste", createNewList);
+  }
+
+  function newCardDialogue(listId) {
+    createPopup(<NewCard listId={listId} />, "Ny Card", createNewCard);
+  }
 
   if (board !== null) {
     return (
-      <div>
+      <div className="board">
         <h1>{board.title}</h1>
         <div className="controls">
           <button className="btn">Rediger</button>
-          <button className="btn">+ Ny Liste</button>
+          <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
         </div>
-        <pre>{JSON.stringify(board, null, 2)}</pre>
+
+        <div className="list-container">
+          {board.lists !== null &&
+            board.lists.map((list, index) =>
+              <List key={list._id} listDetails={list} newCardDialogue={newCardDialogue} />
+            )
+          }
+        </div>
       </div>
     )
   } else {

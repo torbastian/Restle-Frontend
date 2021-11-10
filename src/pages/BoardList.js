@@ -68,7 +68,7 @@ function BoardList() {
   }
 
   function newBoardDialogue() {
-    createPopup(<NewBoard />, "New Board", createNewBoard);
+    createPopup(<NewBoard />, "Ny Board", createNewBoard);
   }
 
   return (
@@ -84,8 +84,23 @@ function BoardList() {
           </div>
         </div>
         <div className="boards">
-          {OwnedBoards != null &&
+          {OwnedBoards !== null &&
             OwnedBoards.map((board, index) =>
+              <BoardCard
+                key={board._id}
+                board={board}
+              />
+            )
+          }
+        </div>
+      </section>
+      <section className="board-section">
+        <div className="board-section-header">
+          <h2>Medlem Boards</h2>
+        </div>
+        <div className="boards">
+          {MemberBoards != null &&
+            MemberBoards.map((board, index) =>
               <BoardCard
                 key={board._id}
                 board={board}
