@@ -1,5 +1,6 @@
 import '../styles/List.scss';
 import Card from './Card';
+import MeatballMenu from './MeatballMenu';
 
 function List({ listDetails, newCardDialogue }) {
 
@@ -7,6 +8,7 @@ function List({ listDetails, newCardDialogue }) {
     <div className="list">
       <div className="list-header">
         <h1>{listDetails.title}</h1>
+        <MeatballMenu />
       </div>
       <div className="card-container">
         {listDetails.cards !== null &&

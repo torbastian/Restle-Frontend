@@ -101,17 +101,21 @@ html {
 }
 
 .controls {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .btn {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .members {
+    margin-top: 0;
+  }
+
   & > .btn {
     margin-left: 0;
   }
-
-  margin-bottom: 10px;
-}
-
-.controls {
-  & > .btn {
-    margin-left: 0;
-  }
-
-  margin-bottom: 10px;
 }

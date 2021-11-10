@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useState } from "react/cjs/react.development";
 import List from "../components/List";
 import Loading from '../components/Loading';
+import Members from "../components/Members";
 import { usePopup } from "../hooks/PopupContext";
 import NewCard from "../popup-content/NewCard";
 import NewList from "../popup-content/NewList";
@@ -93,6 +94,7 @@ function Board() {
         <div className="controls">
           <button className="btn">Rediger</button>
           <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
+          <Members owner={board.owner} members={board.members} />
         </div>
 
         <div className="list-container">

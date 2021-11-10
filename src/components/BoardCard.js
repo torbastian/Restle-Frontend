@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import '../styles/BoardCard.scss';
 import DateDisplay from './Date';
 import MeatballMenu from './MeatballMenu';
+import Members from './Members';
 
 function BoardCard({ board }) {
   const history = useHistory();
@@ -32,6 +33,7 @@ function BoardCard({ board }) {
       </div>
       <DateDisplay date={board.last_edited} />
       <p className="description">{board.description}</p>
+      <Members owner={board.owner} members={board.members} />
     </div>
   )
 }
