@@ -1,3 +1,4 @@
+import { FaTimes } from 'react-icons/fa';
 import '../styles/Popup.scss';
 const { createContext, useState, useCallback, useEffect, useContext, isValidElement, cloneElement } = require("react");
 
@@ -56,7 +57,7 @@ function Popup({ popup, close }) {
     <div className="popup">
       <div className="title-bar">
         <h1>{popup.title}</h1>
-        <button onClick={close}>X</button>
+        <button className="btn close" onClick={close}><FaTimes /></button>
       </div>
       <section className="content">
         { //Hvis popup.content er et validt element, opret et nyt element med parameter
