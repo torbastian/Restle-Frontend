@@ -1,0 +1,14 @@
+.board-list {
+  .title {
+    margin-bottom: 10px;
+  }
+
+  .boards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .board-section {
+    margin-top: 10px;
+  }
+}

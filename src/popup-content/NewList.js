@@ -1,33 +1,25 @@
 import { useState } from "react/cjs/react.development";
 
-function NewBoard(popupData) {
+function NewList(popupData) {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
 
   function onSubmit(e) {
     e.preventDefault();
 
-    const boardDetails = {
-      title: title,
-      description: description
+    const listDetails = {
+      title: title
     }
 
-    popupData.submitAction(boardDetails);
+    popupData.submitAction(listDetails);
   }
 
   return (
-    <div className="new-board">
+    <div className="new-list">
       <form className="frm" onSubmit={onSubmit}>
         <label>Titel</label>
-        <input type="text" name="title" placeholder="Board Titel"
+        <input type="text" name="title" placeholder="List Titel"
           maxLength="40"
           onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <label>Beskrivelse</label>
-        <textarea name="description" placeholder="Beskrivelse"
-          maxLength="1024"
-          onChange={(e) => setDescription(e.target.value)}
         />
 
         <div className="btn-container">
@@ -39,4 +31,4 @@ function NewBoard(popupData) {
   )
 }
 
-export default NewBoard;
+export default NewList;

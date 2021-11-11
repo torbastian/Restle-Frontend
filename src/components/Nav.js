@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import { FaUser, FaSquare } from 'react-icons/fa';
+import { FaUser, FaSquare, FaChevronRight } from 'react-icons/fa';
 import '../styles/Nav.scss';
 import { useState } from 'react';
 import { ReactComponent as Logo } from '../Restle_Logo.svg';
@@ -9,6 +9,10 @@ function Nav() {
 
   return (
     <nav className={expand ? 'expand' : ''}>
+      <button className="expand-btn" onClick={() => setExpand(!expand)}>
+        <FaChevronRight />
+      </button>
+
       <Link className='logo link' to='/'>
         <Logo />
         <p>Restle</p>
@@ -19,7 +23,7 @@ function Nav() {
         <p>Login</p>
       </Link>
 
-      <Link className='link' to='/board_overview'>
+      <Link className='link' to='/boards'>
         <FaSquare />
         <p>Board List</p>
       </Link>

@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
+import BoardCard from "../components/BoardCard";
 import { usePopup } from "../hooks/PopupContext";
 import NewBoard from "../popup-content/NewBoard";
+import '../styles/BoardList.scss';
 
 function BoardList() {
   const { createPopup } = usePopup();
@@ -29,8 +31,13 @@ function BoardList() {
       switch (data.response) {
         //Modtag boards
         case 'BOARD_LIST_RESPONSE':
-          setOwnedBoards(data.owned);
-          setMemberBoards(data.memeberOf);
+          if (data.owned !== undefined) {
+            setOwnedBoards(data.owned);
+          }
+
+          if (data.memeberOf !== undefined) {
+            setMemberBoards(data.memeberOf);
+          }
           break;
 
         default:
@@ -61,11 +68,11 @@ function BoardList() {
   }
 
   function newBoardDialogue() {
-    createPopup(<NewBoard />, "New Board", createNewBoard);
+    createPopup(<NewBoard />, "Ny Board", createNewBoard);
   }
 
   return (
-    <div>
+    <div className="board-list">
       <h1 className="title">
         Boards
       </h1>
@@ -77,9 +84,36 @@ function BoardList() {
           </div>
         </div>
         <div className="boards">
-
+          {OwnedBoards !== null &&
+            OwnedBoards.map((board, index) =>
+              <BoardCard
+                key={board._id}
+                board={board}
+                ws={ws}
+              />
+            )
+          }
         </div>
       </section>
+      {
+        MemberBoards !== null &&
+        <section className="board-section">
+          <div className="board-section-header">
+            <h2>Medlem Boards</h2>
+          </div>
+          <div className="boards">
+            {
+              MemberBoards.map((board, index) =>
+                <BoardCard
+                  key={board._id}
+                  board={board}
+                  ws={ws}
+                />
+              )
+            }
+          </div>
+        </section>
+      }
     </div>
   )
 }

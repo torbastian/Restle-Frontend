@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Link, NavLink } from 'react-router-dom';
 import { useUserContext } from "../hooks/UserContext";
+import '../styles/Login.scss';
 
 function Login() {
   const { user, setUser } = useUserContext();
@@ -35,14 +37,23 @@ function Login() {
   }
 
   return (
-    <div id="Login">
-      <div className="login-con">
-        <h1>Login</h1>
-        <input type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-        <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-        <button onClick={onLogin}>Login</button>
-      </div>
+   <div id="Login">
+    <div className="login-con">
+	   <form>
+		  <span className="text-center">Login</span>
+	     <div className="input-container">
+		    <input type="text" required="" onChange={(e) => setUsername(e.target.value)}/>
+		    <label>Username</label>		
+	     </div>
+	     <div className="input-container">		
+		    <input type="password" required="" onChange={(e) => setPassword(e.target.value)}/>
+		    <label>Password</label>
+	     </div>
+		   <button type="button" className="btn" onClick={onLogin}>Login</button>
+       <Link to="/register"><button type="button" className="btn">Register</button></Link>  
+      </form>	
     </div>
+ </div>
   )
 }
 

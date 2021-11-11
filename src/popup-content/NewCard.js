@@ -1,25 +1,25 @@
 import { useState } from "react/cjs/react.development";
 
-function NewBoard(popupData) {
+function NewCard(popupData) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   function onSubmit(e) {
     e.preventDefault();
 
-    const boardDetails = {
+    const cardDetails = {
       title: title,
       description: description
     }
 
-    popupData.submitAction(boardDetails);
+    popupData.submitAction(cardDetails, popupData.listId);
   }
 
   return (
-    <div className="new-board">
+    <div className="new-card">
       <form className="frm" onSubmit={onSubmit}>
         <label>Titel</label>
-        <input type="text" name="title" placeholder="Board Titel"
+        <input type="text" name="title" placeholder="Card Titel"
           maxLength="40"
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -39,4 +39,4 @@ function NewBoard(popupData) {
   )
 }
 
-export default NewBoard;
+export default NewCard;

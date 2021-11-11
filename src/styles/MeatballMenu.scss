@@ -1,0 +1,72 @@
+.meatball-menu {
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  color: var(--text-color);
+  width: 30px;
+  cursor: pointer;
+  padding: 0 10px;
+
+  &:hover {
+    svg {
+      transform: scale(1.1);
+    }
+  }
+
+  svg {
+    font-size: 20px;
+  }
+
+  .menu {
+    position: absolute;
+    list-style: none;
+    padding-top: 25px;
+    margin-top: -25px;
+    min-width: 100px;
+    z-index: 10;
+
+    li {
+      display: grid;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      grid-template-columns: 30px 80px;
+      background-color: var(--nav-bg-color);
+      padding: 8px;
+
+      border: 1px solid var(--border-1);
+      border-bottom: none;
+      border-top: none;
+
+      &:first-of-type {
+        border-radius: 4px 4px 0 0;
+        border-top: 1px solid var(--border-1);
+      }
+
+      &:last-of-type {
+        border-radius: 0 0 4px 4px;
+        border-bottom: 1px solid var(--border-1);
+      }
+
+      &:first-of-type:last-of-type {
+        border-radius: 4px;
+      }
+
+      &:hover {
+        background-color: var(--nav-bg-hover);
+      }
+
+      .icon {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .option-title {
+        font-size: 16px;
+      }
+    }
+  }
+}

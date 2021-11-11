@@ -1,0 +1,34 @@
+.board-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-1);
+  background-color: var(--nav-bg-color);
+  border-radius: 4px;
+  padding: 10px;
+  width: 200px;
+  height: 180px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  transition: border 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--nav-bg-hover-2);
+  }
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  .description {
+    margin-top: 5px;
+    height: 100%;
+    overflow-y: auto;
+  }
+}

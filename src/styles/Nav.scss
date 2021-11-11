@@ -1,9 +1,45 @@
 nav {
   background-color: var(--nav-bg-color);
   width: var(--nav-width);
+  min-width: var(--nav-width);
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+
+  transition: min-width 0.2s ease-out, width 0.2s ease-out;
+
+  .logo {
+    margin-bottom: 40px;
+  }
+
+  .expand-btn {
+    position: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 55px;
+    margin-left: calc(var(--nav-width) - 15px);
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    border-radius: 4px;
+
+    background-color: var(--nav-highlight);
+    color: var(--text-color);
+
+    opacity: 0;
+    transition: opacity 0.1s ease, margin-left 0.2s ease-out;
+
+    cursor: pointer;
+
+    z-index: 2;
+
+    & svg {
+      transition: transform 0.3s ease-out;
+    }
+  }
 
   &::after {
     content: "";
@@ -13,7 +49,7 @@ nav {
     width: var(--nav-width);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.1s;
+    transition: opacity 0.1s, width 0.2s ease-out;
     border-right: solid;
     border-image: linear-gradient(to bottom, var(--nav-highlight), transparent, transparent, transparent) 1;
   }
@@ -24,6 +60,7 @@ nav {
     height: 50px;
     color: var(--text-color);
     align-items: center;
+    text-decoration: none;
 
     svg {
       justify-self: center;
@@ -33,17 +70,50 @@ nav {
     }
 
     p {
-      display: none;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.205);
+      background-color: var(--nav-bg-hover);
     }
   }
 
   &:hover {
     &::after {
       opacity: 1;
+    }
+
+    .expand-btn {
+      opacity: 1;
+      animation: slide-from-left 0.2s ease;
+    }
+  }
+
+  &.expand {
+    width: var(--nav-expand-width);
+    min-width: var(--nav-expand-width);
+
+    .expand-btn {
+      margin-left: calc(var(--nav-expand-width) - 15px);
+
+      svg {
+        transform: rotateZ(-180deg);
+      }
+    }
+
+    &::after {
+      width: var(--nav-expand-width);
+    }
+  }
+
+  @keyframes slide-from-left {
+    0% {
+      transform: translateX(-10px);
+    }
+
+    100% {
+      transform: translateX(0);
     }
   }
 }
