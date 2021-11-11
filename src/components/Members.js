@@ -9,8 +9,12 @@ function Members({ owner = null, members = null, invite = false }) {
       }
       {members !== null &&
         members.map((user, index) =>
-          <UserIcon user={user} />
+          <UserIcon key={index} user={user} />
         )
+      }
+      {
+        invite &&
+        <button className="user-icon">+</button>
       }
     </div>
   )

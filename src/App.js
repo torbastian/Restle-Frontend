@@ -4,12 +4,12 @@ import Nav from './components/Nav';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-
 import BoardList from './pages/BoardList';
 import UserProvider from './hooks/UserContext';
 import PopupProvider from './hooks/PopupContext';
 import Board from './pages/Board';
 import PrivateRoute from './routes/PrivateRoute';
+
 
 function App() {
   return (

@@ -8,6 +8,7 @@
 :root {
   --nav-bg-color: #26262a;
   --nav-bg-hover: #3c3c42;
+  --nav-bg-hover-2: #4f4f57;
   --nav-width: 50px;
   --nav-expand-width: 180px;
 
@@ -16,8 +17,11 @@
 
   --text-color: #e2e2e2;
   --text-subtle: #b3b3b3;
-  --border-1: #414141;
+  --border-1: #35353a;
   --nav-highlight: #1968fa;
+
+  --blu: var(--nav-highlight);
+  --blu-hover: #397dfb;
 }
 
 .hidden {
@@ -44,7 +48,7 @@ html {
     cursor: auto;
   }
 
-  &:hover {
+  &:hover:enabled {
     background-color: var(--nav-bg-hover);
   }
 
@@ -57,6 +61,14 @@ html {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  &.blu {
+    background-color: var(--blu);
+
+    &:hover:enabled {
+      background-color: var(--blu-hover);
     }
   }
 }
@@ -75,11 +87,12 @@ html {
     color: var(--text-color);
     background-color: var(--nav-bg-color);
     border: none;
-    padding: 5px;
+    padding: 10px;
     font-size: 18px;
     margin: 10px 0;
     border-radius: 4px;
     resize: none;
+    font-size: 20px;
   }
 
   textarea {
@@ -113,6 +126,8 @@ html {
 
   .members {
     margin-top: 0;
+    border-left: 1px solid var(--border-1);
+    padding-left: 10px;
   }
 
   & > .btn {

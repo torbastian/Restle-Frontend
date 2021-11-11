@@ -1,12 +1,24 @@
 import { FaWrench } from 'react-icons/fa';
 import { useHistory } from 'react-router';
+import { usePopup } from '../hooks/PopupContext';
+import EditBoard from '../popup-content/EditBoard';
 import '../styles/BoardCard.scss';
 import DateDisplay from './Date';
 import MeatballMenu from './MeatballMenu';
 import Members from './Members';
 
-function BoardCard({ board }) {
+function BoardCard({ board, ws }) {
+  const { createPopup } = usePopup();
+
   const history = useHistory();
+
+  function updateBoard(boardDetails) {
+    console.log(ws.current.readyState);
+  }
+
+  function editBoard() {
+    createPopup(<EditBoard board={board} />, 'Rediger Board', updateBoard);
+  }
 
   function navigateToBoard() {
     history.push(`/boards/${board._id}`);
@@ -19,15 +31,8 @@ function BoardCard({ board }) {
         <MeatballMenu options={[
           {
             icon: <FaWrench />,
-            title: 'Edit'
-          },
-          {
-            icon: <FaWrench />,
-            title: 'Edit'
-          },
-          {
-            icon: <FaWrench />,
-            title: 'Edit'
+            title: 'Edit',
+            onClick: editBoard
           }
         ]} />
       </div>

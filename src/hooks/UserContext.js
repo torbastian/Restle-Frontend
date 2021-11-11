@@ -33,6 +33,7 @@ function UserProvider({ children }) {
       }
     }).then(res => {
       if (!res.ok) {
+        setUser(null);
         setLoading(false);
         return false;
       } else {

@@ -1,23 +1,23 @@
 import { useState } from "react/cjs/react.development";
+import DateDisplay from "../components/Date";
 
-function NewList(popupData) {
-  const [title, setTitle] = useState("");
+function EditList(popupData) {
+  const [title, setTitle] = useState(popupData.list.title);
 
   function onSubmit(e) {
     e.preventDefault();
-
-    const listDetails = {
-      title: title
-    }
-
-    popupData.submitAction(listDetails);
   }
 
   return (
-    <div className="new-list">
+    <div className="edit-list">
       <form className="frm" onSubmit={onSubmit}>
+        <div className="btn-container">
+          <DateDisplay date={popupData.list.create_date} title={'Oprettet'} />
+          <DateDisplay date={popupData.list.last_edited} title={'Sidst Redigeret'} />
+        </div>
         <label>Titel</label>
         <input type="text" name="title" placeholder="List Titel"
+          value={title}
           maxLength="40"
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -31,4 +31,4 @@ function NewList(popupData) {
   )
 }
 
-export default NewList;
+export default EditList;

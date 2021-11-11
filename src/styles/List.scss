@@ -3,21 +3,26 @@
   flex-direction: column;
   height: min-content;
   background-color: var(--nav-bg-color);
-  width: 220px;
+  width: 250px;
   margin-right: 10px;
-  padding: 10px;
   border-radius: 4px;
   border: 1px solid var(--border-1);
 
   .list-header {
     display: flex;
     justify-content: space-between;
+    background-color: var(--border-1);
+    border-radius: 2px 2px 0 0;
+    padding: 10px;
 
     h1 {
       font-size: 20px;
       font-weight: normal;
-      margin-bottom: 10px;
     }
+  }
+
+  .list-content {
+    padding: 0 10px 10px 10px;
   }
 
   .btn.wide {

@@ -1,4 +1,22 @@
 .date {
   color: var(--text-subtle);
   font-size: 14px;
+  width: max-content;
+  white-space: nowrap;
+
+  .date-title {
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 5px;
+  }
+
+  &.border {
+    margin: 10px;
+
+    p {
+      color: var(--text-color);
+      font-size: 14px;
+    }
+  }
 }

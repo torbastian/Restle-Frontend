@@ -1,6 +1,6 @@
 import '../styles/Date.scss';
 
-function DateDisplay({ date, short = false }) {
+function DateDisplay({ date, short = false, title = null }) {
 
   function parseDate() {
     const msec = Date.parse(date);
@@ -45,9 +45,14 @@ function DateDisplay({ date, short = false }) {
   }
 
   return (
-    <p className="date">
-      {short ? parseDateShort() : parseDate()}
-    </p>
+    <div className={`date ${title ? 'border' : ''}`}>
+      {title !== null &&
+        <h1 className="date-title">{title}</h1>
+      }
+      <p>
+        {short ? parseDateShort() : parseDate()}
+      </p>
+    </div>
   )
 }
 

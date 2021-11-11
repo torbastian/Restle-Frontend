@@ -17,7 +17,7 @@ function NewBoard(popupData) {
 
   return (
     <div className="new-board">
-      <form className="frm" onSubmit={(e) => onSubmit(e)}>
+      <form className="frm" onSubmit={onSubmit}>
         <label>Titel</label>
         <input type="text" name="title" placeholder="Board Titel"
           maxLength="40"
@@ -32,7 +32,7 @@ function NewBoard(popupData) {
 
         <div className="btn-container">
           <button className="btn" type="button" onClick={popupData.close}>Annuller</button>
-          <button className="btn" type="submit" disabled={title.length < 3}>Opret</button>
+          <button className="btn blu" type="submit" disabled={title.length < 3}>Opret</button>
         </div>
       </form>
     </div>

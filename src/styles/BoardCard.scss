@@ -9,6 +9,12 @@
   height: 180px;
   margin-right: 5px;
   margin-bottom: 5px;
+  transition: border 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--nav-bg-hover-2);
+  }
 
   .header {
     display: flex;

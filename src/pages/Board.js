@@ -5,6 +5,7 @@ import List from "../components/List";
 import Loading from '../components/Loading';
 import Members from "../components/Members";
 import { usePopup } from "../hooks/PopupContext";
+import EditBoard from "../popup-content/EditBoard";
 import NewCard from "../popup-content/NewCard";
 import NewList from "../popup-content/NewList";
 import '../styles/Board.scss';
@@ -79,6 +80,10 @@ function Board() {
     }
   }
 
+  function updateBoard() {
+
+  }
+
   function newListDialogue() {
     createPopup(<NewList />, "Ny Liste", createNewList);
   }
@@ -87,20 +92,24 @@ function Board() {
     createPopup(<NewCard listId={listId} />, "Ny Card", createNewCard);
   }
 
+  function editBoardDialogue() {
+    createPopup(<EditBoard board={board} />, 'Rediger Board', updateBoard);
+  }
+
   if (board !== null) {
     return (
       <div className="board">
         <h1>{board.title}</h1>
         <div className="controls">
-          <button className="btn">Rediger</button>
+          <button className="btn" onClick={editBoardDialogue}>Rediger</button>
           <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
-          <Members owner={board.owner} members={board.members} />
+          <Members owner={board.owner} members={board.members} invite={true} />
         </div>
 
         <div className="list-container">
           {board.lists !== null &&
             board.lists.map((list, index) =>
-              <List key={list._id} listDetails={list} newCardDialogue={newCardDialogue} />
+              <List key={list._id} listDetails={list} ws={ws} newCardDialogue={newCardDialogue} />
             )
           }
         </div>

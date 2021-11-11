@@ -30,6 +30,13 @@
   .title-bar {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-1);
+
+    h1 {
+      font-size: 25px;
+    }
   }
 }

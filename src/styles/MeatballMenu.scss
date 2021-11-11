@@ -4,6 +4,14 @@
   background-color: transparent;
   color: var(--text-color);
   width: 30px;
+  cursor: pointer;
+  padding: 0 10px;
+
+  &:hover {
+    svg {
+      transform: scale(1.1);
+    }
+  }
 
   svg {
     font-size: 20px;
@@ -15,7 +23,7 @@
     padding-top: 25px;
     margin-top: -25px;
     min-width: 100px;
-    z-index: 2;
+    z-index: 10;
 
     li {
       display: grid;

@@ -39,10 +39,6 @@
   outline: none;
 }
 
-.btn:hover {
-  background-color: var(--nav-bg-hover);
-}
-
 .input-container input:valid ~ label {
   font-size: 12px;
   top: -12px;

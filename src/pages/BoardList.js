@@ -89,26 +89,31 @@ function BoardList() {
               <BoardCard
                 key={board._id}
                 board={board}
+                ws={ws}
               />
             )
           }
         </div>
       </section>
-      <section className="board-section">
-        <div className="board-section-header">
-          <h2>Medlem Boards</h2>
-        </div>
-        <div className="boards">
-          {MemberBoards != null &&
-            MemberBoards.map((board, index) =>
-              <BoardCard
-                key={board._id}
-                board={board}
-              />
-            )
-          }
-        </div>
-      </section>
+      {
+        MemberBoards !== null &&
+        <section className="board-section">
+          <div className="board-section-header">
+            <h2>Medlem Boards</h2>
+          </div>
+          <div className="boards">
+            {
+              MemberBoards.map((board, index) =>
+                <BoardCard
+                  key={board._id}
+                  board={board}
+                  ws={ws}
+                />
+              )
+            }
+          </div>
+        </section>
+      }
     </div>
   )
 }
