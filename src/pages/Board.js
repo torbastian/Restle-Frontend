@@ -77,6 +77,7 @@ function Board() {
       ws.current.send(JSON.stringify({
         request: 'NEW_CARD',
         listId: listId,
+        boardId: board._id,
         details: newCardDetails
       }));
     }
