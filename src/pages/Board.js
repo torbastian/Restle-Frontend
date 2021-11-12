@@ -9,6 +9,8 @@ import EditBoard from "../popup-content/EditBoard";
 import NewCard from "../popup-content/NewCard";
 import NewList from "../popup-content/NewList";
 import '../styles/Board.scss';
+import { BsArrowReturnRight } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
 function Board() {
   const { createPopup } = usePopup();
@@ -99,7 +101,10 @@ function Board() {
   if (board !== null) {
     return (
       <div className="board">
-        <h1>{board.title}</h1>
+        <div className="board-title">
+          <Link to={'/boards'} className={'back'}><BsArrowReturnRight /></Link>
+          <h1>{board.title}</h1>
+        </div>
         <div className="controls">
           <button className="btn" onClick={editBoardDialogue}>Rediger</button>
           <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>

@@ -3,6 +3,12 @@
   padding: 10px;
   border-radius: 4px;
   margin-top: 10px;
+  cursor: pointer;
+  transition: border 0.2s ease;
+
+  &:hover {
+    border-color: var(--nav-bg-hover-2);
+  }
 
   .card-header {
     font-size: 10px;

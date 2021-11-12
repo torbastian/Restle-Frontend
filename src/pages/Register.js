@@ -7,12 +7,14 @@ import '../styles/Register.scss';
 
 function Register() {
 	const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("")
+	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [colour, setColour] = useState("#fff");
 	const [showColorPicker, setShowColorPicker] = useState(false);
+
+	const history = useHistory();
 
 	function onSubmit(e) {
 		e.preventDefault();
@@ -25,60 +27,65 @@ function Register() {
 			},
 			body: JSON.stringify({
 				username: username,
-                email: email,
+				email: email,
 				first_name: firstName,
 				last_name: lastName,
 				colour: colour,
-                password: password
+				password: password
 			})
 		};
 
 		fetch(process.env.REACT_APP_API_URL + '/user/register', requestNewUser)
-			.then(res => {console.log(res)})
+			.then(res => {
+				console.log(res);
+				if (res.ok) {
+					history.push('/boards');
+				}
+			})
 	}
 
 	return (
 		<div id="Register">
 			<div className="register-con">
 				<form className="user-frm" onSubmit={onSubmit}>
-				    <span className="text-center">Sign up</span>
+					<span className="text-center">Sign up</span>
 					<div className="input-container">
-		            <input type="text" required="" onChange={(e) => setUsername(e.target.value)}/>
-		            <label>Username</label>		
-	                </div>
+						<input type="text" required="" onChange={(e) => setUsername(e.target.value)} />
+						<label>Username</label>
+					</div>
 					<div className="input-container">
-		            <input type="password" required="" onChange={(e) => setPassword(e.target.value)}/>
-		            <label>Password</label>		
-	                </div>
+						<input type="password" required="" onChange={(e) => setPassword(e.target.value)} />
+						<label>Password</label>
+					</div>
 					<div className="input-container">
-		            <input type="text" required="" onChange={(e) => setEmail(e.target.value)}/>
-		            <label>Email</label>		
-	                </div>
+						<input type="text" required="" onChange={(e) => setEmail(e.target.value)} />
+						<label>Email</label>
+					</div>
 					<div className="input-container">
-		            <input type="text" required="" onChange={(e) => setFirstName(e.target.value)}/>
-		            <label>First name</label>		
-	                </div>
+						<input type="text" required="" onChange={(e) => setFirstName(e.target.value)} />
+						<label>First name</label>
+					</div>
 					<div className="input-container">
-		            <input type="text" required="" onChange={(e) => setLastName(e.target.value)}/>
-		            <label>Last name</label>		
-	                </div>
+						<input type="text" required="" onChange={(e) => setLastName(e.target.value)} />
+						<label>Last name</label>
+					</div>
 					<div className="input-container">
-		            <input type="text" required="" value={colour} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}/>
-		            <label>Colour</label>
-					{showColorPicker && (
-						<ChromePicker
-						color={colour}
-						onChange={updatedColor => setColour(updatedColor.hex)}
-						/>
-					)}
-								
-	                </div>
-					
+						<input type="text" required="" value={colour} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)} />
+						<label>Colour</label>
+						{showColorPicker && (
+							<ChromePicker
+								color={colour}
+								onChange={updatedColor => setColour(updatedColor.hex)}
+							/>
+						)}
+
+					</div>
+
 
 
 
 					<button type="button" className="btn" onClick={onSubmit}>Register</button>
-                    <Link to="/login"><button type="button" className="btn">Cancel</button></Link> 
+					<Link to="/login"><button type="button" className="btn">Cancel</button></Link>
 				</form>
 			</div>
 		</div>

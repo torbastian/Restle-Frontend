@@ -5,9 +5,13 @@
   font-family: "Roboto", sans-serif;
 }
 
+html {
+  background-color: var(--bg-color);
+}
+
 :root {
   --nav-bg-color: #26262a;
-  --nav-bg-hover: #3c3c42;
+  --nav-bg-hover: #313136;
   --nav-bg-hover-2: #4f4f57;
   --nav-width: 50px;
   --nav-expand-width: 180px;
@@ -22,6 +26,12 @@
 
   --blu: var(--nav-highlight);
   --blu-hover: #397dfb;
+
+  --red: #e13737;
+  --red-hover: #ff5656;
+
+  --ylw: #f0ad4e;
+  --ylw-hover: #ebbe80;
 }
 
 .hidden {
@@ -69,6 +79,31 @@ html {
 
     &:hover:enabled {
       background-color: var(--blu-hover);
+    }
+  }
+
+  &.red {
+    background-color: var(--red);
+
+    &:hover:enabled {
+      background-color: var(--red-hover);
+    }
+  }
+
+  &.drk {
+    background-color: var(--bg-color);
+
+    &:hover:enabled {
+      background-color: var(--bg-hover);
+    }
+  }
+
+  &.ylw {
+    color: white;
+    background-color: var(--ylw);
+
+    &:hover:enabled {
+      background-color: var(--ylw-hover);
     }
   }
 }

@@ -6,6 +6,12 @@ function EditList(popupData) {
 
   function onSubmit(e) {
     e.preventDefault();
+
+    const listDetails = {
+      title: title
+    }
+
+    popupData.close();
   }
 
   return (
@@ -24,7 +30,7 @@ function EditList(popupData) {
 
         <div className="btn-container">
           <button className="btn" type="button" onClick={popupData.close}>Annuller</button>
-          <button className="btn blu" type="submit" disabled={title.length < 3}>Opret</button>
+          <button className="btn blu" type="submit" disabled={title.length < 3}>Gem</button>
         </div>
       </form>
     </div>

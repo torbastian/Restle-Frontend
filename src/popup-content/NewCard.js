@@ -13,6 +13,7 @@ function NewCard(popupData) {
     }
 
     popupData.submitAction(cardDetails, popupData.listId);
+    popupData.close();
   }
 
   return (
