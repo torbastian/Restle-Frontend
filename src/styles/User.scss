@@ -1,3 +1,13 @@
+
+.profile-con {
+	padding: 70px 30px 35px;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	border-radius: 3px;
+	left: 50%;
+	top: 50%;
+
+
 .header {
 	display: flex;
 	align-items: center;
@@ -47,14 +57,6 @@
   font-size: 23px;
   text-align: center;
 }
-.profile-con {
-  padding: 70px 30px 35px;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  border-radius: 3px;
-  left: 50%;
-  top: 50%;
-}
 .input-container {
   position: relative;
   margin-bottom: 25px;
@@ -88,4 +90,5 @@
 .input-container input:valid ~ label {
   font-size: 12px;
   top: -12px;
+}
 }
