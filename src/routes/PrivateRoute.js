@@ -10,7 +10,7 @@ function PrivateRoute(props) {
   if (isLoading) return <Loading />
 
   //Hvis brugeren ikke er null, returner komponentet
-  if (user) {
+  if (user !== null) {
     return (
       <Route {...rest} render={props => (
         <Component {...props} />

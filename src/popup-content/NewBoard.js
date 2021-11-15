@@ -13,6 +13,7 @@ function NewBoard(popupData) {
     }
 
     popupData.submitAction(boardDetails);
+    popupData.close();
   }
 
   return (

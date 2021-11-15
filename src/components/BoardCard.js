@@ -13,11 +13,24 @@ function BoardCard({ board, ws }) {
   const history = useHistory();
 
   function updateBoard(boardDetails) {
-    console.log(ws.current.readyState);
+    console.log(boardDetails);
+    if (ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        request: 'UPDATE_BOARD',
+        boardId: board._id,
+        details: boardDetails
+      }));
+    }
   }
 
   function editBoard() {
-    createPopup(<EditBoard board={board} />, 'Rediger Board', updateBoard);
+    createPopup(
+      <EditBoard
+        board={board}
+        cancelAction={editBoard}
+      />,
+      'Rediger Board',
+      updateBoard);
   }
 
   function navigateToBoard() {

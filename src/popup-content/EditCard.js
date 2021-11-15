@@ -1,20 +1,20 @@
-import { useState } from 'react/cjs/react.development';
-import DateDisplay from '../components/Date';
-import MemberSelect from '../components/MemberSelect';
+import { useState } from "react/cjs/react.development";
+import DateDisplay from "../components/Date";
+import MemberSelect from "../components/MemberSelect";
 
-function EditBoard(popupData) {
-  const [title, setTitle] = useState(popupData.board.title);
-  const [description, setDescription] = useState(popupData.board.description);
+function EditCard(popupData) {
+  const [title, setTitle] = useState(popupData.card.title);
+  const [description, setDescription] = useState(popupData.card.description);
 
   function onSubmit(e) {
     e.preventDefault();
 
-    const boardDetails = {
+    const cardDetails = {
       title: title,
       description: description
     }
 
-    popupData.submitAction(boardDetails);
+    popupData.submitAction(cardDetails);
     popupData.close();
   }
 
@@ -22,19 +22,15 @@ function EditBoard(popupData) {
     console.log(selectedMembers);
   }
 
-  function transferOwnership(selectedMembers) {
-    console.log(selectedMembers);
-  }
-
   return (
-    <div className="edit-board">
+    <div className="edit-card">
       <div className="btn-container">
-        <DateDisplay date={popupData.board.create_date} title={'Oprettet'} />
-        <DateDisplay date={popupData.board.last_edited} title={'Sidst Redigeret'} />
+        <DateDisplay date={popupData.card.create_date} title={'Oprettet'} />
+        <DateDisplay date={popupData.card.last_edited} title={'Sidst Redigeret'} />
       </div>
       <form className="frm" onSubmit={onSubmit}>
         <label>Titel</label>
-        <input type="text" name="title" placeholder="Board Titel"
+        <input type="text" name="title" placeholder="Card Titel"
           value={title}
           maxLength="40"
           onChange={(e) => setTitle(e.target.value)}
@@ -52,9 +48,7 @@ function EditBoard(popupData) {
             { first_name: 'test', last_name: 'test', colour: '#fff' },
             { first_name: 'test', last_name: 'test', colour: '#fff' }
           ]}
-          transferOwnership={transferOwnership}
           removeMember={removeMember}
-          cancelAction={popupData.cancelAction}
         />
 
         <div className="btn-container">
@@ -66,4 +60,4 @@ function EditBoard(popupData) {
   )
 }
 
-export default EditBoard;
+export default EditCard;
