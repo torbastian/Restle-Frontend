@@ -31,6 +31,11 @@ function Nav() {
         <FaSquare />
         <p>Board List</p>
       </NavLink>
+
+      <Link className='link' to='/profile'>
+        <FaChevronRight />
+        <p>Profile</p>
+      </Link>
     </nav>
   )
 }

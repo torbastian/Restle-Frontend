@@ -80,12 +80,8 @@ function Register() {
 						)}
 
 					</div>
-
-
-
-
-					<button type="button" className="btn" onClick={onSubmit}>Register</button>
-					<Link to="/login"><button type="button" className="btn">Cancel</button></Link>
+					<button type="button" className="btn" onClick={onSubmit}>Sign up</button>
+                    <Link to="/login"><button type="button" className="btn">Cancel</button></Link> 
 				</form>
 			</div>
 		</div>
