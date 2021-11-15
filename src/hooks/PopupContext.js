@@ -12,12 +12,27 @@ function PopupProvider({ children }) {
     setPopup({ content: content, title: title, submitAction: submitAction });
   }, [setPopup]);
 
+  const createDialogue = useCallback(
+    (title = "", confirmButton = undefined, cancelAction = closePopup, submitAction = undefined) => {
+      setPopup({
+        content: <Dialogue
+          confirmButton={confirmButton}
+          cancelAction={cancelAction}
+          submitAction={submitAction}
+        />,
+        title: title,
+        submitAction: submitAction
+      })
+    },
+    [setPopup],
+  )
+
   function closePopup() {
     setPopup(null);
   }
 
   return (
-    <PopupContext.Provider value={{ createPopup }}>
+    <PopupContext.Provider value={{ createPopup, createDialogue }}>
       {/* Hvis popup ikke er null, opret en ny popup */}
       {popup !== null &&
         <div className="popup-container">
@@ -71,6 +86,20 @@ function Popup({ popup, close }) {
             popup.content
         }
       </section>
+    </div>
+  )
+}
+
+function Dialogue({ confirmButton, cancelAction, submitAction }) {
+  return (
+    <div className="dialogue btn-container">
+      <button className="btn" onClick={cancelAction}>Annuller</button>
+      <button className={`btn 
+      ${confirmButton.class &&
+        confirmButton.class}`}
+        onClick={submitAction}>
+        {confirmButton.text}
+      </button>
     </div>
   )
 }

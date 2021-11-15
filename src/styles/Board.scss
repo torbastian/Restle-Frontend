@@ -1,4 +1,19 @@
 .board {
+  .board-title {
+    display: flex;
+  }
+
+  .back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text-subtle);
+    transform: rotateZ(180deg);
+    font-size: 24px;
+    margin-right: 10px;
+  }
+
   .list-container {
     display: flex;
   }

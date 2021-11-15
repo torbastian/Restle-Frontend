@@ -1,7 +1,13 @@
 import UserIcon from "./UserIcon";
 import '../styles/Members.scss';
 
-function Members({ owner = null, members = null, invite = false }) {
+function Members({ owner = null, members = null, invite = undefined }) {
+
+  function onClick(e) {
+    e.stopPropagation();
+    invite();
+  }
+
   return (
     <div className="members">
       {owner !== null &&
@@ -13,8 +19,8 @@ function Members({ owner = null, members = null, invite = false }) {
         )
       }
       {
-        invite &&
-        <button className="user-icon">+</button>
+        invite !== undefined &&
+        <button className="user-icon" onClick={onClick}>+</button>
       }
     </div>
   )

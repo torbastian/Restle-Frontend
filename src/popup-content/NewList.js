@@ -11,6 +11,7 @@ function NewList(popupData) {
     }
 
     popupData.submitAction(listDetails);
+    popupData.close();
   }
 
   return (

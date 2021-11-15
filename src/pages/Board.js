@@ -9,6 +9,9 @@ import EditBoard from "../popup-content/EditBoard";
 import NewCard from "../popup-content/NewCard";
 import NewList from "../popup-content/NewList";
 import '../styles/Board.scss';
+import { BsArrowReturnRight } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 function Board() {
   const { createPopup } = usePopup();
@@ -75,13 +78,114 @@ function Board() {
       ws.current.send(JSON.stringify({
         request: 'NEW_CARD',
         listId: listId,
+        boardId: board._id,
         details: newCardDetails
       }));
     }
   }
 
-  function updateBoard() {
+  function updateBoard(boardDetails) {
+    if (ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        request: 'UPDATE_BOARD',
+        boardId: board._id,
+        details: boardDetails
+      }));
+    }
+  }
 
+  function moveList(listToMove, destination) {
+    if (ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        request: 'MOVE_LIST',
+        boardId: board._id,
+        listId: listToMove,
+        newIndex: destination
+      }));
+    }
+  }
+
+  function moveCard(cardToMove, oldList, newList, destinationIndex) {
+    if (ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify({
+        request: 'MOVE_CARD',
+        boardId: board._id,
+        cardId: cardToMove,
+        oldList: oldList,
+        newList: newList,
+        destinationIndex: destinationIndex
+      }));
+    }
+  }
+
+  function onDragEnd(result) {
+    const { destination, source, draggableId, type } = result;
+
+    if (!destination) return;
+
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+
+    if (type === 'list') {
+      //Opdater listernes rækkefølge
+      var newLists = [...board.lists];
+      var _removedList = newLists.splice(source.index, 1)[0];
+      newLists.splice(destination.index, 0, _removedList);
+
+      const newBoard = {
+        ...board,
+        lists: newLists
+      }
+
+      setBoard(newBoard);
+      moveList(_removedList._id, destination.index);
+    } else if (type === 'card') {
+      //Fjern kortet fra listen, og tilføj det til destinationen
+      const listSource = board.lists.find(l => l._id === source.droppableId);
+      const newCardsSource = [...listSource.cards];
+
+      let _card = newCardsSource.splice(source.index, 1)[0];
+
+      const newLists = [...board.lists];
+
+      //Hvis destinationen og source er den samme, opdater en enkelt liste
+      if (destination.droppableId === source.droppableId) {
+        newCardsSource.splice(destination.index, 0, _card);
+
+        const updatedList = {
+          ...listSource,
+          cards: newCardsSource
+        }
+
+        newLists[newLists.findIndex(l => l._id === source.droppableId)] = updatedList;
+      } else {
+        //Hvis destination og source ikke er det samme, opdater både source og destination
+        const listDestination = board.lists.find(l => l._id === destination.droppableId);
+        const newCardsDestination = [...listDestination.cards];
+
+        newCardsDestination.splice(destination.index, 0, _card);
+
+        const updatedSourceList = {
+          ...listSource,
+          cards: newCardsSource
+        }
+
+        const updatedDestinationList = {
+          ...listDestination,
+          cards: newCardsDestination
+        }
+
+        newLists[newLists.findIndex(l => l._id === source.droppableId)] = updatedSourceList;
+        newLists[newLists.findIndex(l => l._id === destination.droppableId)] = updatedDestinationList;
+      }
+
+      const newBoard = {
+        ...board,
+        lists: newLists
+      }
+
+      setBoard(newBoard);
+      moveCard(draggableId, source.droppableId, destination.droppableId, destination.index);
+    }
   }
 
   function newListDialogue() {
@@ -93,27 +197,51 @@ function Board() {
   }
 
   function editBoardDialogue() {
-    createPopup(<EditBoard board={board} />, 'Rediger Board', updateBoard);
+    createPopup(<EditBoard board={board} cancelAction={editBoardDialogue} />, 'Rediger Board', updateBoard);
   }
 
   if (board !== null) {
     return (
-      <div className="board">
-        <h1>{board.title}</h1>
-        <div className="controls">
-          <button className="btn" onClick={editBoardDialogue}>Rediger</button>
-          <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
-          <Members owner={board.owner} members={board.members} invite={true} />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="board">
+          <div className="board-title">
+            <Link to={'/boards'} className={'back'}><BsArrowReturnRight /></Link>
+            <h1>{board.title}</h1>
+          </div>
+          <div className="controls">
+            <button className="btn" onClick={editBoardDialogue}>Rediger</button>
+            <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
+            <Members owner={board.owner} members={board.members} invite={true} />
+          </div>
+          <Droppable
+            droppableId={'list-droppable'}
+            direction='horizontal'
+            type='list'
+          >
+            {(provided) => (
+              <div className="list-container"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {board.lists !== null &&
+                  board.lists.map((list, index) =>
+                    <List
+                      key={list._id}
+                      index={index}
+                      listDetails={list}
+                      ws={ws}
+                      newCardDialogue={newCardDialogue}
+                    />
+                  )}
+                {provided.placeholder}
+                {board.lists.length === 0 &&
+                  <p>Tilføj en liste ved at trykke på Ny Liste</p>
+                }
+              </div>
+            )}
+          </Droppable>
         </div>
-
-        <div className="list-container">
-          {board.lists !== null &&
-            board.lists.map((list, index) =>
-              <List key={list._id} listDetails={list} ws={ws} newCardDialogue={newCardDialogue} />
-            )
-          }
-        </div>
-      </div>
+      </DragDropContext>
     )
   } else {
     return (
