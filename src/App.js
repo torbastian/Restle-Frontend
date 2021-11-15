@@ -9,8 +9,13 @@ import UserProvider from './hooks/UserContext';
 import PopupProvider from './hooks/PopupContext';
 import Board from './pages/Board';
 import PrivateRoute from './routes/PrivateRoute';
+<<<<<<< HEAD
 import Profile from './pages/Profile';
 import AdminOverview from './pages/AdminOverview';
+=======
+import AdminOverview from './pages/AdminOverview';
+import Profile from './pages/Profile';
+>>>>>>> 3dafe83718f472301b668557cd191c14b5f1f8e4
 
 
 function App() {
@@ -27,7 +32,7 @@ function App() {
                 <Route path="/register" component={Register} />
                 <Route path="/AdminOverview" component={AdminOverview} />
                 <PrivateRoute path="/boards" exact component={BoardList} />
-                <PrivateRoute path="/profile" component={Profile}/>
+                <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/boards/:id" component={Board} />
               </Switch>
             </div>
