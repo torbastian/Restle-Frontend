@@ -10,6 +10,7 @@ import UserProvider from './hooks/UserContext';
 import PopupProvider from './hooks/PopupContext';
 import Board from './pages/Board';
 import PrivateRoute from './routes/PrivateRoute';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <PrivateRoute path="/boards" exact component={BoardList} />
+                <PrivateRoute path="/profile" component={Profile}/>
                 <PrivateRoute path="/boards/:id" component={Board} />
               </Switch>
             </div>
