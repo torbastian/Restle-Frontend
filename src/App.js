@@ -11,6 +11,7 @@ import Board from './pages/Board';
 import PrivateRoute from './routes/PrivateRoute';
 import AdminOverview from './pages/AdminOverview';
 import Profile from './pages/Profile';
+import LoggedInRoute from './routes/LoggedInRoute';
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
             <div id="content">
               <Switch>
                 <Route path="/" exact component={Home} />
-                <Route path="/login" component={Login} />
+                <LoggedInRoute path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="/AdminOverview" component={AdminOverview} />
                 <PrivateRoute path="/boards" exact component={BoardList} />

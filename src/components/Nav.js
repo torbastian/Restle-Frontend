@@ -32,11 +32,6 @@ function Nav() {
         <p>Board List</p>
       </NavLink>
 
-      <Link className='link' to='/profile'>
-        <FaChevronRight />
-        <p>Profile</p>
-      </Link>
-
       <Link className='link' to='/AdminOverview'>
         <FaUser />
         <p>Admin Overview</p>
