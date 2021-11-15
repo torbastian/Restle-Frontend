@@ -27,7 +27,7 @@ function App() {
                 <Route path="/register" component={Register} />
                 <Route path="/AdminOverview" component={AdminOverview} />
                 <PrivateRoute path="/boards" exact component={BoardList} />
-                <PrivateRoute path="/profile" component={Profile}/>
+                <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/boards/:id" component={Board} />
               </Switch>
             </div>
