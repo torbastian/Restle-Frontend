@@ -19,7 +19,6 @@ function Profile() {
 	const [newPass2, setNewPass2] = useState("");
 	const [passwordToggle, setPasswordToggle] = useState(false);
 
-
 	useEffect(() => {
 			setFirstName(user.first_name);
 			setLastName(user.last_name);
@@ -97,7 +96,7 @@ function Profile() {
 						<ChromePicker
 						color={colour}
 						value={colour}
-						onChange={updatedColor => setColour(updatedColor.hex)}
+						onChange={(e) => setColour(e.hex)}
 						/>
 					)}
 								
