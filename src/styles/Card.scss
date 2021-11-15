@@ -1,10 +1,10 @@
 .card {
   border: 1px solid var(--border-1);
-  padding: 10px;
   border-radius: 4px;
   margin-top: 10px;
   cursor: pointer;
   transition: border 0.2s ease;
+  background-color: var(--nav-bg-color);
 
   &:hover {
     border-color: var(--nav-bg-hover-2);
@@ -13,12 +13,17 @@
   .card-header {
     font-size: 10px;
     font-weight: normal;
-    margin-bottom: 10px;
+    padding: 10px;
   }
 
   .card-description {
+    padding: 0 10px 10px 10px;
     p {
       color: var(--text-subtle);
     }
+  }
+
+  .members {
+    margin: 0;
   }
 }

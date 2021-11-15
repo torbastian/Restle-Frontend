@@ -21,8 +21,8 @@ function MemberSelect({ members, transferOwnership = undefined, removeMember = u
     setSelectedMembers(newMembers);
   }
 
-  function areYouSure(title, confirmButtonText, submitAction) {
-    createDialogue(title, { class: 'blu', text: confirmButtonText }, cancelAction, submitAction);
+  function areYouSure(title, confirmButton, submitAction) {
+    createDialogue(title, confirmButton, cancelAction, submitAction);
   }
 
   return (
@@ -45,7 +45,11 @@ function MemberSelect({ members, transferOwnership = undefined, removeMember = u
           transferOwnership !== undefined &&
           <button
             className="btn ylw"
-            onClick={() => areYouSure(`Vil du overføre ejerskab til ${selectedMembers[0]}?`, 'Overfør', () => transferOwnership([...selectedMembers]))}
+            onClick={() =>
+              areYouSure(`Vil du overføre ejerskab til ${selectedMembers[0].first_name}?`,
+                { class: 'ylw', text: 'Overfør' },
+                () => transferOwnership([...selectedMembers])
+              )}
             disabled={selectedMembers.length !== 1}
             type='button'
           >
@@ -56,7 +60,11 @@ function MemberSelect({ members, transferOwnership = undefined, removeMember = u
           removeMember !== undefined &&
           <button
             className="btn red"
-            onClick={() => removeMember([...selectedMembers])}
+            onClick={() =>
+              areYouSure(`Vil du fjerne ${selectedMembers.length} medlemmer fra boardet?`,
+                { class: 'red', text: 'Fjern' },
+                () => removeMember([...selectedMembers])
+              )}
             disabled={selectedMembers.length === 0}
             type='button'
           >

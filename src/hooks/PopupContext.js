@@ -92,7 +92,7 @@ function Popup({ popup, close }) {
 
 function Dialogue({ confirmButton, cancelAction, submitAction }) {
   return (
-    <div className="dialogue">
+    <div className="dialogue btn-container">
       <button className="btn" onClick={cancelAction}>Annuller</button>
       <button className={`btn 
       ${confirmButton.class &&

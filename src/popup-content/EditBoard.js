@@ -54,6 +54,7 @@ function EditBoard(popupData) {
           ]}
           transferOwnership={transferOwnership}
           removeMember={removeMember}
+          cancelAction={popupData.cancelAction}
         />
 
         <div className="btn-container">

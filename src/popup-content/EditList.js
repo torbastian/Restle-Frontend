@@ -11,6 +11,7 @@ function EditList(popupData) {
       title: title
     }
 
+    popupData.submitAction(listDetails);
     popupData.close();
   }
 

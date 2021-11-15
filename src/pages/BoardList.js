@@ -39,7 +39,15 @@ function BoardList() {
             setMemberBoards(data.memeberOf);
           }
           break;
+        case 'BOARD_LIST_UPDATE':
+          if (data.owned !== undefined) {
+            setOwnedBoards(updateBoardState(data.owned, OwnedBoards));
+          }
 
+          if (data.memeberOf !== undefined) {
+            setMemberBoards(updateBoardState(data.memeberOf, MemberBoards));
+          }
+          break;
         default:
           break;
       }
@@ -56,6 +64,20 @@ function BoardList() {
       ws.current.close();
     }
   }, []);
+
+
+  function updateBoardState(board, state) {
+    let _boards = [...state];
+    let boardIndex = _boards.findIndex(b => b._id === board._id);
+
+    if (boardIndex !== -1) {
+      _boards[boardIndex] = board;
+    } else {
+      _boards.push(board);
+    }
+
+    return (_boards);
+  }
 
   function createNewBoard(newBoardDetails) {
     if (ws.current.readyState === WebSocket.OPEN) {
