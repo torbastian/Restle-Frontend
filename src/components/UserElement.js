@@ -2,6 +2,7 @@ import { FaCrown } from 'react-icons/fa';
 import '../styles/UserIcon.scss';
 import '../styles/AdminOverview.scss';
 import UserIcon from '../components/UserIcon';
+import {IoMdCreate} from 'react-icons/io';
 
 function UserElement({user, onClick}){
   return(
@@ -18,7 +19,7 @@ function UserElement({user, onClick}){
         </div>
       </div>
       <div id="imgBox">
-        <img scr=""></img>
+        <IoMdCreate/>
       </div>
     </div>
   )

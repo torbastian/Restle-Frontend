@@ -1,15 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import { useState } from "react/cjs/react.development";
-import List from "../components/List";
-import Loading from '../components/Loading';
-import Members from "../components/Members";
 import UserElement from "../components/UserElement";
-import UserIcon from "../components/UserIcon";
 import { usePopup } from "../hooks/PopupContext";
-import EditBoard from "../popup-content/EditBoard";
-import NewCard from "../popup-content/NewCard";
-import NewList from "../popup-content/NewList";
 import '../styles/Board.scss';
 import {FaSearch} from 'react-icons/fa';
 import Profile from "./Profile";
