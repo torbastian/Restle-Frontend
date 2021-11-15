@@ -9,11 +9,8 @@ import UserProvider from './hooks/UserContext';
 import PopupProvider from './hooks/PopupContext';
 import Board from './pages/Board';
 import PrivateRoute from './routes/PrivateRoute';
-<<<<<<< HEAD
 import AdminOverview from './pages/AdminOverview';
-=======
 import Profile from './pages/Profile';
->>>>>>> 0f46dcffff25ce2ccc0dba5787321655f57711d8
 
 
 function App() {
