@@ -1,7 +1,6 @@
 import { deleteUser, updateUser } from '../components/UserFunctions';
 import { FaCheck, FaChevronDown, FaTimes } from 'react-icons/fa';
 import { useContext, useEffect, useState } from 'react';
-import { animated } from 'react-spring';
 import { ChromePicker } from 'react-color';
 import { UserContext } from '../hooks/UserContext';
 import '../styles/User.scss';
@@ -111,7 +110,7 @@ function Profile() {
 
 						<FaChevronDown />
 					</div>
-					<animated.div className={`input-container ${!passwordToggle ? "hidden" : ""}`}>
+					<div className={`input-container ${!passwordToggle ? "hidden" : ""}`}>
 								<label></label>
 								<input type="password" name="password" placeholder="Current Password"
 									maxLength={1024}
@@ -130,8 +129,7 @@ function Profile() {
 							value={newPass2}
 							onChange={(e) => setNewPass2(e.target.value)}
 						/>
-			
-					</animated.div>
+					</div>
 				</div>
 
 		   <button type="button" className="btn" onClick={_updateUser}>Save</button>
