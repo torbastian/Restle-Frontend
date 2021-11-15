@@ -70,29 +70,6 @@ function AdminOverview() {
             </div>
         </div>
     );
-
-    //EXAMPLE
-    /*
-    return(
-        <div>
-            <h1>Admin Overview</h1>
-            <div id="userList"></div>
-            <div id="profile page"></div>
-            {
-                user !== null &&
-                user.map((_user, index) =>
-
-                <div key={index}>
-                <UserIcon  user={_user} onClick={() => seeLog()}/>
-                <button onClick={seeLog}></button>
-                </div>
-                
-                )
-            }
-
-        </div>
-    );
-    */
 }
 
 export default AdminOverview;
