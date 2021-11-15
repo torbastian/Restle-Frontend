@@ -27,6 +27,11 @@ function Nav() {
         <FaSquare />
         <p>Board List</p>
       </Link>
+
+      <Link className='link' to='/AdminOverview'>
+        <FaUser />
+        <p>Admin Overview</p>
+      </Link>
     </nav>
   )
 }
