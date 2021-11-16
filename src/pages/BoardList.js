@@ -7,8 +7,8 @@ import '../styles/BoardList.scss';
 
 function BoardList() {
   const { createPopup } = usePopup();
-  const [OwnedBoards, setOwnedBoards] = useState(null);
-  const [MemberBoards, setMemberBoards] = useState(null);
+  const [OwnedBoards, setOwnedBoards] = useState([]);
+  const [MemberBoards, setMemberBoards] = useState([]);
   const ws = useRef(null);
 
   useEffect(() => {
@@ -22,35 +22,35 @@ function BoardList() {
       ws.current.send(JSON.stringify({
         request: 'SUBSCRIBE_BOARD_LIST'
       }));
-    }
 
-    ws.current.onmessage = (e) => {
-      //Modtag data
-      const data = JSON.parse(e.data);
-      console.log(data);
+      ws.current.onmessage = (e) => {
+        //Modtag data
+        const data = JSON.parse(e.data);
+        console.log(data);
 
-      switch (data.response) {
-        //Modtag boards
-        case 'BOARD_LIST_RESPONSE':
-          if (data.owned !== undefined) {
-            setOwnedBoards(data.owned);
-          }
+        switch (data.response) {
+          //Modtag boards
+          case 'BOARD_LIST_RESPONSE':
+            if (data.owned !== undefined) {
+              setOwnedBoards(data.owned);
+            }
 
-          if (data.memeberOf !== undefined) {
-            setMemberBoards(data.memeberOf);
-          }
-          break;
-        case 'BOARD_LIST_UPDATE':
-          if (data.owned !== undefined) {
-            setOwnedBoards(updateBoardState(data.owned, OwnedBoards));
-          }
+            if (data.memeberOf !== undefined) {
+              setMemberBoards(data.memeberOf);
+            }
+            break;
+          case 'BOARD_LIST_UPDATE':
+            if (data.owned !== undefined) {
+              setOwnedBoards(updateBoardState(data.owned, OwnedBoards));
+            }
 
-          if (data.memeberOf !== undefined) {
-            setMemberBoards(updateBoardState(data.memeberOf, MemberBoards));
-          }
-          break;
-        default:
-          break;
+            if (data.memeberOf !== undefined) {
+              setMemberBoards(updateBoardState(data.memeberOf, MemberBoards));
+            }
+            break;
+          default:
+            break;
+        }
       }
     }
 
@@ -101,7 +101,7 @@ function BoardList() {
           </div>
         </div>
         <div className="boards">
-          {OwnedBoards !== null &&
+          {OwnedBoards.length > 0 &&
             OwnedBoards.map((board, index) =>
               <BoardCard
                 key={board._id}
@@ -113,7 +113,7 @@ function BoardList() {
         </div>
       </section>
       {
-        MemberBoards !== null &&
+        MemberBoards.length > 0 &&
         <section className="board-section">
           <div className="board-section-header">
             <h2>Medlem Boards</h2>
