@@ -12,11 +12,15 @@ import '../styles/Board.scss';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { createNewCard, createNewList, deleteBoard, moveCard, moveList, updateBoard } from "../helpers/BoardHelper";
+import { useCookies } from 'react-cookie';
 
 function Board() {
   const { createPopup } = usePopup();
   const { id } = useParams();
   const [board, setBoard] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies([id]);
+
   const ws = useRef(null);
 
   useEffect(() => {
@@ -26,11 +30,20 @@ function Board() {
     ws.current.onopen = () => {
       console.log("Connection to WS Established");
 
-      //Send en forespørgelse om at abbonnere til brugerens boards
-      ws.current.send(JSON.stringify({
-        request: 'SUBSCRIBE_BOARD',
-        boardId: id
-      }));
+      if (cookies.boardData !== undefined) {
+        ws.current.send(JSON.stringify({
+          request: 'SUBSCRIBE_BOARD_COOKIE',
+          boardId: id,
+          lastEdited: cookies.boardData.last_edited
+        }))
+      } else {
+        //Send en forespørgelse om at abbonnere til brugerens boards
+        ws.current.send(JSON.stringify({
+          request: 'SUBSCRIBE_BOARD',
+          boardId: id
+        }));
+      }
+
     };
 
     ws.current.onmessage = (e) => {
@@ -43,7 +56,11 @@ function Board() {
         case 'BOARD_RESPONSE':
           if (data.board) {
             setBoard(data.board);
+            setCookie('boardData', data.board);
           }
+          break;
+        case 'BOARD_UP_TO_DATE':
+          setBoard(cookies.boardData);
           break;
 
         default:
@@ -58,64 +75,30 @@ function Board() {
           boardId: id
         }));
       }
+
+      ws.current.close();
     }
 
   }, []);
 
-  function createNewList(newListDetails) {
-    if (ws.current.readyState === WebSocket.OPEN) {
-      console.log('New List');
-      ws.current.send(JSON.stringify({
-        request: 'NEW_LIST',
-        boardId: board._id,
-        details: newListDetails
-      }));
-    }
+  function _createNewList(newListDetails) {
+    createNewList(ws, board._id, newListDetails);
   }
 
-  function createNewCard(newCardDetails, listId) {
-    if (ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify({
-        request: 'NEW_CARD',
-        listId: listId,
-        boardId: board._id,
-        details: newCardDetails
-      }));
-    }
+  function _createNewCard(newCardDetails, listId) {
+    createNewCard(ws, newCardDetails, board._id, listId);
   }
 
-  function updateBoard(boardDetails) {
-    if (ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify({
-        request: 'UPDATE_BOARD',
-        boardId: board._id,
-        details: boardDetails
-      }));
-    }
+  function _updateBoard(boardDetails) {
+    updateBoard(ws, board._id, boardDetails);
   }
 
-  function moveList(listToMove, destination) {
-    if (ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify({
-        request: 'MOVE_LIST',
-        boardId: board._id,
-        listId: listToMove,
-        newIndex: destination
-      }));
-    }
+  function _moveList(listToMove, destination) {
+    moveList(ws, board._id, listToMove, destination)
   }
 
-  function moveCard(cardToMove, oldList, newList, destinationIndex) {
-    if (ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify({
-        request: 'MOVE_CARD',
-        boardId: board._id,
-        cardId: cardToMove,
-        oldList: oldList,
-        newList: newList,
-        destinationIndex: destinationIndex
-      }));
-    }
+  function _moveCard(cardToMove, oldList, newList, destinationIndex) {
+    moveCard(ws, board._id, cardToMove, oldList, newList, destinationIndex);
   }
 
   function onDragEnd(result) {
@@ -137,7 +120,7 @@ function Board() {
       }
 
       setBoard(newBoard);
-      moveList(_removedList._id, destination.index);
+      _moveList(_removedList._id, destination.index);
     } else if (type === 'card') {
       //Fjern kortet fra listen, og tilføj det til destinationen
       const listSource = board.lists.find(l => l._id === source.droppableId);
@@ -184,20 +167,30 @@ function Board() {
       }
 
       setBoard(newBoard);
-      moveCard(draggableId, source.droppableId, destination.droppableId, destination.index);
+      _moveCard(draggableId, source.droppableId, destination.droppableId, destination.index);
     }
   }
 
+  function _deleteBoard(board) {
+    deleteBoard(ws, board._id);
+  }
+
   function newListDialogue() {
-    createPopup(<NewList />, "Ny Liste", createNewList);
+    createPopup(<NewList />, "Ny Liste", _createNewList);
   }
 
   function newCardDialogue(listId) {
-    createPopup(<NewCard listId={listId} />, "Ny Card", createNewCard);
+    createPopup(<NewCard listId={listId} />, "Ny Card", _createNewCard);
   }
 
   function editBoardDialogue() {
-    createPopup(<EditBoard board={board} cancelAction={editBoardDialogue} />, 'Rediger Board', updateBoard);
+    createPopup(
+      <EditBoard board={board}
+        cancelAction={editBoardDialogue}
+        deleteAction={_deleteBoard} />,
+      'Rediger Board',
+      _updateBoard
+    );
   }
 
   if (board !== null) {

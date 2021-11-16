@@ -1,8 +1,11 @@
+import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react/cjs/react.development";
 import DateDisplay from "../components/Date";
+import { usePopup } from "../hooks/PopupContext";
 
 function EditList(popupData) {
   const [title, setTitle] = useState(popupData.list.title);
+  const { createDialogue } = usePopup();
 
   function onSubmit(e) {
     e.preventDefault();
@@ -13,6 +16,19 @@ function EditList(popupData) {
 
     popupData.submitAction(listDetails);
     popupData.close();
+  }
+
+  function deleteDialogue() {
+    createDialogue(`Vil du slette ${title}?`,
+      { class: 'red', text: 'Slet' },
+      popupData.cancelAction,
+      () => deleteList()
+    );
+  }
+
+  function deleteList() {
+    popupData.close();
+    popupData.deleteAction(popupData.list);
   }
 
   return (
@@ -28,6 +44,7 @@ function EditList(popupData) {
           maxLength="40"
           onChange={(e) => setTitle(e.target.value)}
         />
+        <button className="btn red delete" type="button" onClick={deleteDialogue}><FaTrashAlt />Slet</button>
 
         <div className="btn-container">
           <button className="btn" type="button" onClick={popupData.close}>Annuller</button>

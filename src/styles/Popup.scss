@@ -28,6 +28,26 @@
   border-radius: 4px;
   animation: pop-up 0.2s ease-out;
 
+  .delete {
+    max-width: max-content;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-left: auto;
+  }
+
+  .btn {
+    svg {
+      margin-right: 10px;
+    }
+
+    &.close {
+      svg {
+        margin: 0;
+      }
+    }
+  }
+
   .title-bar {
     display: flex;
     justify-content: space-between;
