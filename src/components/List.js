@@ -1,27 +1,36 @@
-import { FaWrench } from 'react-icons/fa';
+import { FaTrashAlt, FaWrench } from 'react-icons/fa';
 import { usePopup } from '../hooks/PopupContext';
 import EditList from '../popup-content/EditList';
 import '../styles/List.scss';
 import Card from './Card';
 import MeatballMenu from './MeatballMenu';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { deleteList, updateList } from '../helpers/BoardHelper';
 
 function List({ listDetails, newCardDialogue, ws, index }) {
-  const { createPopup } = usePopup();
+  const { createPopup, createDialogue, closePopup } = usePopup();
 
-  function updateList(_listDetails) {
-    if (ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify({
-        request: 'UPDATE_LIST',
-        boardId: listDetails.board,
-        listId: listDetails._id,
-        details: _listDetails
-      }));
-    }
+  function _updateList(_listDetails) {
+    updateList(ws, listDetails.board, listDetails._id, _listDetails);
+  }
+
+  function deleteDialogue() {
+    createDialogue(`Vil du slette ${listDetails.title}?`,
+      { class: 'red', text: 'Slet' },
+      undefined,
+      () => {
+        closePopup();
+        _deleteList(listDetails);
+      }
+    );
+  }
+
+  function _deleteList(list) {
+    deleteList(ws, listDetails.board, list._id);
   }
 
   function editList() {
-    createPopup(<EditList list={listDetails} />, 'Rediger List', updateList);
+    createPopup(<EditList list={listDetails} deleteAction={_deleteList} />, 'Rediger List', _updateList);
   }
 
   return (
@@ -39,8 +48,13 @@ function List({ listDetails, newCardDialogue, ws, index }) {
             <MeatballMenu options={[
               {
                 icon: <FaWrench />,
-                title: 'Edit',
+                title: 'Rediger',
                 onClick: editList
+              },
+              {
+                icon: <FaTrashAlt />,
+                title: 'Slet',
+                onClick: deleteDialogue
               }
             ]} />
           </div>

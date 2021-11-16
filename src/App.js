@@ -11,29 +11,33 @@ import Board from './pages/Board';
 import PrivateRoute from './routes/PrivateRoute';
 import AdminOverview from './pages/AdminOverview';
 import Profile from './pages/Profile';
+import LoggedInRoute from './routes/LoggedInRoute';
+import { CookiesProvider } from 'react-cookie';
 
 
 function App() {
   return (
     <Router>
-      <UserProvider>
-        <PopupProvider>
-          <div className="App">
-            <Nav />
-            <div id="content">
-              <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-                <Route path="/AdminOverview" component={AdminOverview} />
-                <PrivateRoute path="/boards" exact component={BoardList} />
-                <PrivateRoute path="/profile" component={Profile} />
-                <PrivateRoute path="/boards/:id" component={Board} />
-              </Switch>
+      <CookiesProvider>
+        <UserProvider>
+          <PopupProvider>
+            <div className="App">
+              <Nav />
+              <div id="content">
+                <Switch>
+                  <Route path="/" exact component={Home} />
+                  <LoggedInRoute path="/login" component={Login} />
+                  <Route path="/register" component={Register} />
+                  <Route path="/AdminOverview" component={AdminOverview} />
+                  <PrivateRoute path="/boards" exact component={BoardList} />
+                  <PrivateRoute path="/profile" component={Profile} />
+                  <PrivateRoute path="/boards/:id" component={Board} />
+                </Switch>
+              </div>
             </div>
-          </div>
-        </PopupProvider>
-      </UserProvider>
+          </PopupProvider>
+        </UserProvider>
+      </CookiesProvider>
     </Router>
   );
 }

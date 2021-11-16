@@ -53,6 +53,10 @@
         border-radius: 4px;
       }
 
+      &:not(:first-of-type) {
+        border-top: 1px solid var(--border-1);
+      }
+
       &:hover {
         background-color: var(--nav-bg-hover);
       }

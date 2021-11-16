@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import BoardCard from "../components/BoardCard";
+import { createBoard } from "../helpers/BoardHelper";
 import { usePopup } from "../hooks/PopupContext";
 import NewBoard from "../popup-content/NewBoard";
 import '../styles/BoardList.scss';
@@ -79,18 +80,12 @@ function BoardList() {
     return (_boards);
   }
 
-  function createNewBoard(newBoardDetails) {
-    if (ws.current.readyState === WebSocket.OPEN) {
-
-      ws.current.send(JSON.stringify({
-        request: 'NEW_BOARD',
-        details: newBoardDetails
-      }));
-    }
+  function _createNewBoard(newBoardDetails) {
+    createBoard(ws, newBoardDetails);
   }
 
   function newBoardDialogue() {
-    createPopup(<NewBoard />, "Ny Board", createNewBoard);
+    createPopup(<NewBoard />, "Ny Board", _createNewBoard);
   }
 
   return (
