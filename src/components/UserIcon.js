@@ -2,7 +2,6 @@ import { FaCrown } from 'react-icons/fa';
 import '../styles/UserIcon.scss';
 
 function UserIcon({ user, isOwner = false, onClick, className }) {
-  const initials = user.first_name[0] + user.last_name[0];
 
   return (
     <span
@@ -16,8 +15,7 @@ function UserIcon({ user, isOwner = false, onClick, className }) {
       {
         user.first_name[0] !== undefined
         && user.last_name[0] !== undefined
-        && initials
-        && initials.toUpperCase()
+        && user.first_name[0].toUpperCase() + user.first_name[0].toUpperCase()
       }
     </span>
   )
