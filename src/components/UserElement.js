@@ -1,24 +1,25 @@
 import { FaCrown } from 'react-icons/fa';
 import '../styles/UserIcon.scss';
 import '../styles/AdminOverview.scss';
+import UserIcon from '../components/UserIcon';
+import {IoMdCreate} from 'react-icons/io';
 
-function UserElement({user}){
+function UserElement({user, onClick}){
   return(
-    <div class="userElement">
-      <div class="UserIcon">
-        {
-          user !== null &&
-          user.map((_user) =>
-          <UserIcon  user={_user} onClick={() => seeLog()}/>)
-        }
+    <div className="userElement" onClick={onClick}>
+      <div className="UserIcon">
+        <UserIcon  user={user} />
       </div>
-      <div id="infoBox">
-        <div class="info">
-          <p>{user.first_name[0]}</p>
+      <div className="infoBox">
+        <div className="info">
+          <p>{user.first_name}</p>
         </div>
-        <div class="info">
-          <p>{user.email[0]}</p>
+        <div className="info">
+          <p>{user.email}</p>
         </div>
+      </div>
+      <div id="imgBox">
+        <IoMdCreate/>
       </div>
     </div>
   )
