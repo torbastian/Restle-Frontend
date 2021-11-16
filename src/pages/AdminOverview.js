@@ -51,7 +51,7 @@ function AdminOverview() {
     }
 
     function SelectUser(user){
-        console.log("HEJ");
+        setSelectedUser(null);
         setSelectedUser(user);
     }
 
@@ -74,7 +74,7 @@ function AdminOverview() {
                 </div>
                 <div id="profile page">
                         {selectedUser !== null && 
-                        <Profile ></Profile>
+                        <Profile _user={selectedUser}></Profile>
                         }
                 </div>
             </div>
