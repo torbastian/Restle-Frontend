@@ -32,7 +32,7 @@ function Profile({ _user }) {
 			setUserId(user._id);
 		}
 
-	}, []);
+	}, [_user]);
 
 	function cancel() {
 		if (_user) {
