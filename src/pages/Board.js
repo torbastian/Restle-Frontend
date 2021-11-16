@@ -31,21 +31,6 @@ function Board() {
 
     ws.current.onopen = () => {
       console.log("Connection to WS Established");
-
-      if (cookies.boardData !== undefined) {
-        ws.current.send(JSON.stringify({
-          request: 'SUBSCRIBE_BOARD_COOKIE',
-          boardId: id,
-          lastEdited: cookies.boardData.last_edited
-        }))
-      } else {
-        //Send en forespørgelse om at abbonnere til brugerens boards
-        ws.current.send(JSON.stringify({
-          request: 'SUBSCRIBE_BOARD',
-          boardId: id
-        }));
-      }
-
     };
 
     ws.current.onmessage = (e) => {
@@ -55,6 +40,21 @@ function Board() {
 
       switch (data.response) {
         //Modtag board
+        case 'CONNECTED_READY':
+          if (cookies.boardData !== undefined) {
+            ws.current.send(JSON.stringify({
+              request: 'SUBSCRIBE_BOARD_COOKIE',
+              boardId: id,
+              lastEdited: cookies.boardData.last_edited
+            }))
+          } else {
+            //Send en forespørgelse om at abbonnere til brugerens boards
+            ws.current.send(JSON.stringify({
+              request: 'SUBSCRIBE_BOARD',
+              boardId: id
+            }));
+          }
+          break;
         case 'BOARD_RESPONSE':
           if (data.board) {
             setBoard(data.board);

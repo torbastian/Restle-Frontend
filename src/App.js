@@ -13,6 +13,7 @@ import AdminOverview from './pages/AdminOverview';
 import Profile from './pages/Profile';
 import LoggedInRoute from './routes/LoggedInRoute';
 import { CookiesProvider } from 'react-cookie';
+import AdminBoardOverview from './pages/AdminBoardOverview';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                   <PrivateRoute path="/boards" exact component={BoardList} />
                   <PrivateRoute path="/profile" component={Profile} />
                   <PrivateRoute path="/boards/:id" component={Board} />
+                  <PrivateRoute path="/AdminBoardOverview" component={AdminBoardOverview} />
                 </Switch>
               </div>
             </div>
