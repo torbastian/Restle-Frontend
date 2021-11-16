@@ -11,7 +11,6 @@ import { get } from "mongoose";
 function AdminOverview() {
     useEffect(() =>{
         getUsers();
-        console.log("USER: " + user);
     }, []);
     const [user, setUser] = useState([]);
     const [search, setSearch] = useState("");
@@ -25,14 +24,12 @@ function AdminOverview() {
         }  
       };
 
-    function seeLog(){
-        console.log("test");
-    }
-
     function getUsers(){
-        fetch(process.env.REACT_APP_API_URL + '/user/', requestData).then(res => {
+        fetch(process.env.REACT_APP_API_URL + '/user/getUsers/', requestData).then(res => {
+            console.log("", requestData);
             res.json().then(data => {
-                setUser([data, data, data, data]);
+                console.log("",data);
+                setUser(data.users);
             })
         });
     }
@@ -42,9 +39,9 @@ function AdminOverview() {
         const url = new URL(process.env.REACT_APP_API_URL + '/user/findUser');
         url.search = new URLSearchParams(params).toString();
 
-        fetch(url).then(res => {
-            console.log(res);
+        fetch(url, requestData).then(res => {
             res.json().then(data => {
+                console.log("data ", data)
                 setUser(data);
             })
         });

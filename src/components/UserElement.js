@@ -8,7 +8,7 @@ function UserElement({user, onClick}){
   return(
     <div className="userElement" onClick={onClick}>
       <div className="UserIcon">
-        <UserIcon  user={user} />
+        {user !== null && <UserIcon user={user} />}
       </div>
       <div className="infoBox">
         <div className="info">
