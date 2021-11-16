@@ -40,13 +40,17 @@ function BoardList() {
             }
             break;
           case 'BOARD_LIST_UPDATE':
-            if (data.owned !== undefined) {
+            if (data.owned !== []) {
               setOwnedBoards(updateBoardState(data.owned, OwnedBoards));
             }
 
-            if (data.memeberOf !== undefined) {
+            if (data.memeberOf !== []) {
               setMemberBoards(updateBoardState(data.memeberOf, MemberBoards));
             }
+            break;
+          case 'BOARD_DELETE':
+            setOwnedBoards(removeBoardFromState(data.boardId, OwnedBoards));
+            setMemberBoards(removeBoardFromState(data.boardId, MemberBoards));
             break;
           default:
             break;
@@ -65,6 +69,17 @@ function BoardList() {
       ws.current.close();
     }
   }, []);
+
+  function removeBoardFromState(boardId, state) {
+    let _boards = [...state];
+    let boardIndex = _boards.findIndex(b => b._id === boardId);
+
+    if (boardIndex !== -1) {
+      _boards.splice(boardIndex, 1);
+    }
+
+    return _boards;
+  }
 
 
   function updateBoardState(board, state) {

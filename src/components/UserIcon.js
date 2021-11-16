@@ -13,7 +13,12 @@ function UserIcon({ user, isOwner = false, onClick, className }) {
       onClick={onClick}
     >
       {isOwner && <FaCrown className='crown' />}
-      {initials && initials.toUpperCase()}
+      {
+        user.first_name[0] !== undefined
+        && user.last_name[0] !== undefined
+        && initials
+        && initials.toUpperCase()
+      }
     </span>
   )
 }

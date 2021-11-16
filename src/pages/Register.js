@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import ColorSelector from '../components/ColorSelector';
 import { ChromePicker } from 'react-color';
-import '../styles/Register.scss';
+import '../styles/User.scss';
 
 
 function Register() {
@@ -45,7 +45,7 @@ function Register() {
 	}
 
 	return (
-		<div id="Register">
+		<div className="user-style">
 			<div className="register-con">
 				<form className="user-frm" onSubmit={onSubmit}>
 					<span className="text-center">Sign up</span>
@@ -69,19 +69,9 @@ function Register() {
 						<input type="text" required="" onChange={(e) => setLastName(e.target.value)} />
 						<label>Last name</label>
 					</div>
-					<div className="input-container">
-						<input type="text" required="" value={colour} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)} />
-						<label>Colour</label>
-						{showColorPicker && (
-							<ChromePicker
-								color={colour}
-								onChange={updatedColor => setColour(updatedColor.hex)}
-							/>
-						)}
-
-					</div>
+					<ColorSelector color={colour} setColor={setColour} user={{ first_name: firstName, last_name: lastName, colour: colour }} />
 					<button type="button" className="btn" onClick={onSubmit}>Sign up</button>
-                    <Link to="/login"><button type="button" className="btn">Cancel</button></Link> 
+					<Link to="/login"><button type="button" className="btn">Cancel</button></Link>
 				</form>
 			</div>
 		</div>

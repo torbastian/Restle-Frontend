@@ -5,6 +5,7 @@ import List from "../components/List";
 import Loading from '../components/Loading';
 import Members from "../components/Members";
 import { usePopup } from "../hooks/PopupContext";
+import { useHistory } from 'react-router';
 import EditBoard from "../popup-content/EditBoard";
 import NewCard from "../popup-content/NewCard";
 import NewList from "../popup-content/NewList";
@@ -20,6 +21,7 @@ function Board() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies([id]);
+  const history = useHistory();
 
   const ws = useRef(null);
 
@@ -62,7 +64,11 @@ function Board() {
         case 'BOARD_UP_TO_DATE':
           setBoard(cookies.boardData);
           break;
-
+        case 'BOARD_DELETE':
+          if (data.boardId === board._id) {
+            history.push('/boards');
+          }
+          break;
         default:
           break;
       }

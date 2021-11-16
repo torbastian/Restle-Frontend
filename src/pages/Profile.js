@@ -89,7 +89,7 @@ function Profile({ _user }) {
 	}
 
 	return (
-		<div id="profile">
+		<div className="user-style">
 			<form className="profile-con">
 				<span className="text-center">Profile</span>
 
@@ -101,7 +101,7 @@ function Profile({ _user }) {
 					<input type="text" required="" value={lastName} maxLength={40} onChange={(e) => setLastName(e.target.value)} />
 					<label>Last name</label>
 				</div>
-				<ColorSelector color={colour} setColor={setColour} user={{ first_name: firstName, last_name: lastName }} />
+				<ColorSelector color={colour} setColor={setColour} user={{ first_name: firstName, last_name: lastName, colour: colour }} />
 				<div>
 					<div className={`header ${passwordToggle && "active"}`} onClick={() => setPasswordToggle(!passwordToggle)}>
 						<h1>
