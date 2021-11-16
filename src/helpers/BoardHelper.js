@@ -50,11 +50,12 @@ export function createNewList(ws, boardId, newListDetails) {
   }
 }
 
-export function deleteList(ws, listId) {
+export function deleteList(ws, boardId, listId) {
   if (ws.current.readyState === WebSocket.OPEN) {
     ws.current.send(JSON.stringify({
       request: 'DELETE_LIST',
-      cardId: listId
+      boardId: boardId,
+      listId: listId
     }));
   }
 }
@@ -95,10 +96,11 @@ export function moveCard(ws, boardId, cardToMove, oldList, newList, destinationI
   }
 }
 
-export function deleteCard(ws, cardId) {
+export function deleteCard(ws, boardId, cardId) {
   if (ws.current.readyState === WebSocket.OPEN) {
     ws.current.send(JSON.stringify({
       request: 'DELETE_CARD',
+      boardId: boardId,
       cardId: cardId
     }));
   }

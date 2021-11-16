@@ -13,7 +13,7 @@ function Card({ cardDetails, ws, index }) {
   }
 
   function _deleteCard(card) {
-    deleteCard(ws, card._id);
+    deleteCard(ws, cardDetails.board, card._id);
   }
 
   function editCard() {

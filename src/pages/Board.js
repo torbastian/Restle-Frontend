@@ -56,7 +56,7 @@ function Board() {
         case 'BOARD_RESPONSE':
           if (data.board) {
             setBoard(data.board);
-            setCookie('boardData', data.board);
+            setCookie('boardData', data.board, { path: '/', sameSite: 'strict' });
           }
           break;
         case 'BOARD_UP_TO_DATE':

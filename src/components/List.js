@@ -26,7 +26,7 @@ function List({ listDetails, newCardDialogue, ws, index }) {
   }
 
   function _deleteList(list) {
-    deleteList(ws, list._id);
+    deleteList(ws, listDetails.board, list._id);
   }
 
   function editList() {
