@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import BoardCard from "../components/BoardCard";
-import { createBoard } from "../helpers/BoardHelper";
+import { createBoard, updateBoard } from "../helpers/BoardHelper";
 import { usePopup } from "../hooks/PopupContext";
 import NewBoard from "../popup-content/NewBoard";
 import '../styles/BoardList.scss';
@@ -40,17 +40,19 @@ function BoardList() {
             }
             break;
           case 'BOARD_LIST_UPDATE':
-            if (data.owned !== []) {
-              setOwnedBoards(updateBoardState(data.owned, OwnedBoards));
+            if (data.owned !== undefined) {
+              console.log('UPDATE OWNER', [...OwnedBoards]);
+              setOwnedBoards(OwnedBoards => (updateBoardState(data.owned, [...OwnedBoards])));
             }
 
-            if (data.memeberOf !== []) {
-              setMemberBoards(updateBoardState(data.memeberOf, MemberBoards));
+            if (data.memeberOf !== undefined) {
+              console.log('UPDATE MEMBEROF');
+              setMemberBoards(MemberBoards => (updateBoardState(data.memeberOf, [...MemberBoards])));
             }
             break;
           case 'BOARD_DELETE':
-            setOwnedBoards(removeBoardFromState(data.boardId, OwnedBoards));
-            setMemberBoards(removeBoardFromState(data.boardId, MemberBoards));
+            setOwnedBoards(OwnedBoards => (removeBoardFromState(data.boardId, [...OwnedBoards])));
+            setMemberBoards(MemberBoards => (removeBoardFromState(data.boardId, [...MemberBoards])));
             break;
           default:
             break;
@@ -70,8 +72,7 @@ function BoardList() {
     }
   }, []);
 
-  function removeBoardFromState(boardId, state) {
-    let _boards = [...state];
+  function removeBoardFromState(boardId, _boards) {
     let boardIndex = _boards.findIndex(b => b._id === boardId);
 
     if (boardIndex !== -1) {
@@ -81,9 +82,7 @@ function BoardList() {
     return _boards;
   }
 
-
-  function updateBoardState(board, state) {
-    let _boards = [...state];
+  function updateBoardState(board, _boards) {
     let boardIndex = _boards.findIndex(b => b._id === board._id);
 
     if (boardIndex !== -1) {
@@ -116,7 +115,7 @@ function BoardList() {
           </div>
         </div>
         <div className="boards">
-          {OwnedBoards.length > 0 &&
+          {OwnedBoards !== [] &&
             OwnedBoards.map((board, index) =>
               <BoardCard
                 key={board._id}
@@ -128,20 +127,19 @@ function BoardList() {
         </div>
       </section>
       {
-        MemberBoards.length > 0 &&
+        MemberBoards !== [] &&
         <section className="board-section">
           <div className="board-section-header">
             <h2>Medlem Boards</h2>
           </div>
           <div className="boards">
-            {
-              MemberBoards.map((board, index) =>
-                <BoardCard
-                  key={board._id}
-                  board={board}
-                  ws={ws}
-                />
-              )
+            {MemberBoards.map((board, index) =>
+              <BoardCard
+                key={board._id}
+                board={board}
+                ws={ws}
+              />
+            )
             }
           </div>
         </section>
