@@ -18,11 +18,6 @@ function BoardList() {
     ws.current.onopen = () => {
       console.log("Connection to WS Established");
 
-      //Send en forespørgelse om at abbonnere til brugerens boards
-      ws.current.send(JSON.stringify({
-        request: 'SUBSCRIBE_BOARD_LIST'
-      }));
-
       ws.current.onmessage = (e) => {
         //Modtag data
         const data = JSON.parse(e.data);
@@ -30,6 +25,12 @@ function BoardList() {
 
         switch (data.response) {
           //Modtag boards
+          case 'CONNECTED_READY':
+            //Send en forespørgelse om at abbonnere til brugerens boards
+            ws.current.send(JSON.stringify({
+              request: 'SUBSCRIBE_BOARD_LIST'
+            }));
+            break;
           case 'BOARD_LIST_RESPONSE':
             if (data.owned !== undefined) {
               setOwnedBoards(data.owned);
