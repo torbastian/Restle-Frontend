@@ -12,10 +12,10 @@ function UserElement({user, onClick}){
       </div>
       <div className="infoBox">
         <div className="info">
-          <p>{user.first_name[0]}</p>
+          <p>{user.first_name}</p>
         </div>
         <div className="info">
-          <p>{user.email[0]}</p>
+          <p>{user.email}</p>
         </div>
       </div>
       <div id="imgBox">
