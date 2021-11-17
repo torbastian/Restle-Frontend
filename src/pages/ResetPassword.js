@@ -7,8 +7,20 @@ import '../styles/ResetPassword.scss';
 function Reset() {
   const [email, setEmail] = useState("");
 
-function onReset() {
+function onReset(_email) {
+  console.log("onReset");
 
+  const requestLogin = {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify({ email:_email })
+  };
+
+  fetch(process.env.REACT_APP_API_URL + '/user/resetPassword', requestLogin);
+  console.log("should have posted");
 }
   
 
@@ -25,7 +37,7 @@ function onReset() {
             <input type="text" required="" onChange={(e) => setEmail(e.target.value)} />
             <label>Email</label>
           </div>
-          <button type="button" className="btn" onClick={onReset}>Reset password</button>
+          <button type="button" className="btn" onClick={() => onReset(email)}>Reset password</button>
           <Link to="/login"><button type="button" className="btn">Cancel</button></Link>
         </form>
       </div>
