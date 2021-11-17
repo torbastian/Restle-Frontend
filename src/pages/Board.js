@@ -1,6 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
-import { useState } from "react/cjs/react.development";
 import List from "../components/List";
 import Loading from '../components/Loading';
 import Members from "../components/Members";

@@ -60,10 +60,7 @@ function EditCard(popupData) {
         />
 
         <MemberSelect
-          members={[
-            { first_name: 'test', last_name: 'test', colour: '#fff' },
-            { first_name: 'test', last_name: 'test', colour: '#fff' }
-          ]}
+          members={popupData.card.members}
           removeMember={removeMember}
         />
         <button className="btn red delete" type="button" onClick={deleteDialogue}><FaTrashAlt />Slet</button>

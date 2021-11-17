@@ -65,10 +65,7 @@ function EditBoard(popupData) {
         />
 
         <MemberSelect
-          members={[
-            { first_name: 'test', last_name: 'test', colour: '#fff' },
-            { first_name: 'test', last_name: 'test', colour: '#fff' }
-          ]}
+          members={popupData.board.members}
           transferOwnership={transferOwnership}
           removeMember={removeMember}
           cancelAction={popupData.cancelAction}
