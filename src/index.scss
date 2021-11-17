@@ -157,6 +157,22 @@ html {
   .btn {
     margin-top: 0;
     margin-bottom: 0;
+
+    &.sort {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      svg {
+        margin-right: 5px;
+      }
+
+      &.asc {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
   }
 
   .members {
@@ -167,5 +183,35 @@ html {
 
   & > .btn {
     margin-left: 0;
+  }
+
+  .right {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+
+  input[type="text"] {
+    padding: 5px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-1);
+    border-radius: 4px 0 0 4px;
+    color: var(--text-color);
+
+    & ~ button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-color);
+      padding: 10px;
+      background-color: var(--bg-color);
+      border: 1px solid var(--border-1);
+      border-left: none;
+      border-radius: 0 4px 4px 0;
+    }
   }
 }

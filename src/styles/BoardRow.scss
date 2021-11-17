@@ -6,7 +6,7 @@
   align-items: center;
   justify-items: center;
   background-color: var(--nav-bg-color);
-  margin: 10px 0;
+  margin-bottom: 10px;
   padding: 10px;
   border-radius: 4px;
   border: 1px solid var(--border-1);
@@ -16,12 +16,28 @@
     margin-top: 0;
   }
 
+  .edit {
+    margin: 0;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+  }
+
   p {
     //border-left: 1px solid var(--border-1);
   }
 
   .board-title {
     justify-self: start;
-    margin-left: 20px;
+    margin-left: 10px;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 8px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

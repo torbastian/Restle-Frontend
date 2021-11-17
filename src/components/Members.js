@@ -5,7 +5,10 @@ function Members({ owner = null, members = null, invite = undefined }) {
 
   function onClick(e) {
     e.stopPropagation();
-    invite();
+
+    if (invite !== undefined) {
+      invite();
+    }
   }
 
   return (
