@@ -54,6 +54,7 @@ function Login() {
           </div>
           <button type="button" className="btn" onClick={onLogin}>Login</button>
           <Link to="/register"><button type="button" className="btn">Register</button></Link>
+          <p>Forgot your password? <Link to="/resetpass">Reset password</Link></p>
         </form>
       </div>
     </div>
