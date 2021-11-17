@@ -3,9 +3,9 @@ import { useParams } from "react-router";
 import { useState } from "react/cjs/react.development";
 import UserElement from "../components/UserElement";
 import { usePopup } from "../hooks/PopupContext";
-import '../styles/Board.scss';
 import { FaSearch } from 'react-icons/fa';
 import Profile from "./Profile";
+import '../styles/AdminOverview.scss';
 
 function AdminOverview() {
     useEffect(() => {
@@ -53,11 +53,11 @@ function AdminOverview() {
 
 
     return (
-        <div id="parent">
+        <div id="admin-overview">
             <h1>Admin Overview</h1>
             <div id="box">
                 <div id="userList">
-                    <div id="serchBox">
+                    <div className="search">
                         <input type="text" onChange={(e) => setSearch(e.target.value)}></input>
                         <button onClick={() => Search(search)}><FaSearch /></button>
                     </div>
@@ -68,7 +68,7 @@ function AdminOverview() {
                             )}
                     </div>
                 </div>
-                <div id="profile page">
+                <div className="profile">
                     {selectedUser !== null &&
                         <Profile _user={selectedUser}></Profile>
                     }

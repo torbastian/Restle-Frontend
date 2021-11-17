@@ -1,26 +1,21 @@
 import { FaCrown } from 'react-icons/fa';
-import '../styles/UserIcon.scss';
-import '../styles/AdminOverview.scss';
+import '../styles/UserElement.scss';
 import UserIcon from '../components/UserIcon';
-import {IoMdCreate} from 'react-icons/io';
+import { IoMdCreate } from 'react-icons/io';
 
-function UserElement({user, onClick}){
-  return(
+function UserElement({ user, onClick }) {
+  return (
     <div className="userElement" onClick={onClick}>
       <div className="UserIcon">
         {user !== null && <UserIcon user={user} />}
       </div>
       <div className="infoBox">
-        <div className="info">
-          {user !== null && <p>{user.first_name}</p>}
-        </div>
-        <div className="info">
-          { user !== null && <p>{user.email}</p>}
-        </div>
+        {user !== null && <p className="info">{user.first_name}</p>}
+        {user !== null && <p className="info">{user.email}</p>}
       </div>
-      <div id="imgBox">
-        <IoMdCreate/>
-      </div>
+      <span className="icon">
+        <IoMdCreate />
+      </span>
     </div>
   )
 }

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { deleteBoard } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 import EditBoard from '../popup-content/EditBoard';
+import InivteUser from '../popup-content/InviteUser';
 import '../styles/BoardCard.scss';
 import DateDisplay from './Date';
 import MeatballMenu from './MeatballMenu';
@@ -51,6 +52,20 @@ function BoardCard({ board, ws }) {
     history.push(`/boards/${board._id}`);
   }
 
+  function _inviteMember(user) {
+    console.log('INVITE MEMBER', user);
+  }
+
+  function inviteMemberPopup() {
+    createPopup(
+      <InivteUser
+
+      />,
+      'Inviter Medlem',
+      _inviteMember
+    )
+  }
+
   return (
     <div className="board-card" onClick={navigateToBoard}>
       <div className="header">
@@ -70,7 +85,7 @@ function BoardCard({ board, ws }) {
       </div>
       <DateDisplay date={board.last_edited} />
       <p className="description">{board.description}</p>
-      <Members owner={board.owner} members={board.members} />
+      <Members owner={board.owner} members={board.members} invite={inviteMemberPopup} />
     </div>
   )
 }

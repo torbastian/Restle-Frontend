@@ -1,0 +1,25 @@
+.userElement {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  padding: 10px;
+  background-color: var(--nav-bg-color);
+  border-radius: 4px;
+  border: 1px solid var(--border-1);
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  &:first-of-type {
+    margin-top: 10px;
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .info-box {
+    text-align: start;
+  }
+}
