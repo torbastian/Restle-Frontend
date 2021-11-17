@@ -15,6 +15,7 @@ import LoggedInRoute from './routes/LoggedInRoute';
 import { CookiesProvider } from 'react-cookie';
 import Reset from './pages/ResetPassword';
 import AdminBoardOverview from './pages/AdminBoardOverview';
+import ActuelPasswordReset from './pages/ActuelPasswordReset';
 
 
 function App() {
@@ -30,7 +31,8 @@ function App() {
                   <Route path="/" exact component={Home} />
                   <LoggedInRoute path="/login" component={Login} />
                   <Route path="/register" component={Register} />
-                  <Route path="/resetpass" component={Reset} />
+                  <Route path="/resetpass" exact component={Reset} />
+                  <Route path="/resetPassword/:token" component={ActuelPasswordReset}/>
                   <PrivateRoute path="/AdminOverview" component={AdminOverview} />
                   <PrivateRoute path="/boards" exact component={BoardList} />
                   <PrivateRoute path="/profile" component={Profile} />
