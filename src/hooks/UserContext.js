@@ -13,6 +13,7 @@ function UserProvider({ children }) {
   }, []);
 
   function logout() {
+    console.log("logout");
     fetch(process.env.REACT_APP_API_URL + '/user/logout', {
       method: 'GET',
       credentials: 'include'
@@ -32,12 +33,16 @@ function UserProvider({ children }) {
         'Accept': 'application/json'
       }
     }).then(res => {
+      console.log("hook res ", res);
+      console.log("hook res ok = ", res.ok);
       if (!res.ok) {
+        console.log("findUser not ok");
         setUser(null);
         setLoading(false);
         return false;
       } else {
         return res.json().then(user => {
+          console.log("findUser is ok");
           setUser(user);
           setLoading(false);
           return true;

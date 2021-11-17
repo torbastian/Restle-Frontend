@@ -13,6 +13,7 @@ import AdminOverview from './pages/AdminOverview';
 import Profile from './pages/Profile';
 import LoggedInRoute from './routes/LoggedInRoute';
 import { CookiesProvider } from 'react-cookie';
+import Reset from './pages/ResetPassword';
 import AdminBoardOverview from './pages/AdminBoardOverview';
 
 
@@ -29,7 +30,8 @@ function App() {
                   <Route path="/" exact component={Home} />
                   <LoggedInRoute path="/login" component={Login} />
                   <Route path="/register" component={Register} />
-                  <Route path="/AdminOverview" component={AdminOverview} />
+                  <Route path="/resetpass" component={Reset} />
+                  <PrivateRoute path="/AdminOverview" component={AdminOverview} />
                   <PrivateRoute path="/boards" exact component={BoardList} />
                   <PrivateRoute path="/profile" component={Profile} />
                   <PrivateRoute path="/boards/:id" component={Board} />

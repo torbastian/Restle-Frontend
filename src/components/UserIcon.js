@@ -2,7 +2,7 @@ import { FaCrown } from 'react-icons/fa';
 import '../styles/UserIcon.scss';
 
 function UserIcon({ user, isOwner = false, onClick, className }) {
-
+console.log(user);
   return (
     <span
       className={`${className} user-icon ${isOwner ? 'owner' : ''}`}
