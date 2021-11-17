@@ -4,12 +4,11 @@ import { useState } from "react/cjs/react.development";
 import UserElement from "../components/UserElement";
 import { usePopup } from "../hooks/PopupContext";
 import '../styles/Board.scss';
-import {FaSearch} from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
 import Profile from "./Profile";
-import { get } from "mongoose";
 
 function AdminOverview() {
-    useEffect(() =>{
+    useEffect(() => {
         getUsers();
     }, []);
     const [user, setUser] = useState([]);
@@ -20,22 +19,22 @@ function AdminOverview() {
         method: 'GET',
         credentials: 'include',
         headers: {
-          'Content-type': 'application/json'
-        }  
-      };
+            'Content-type': 'application/json'
+        }
+    };
 
-    function getUsers(){
+    function getUsers() {
         fetch(process.env.REACT_APP_API_URL + '/user/getUsers/', requestData).then(res => {
             console.log("", requestData);
             res.json().then(data => {
-                console.log("",data);
+                console.log("", data);
                 setUser(data.users);
             })
         });
     }
 
-    function Search(input){
-        const params = {search: input};
+    function Search(input) {
+        const params = { search: input };
         const url = new URL(process.env.REACT_APP_API_URL + '/user/findUser');
         url.search = new URLSearchParams(params).toString();
 
@@ -47,32 +46,32 @@ function AdminOverview() {
         });
     }
 
-    function SelectUser(user){
+    function SelectUser(user) {
         setSelectedUser(null);
         setSelectedUser(user);
     }
 
 
-    return(
+    return (
         <div id="parent">
             <h1>Admin Overview</h1>
             <div id="box">
                 <div id="userList">
                     <div id="serchBox">
                         <input type="text" onChange={(e) => setSearch(e.target.value)}></input>
-                        <button onClick={() => Search(search)}><FaSearch/></button>
+                        <button onClick={() => Search(search)}><FaSearch /></button>
                     </div>
                     <div className="userBox">
-                    { 
-                        user !== [] && user.map((_user, index) =>
-                        <UserElement key={index} user={_user} onClick={() => SelectUser(_user)} ></UserElement>
-                    )}  
+                        {
+                            user !== [] && user.map((_user, index) =>
+                                <UserElement key={index} user={_user} onClick={() => SelectUser(_user)} ></UserElement>
+                            )}
                     </div>
                 </div>
                 <div id="profile page">
-                        {selectedUser !== null && 
+                    {selectedUser !== null &&
                         <Profile _user={selectedUser}></Profile>
-                        }
+                    }
                 </div>
             </div>
         </div>

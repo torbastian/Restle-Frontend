@@ -15,6 +15,8 @@ function UserIcon({ user, isOwner = false, onClick, className }) {
       {
         user.first_name !== undefined
         && user.last_name !== undefined
+        && user.first_name.length > 0
+        && user.last_name.length > 0
         && user.first_name[0].toUpperCase() + user.first_name[0].toUpperCase()
       }
     </span>
