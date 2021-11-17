@@ -29,7 +29,7 @@ function App() {
                   <Route path="/" exact component={Home} />
                   <LoggedInRoute path="/login" component={Login} />
                   <Route path="/register" component={Register} />
-                  <Route path="/AdminOverview" component={AdminOverview} />
+                  <PrivateRoute path="/AdminOverview" component={AdminOverview} />
                   <PrivateRoute path="/boards" exact component={BoardList} />
                   <PrivateRoute path="/profile" component={Profile} />
                   <PrivateRoute path="/boards/:id" component={Board} />
