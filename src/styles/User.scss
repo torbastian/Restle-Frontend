@@ -1,94 +1,80 @@
+.user-style {
+  display: grid;
+  height: 100%;
+  place-content: center;
 
-.profile-con {
-	padding: 70px 30px 35px;
-	position: absolute;
-	transform: translate(-50%, -50%);
-	border-radius: 3px;
-	left: 50%;
-	top: 50%;
+  .profile-con {
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
 
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-radius: var(--global-radius);
+      cursor: pointer;
+      justify-content: space-between;
+      background-color: var(--border-color);
 
-.header {
-	display: flex;
-	align-items: center;
-	padding: 10px;
-	border-radius: var(--global-radius);
-	cursor: pointer;
-	justify-content: space-between;
-	background-color: var(--border-color);
-	
+      h1 {
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        margin: 0;
 
+        > svg {
+          margin-right: 10px;
+          font-size: 14px;
+        }
+      }
+    }
 
- h1 {
-	font-size: 18px;
-	display: flex;
-	align-items: center;
-	margin: 0;
+    .btn {
+      width: 125px;
+      margin: 7px;
+    }
 
-	> svg {
-			margin-right: 10px;
-			font-size: 14px;
-	}
-}
-}
+    .text-center {
+      color: #fff;
+      margin: -50px 0 60px 0;
+      display: block;
+      font-size: 23px;
+      text-align: center;
+    }
 
-.container {
-		display: block;
-		flex-direction: column;
-		border: 1px solid var(--border-color);
-		border-top: none;
-		padding: 10px;
-		border-radius: 0 0 var(--global-radius) var(--global-radius);
-}
+    .input-container {
+      position: relative;
+      margin-bottom: 25px;
 
+      label {
+        left: 0px;
+        font-size: 16px;
+        position: absolute;
+        top: 0px;
+        color: #fff;
+      }
 
+      input {
+        border: 0;
+        border-bottom: 1px solid #555;
+        color: #fff;
+        background: transparent;
+        padding: 8px 0 5px 0;
+        font-size: 16px;
+        width: 100%;
+      }
 
-.btn{
-	width: 125px;
-	margin: 7px;
-}
+      input:focus {
+        border: none;
+        border-bottom: 1px solid #e2e2e2;
+        outline: none;
+      }
 
-
-
-.text-center {
-  color: #fff;
-  margin: -50px 0 60px 0;
-  display: block;
-  font-size: 23px;
-  text-align: center;
-}
-.input-container {
-  position: relative;
-  margin-bottom: 25px;
-}
-.input-container label {
-  left: 0px;
-  font-size: 16px;
-  position: absolute;
-  top: 0px;
-  color: #fff;
-}
-.input-container input {
-  border: 0;
-  border-bottom: 1px solid #555;
-  color: #fff;
-  background: transparent;
-  padding: 8px 0 5px 0;
-  font-size: 16px;
-  width: 100%;
-}
-.input-container input:focus {
-  border: none;
-  border-bottom: 1px solid #e2e2e2;
-  outline: none;
-}
-
-.btn:hover {
-  background-color: var(--nav-bg-hover);
-}
-
-.input-container input:valid ~ label {
-  font-size: 12px;
-  top: -12px;
-}
+      input:valid ~ label {
+        font-size: 12px;
+        top: -12px;
+      }
+    }
+  }
 }

@@ -1,10 +1,13 @@
+import { FaTrashAlt } from 'react-icons/fa';
 import { useState } from 'react/cjs/react.development';
 import DateDisplay from '../components/Date';
 import MemberSelect from '../components/MemberSelect';
+import { usePopup } from '../hooks/PopupContext';
 
 function EditBoard(popupData) {
   const [title, setTitle] = useState(popupData.board.title);
   const [description, setDescription] = useState(popupData.board.description);
+  const { createDialogue } = usePopup();
 
   function onSubmit(e) {
     e.preventDefault();
@@ -16,6 +19,20 @@ function EditBoard(popupData) {
 
     popupData.submitAction(boardDetails);
     popupData.close();
+  }
+
+  function deleteDialogue() {
+    createDialogue(`Vil du slette ${title}?`,
+      { class: 'red', text: 'Slet' },
+      popupData.cancelAction,
+      () => deleteBoard()
+    );
+  }
+
+  function deleteBoard() {
+    console.log("deleteBoard");
+    popupData.close();
+    popupData.deleteAction(popupData.board);
   }
 
   function removeMember(selectedMembers) {
@@ -57,6 +74,7 @@ function EditBoard(popupData) {
           cancelAction={popupData.cancelAction}
         />
 
+        <button className="btn red delete" type="button" onClick={deleteDialogue}><FaTrashAlt />Slet</button>
         <div className="btn-container">
           <button className="btn" type="button" onClick={popupData.close}>Annuller</button>
           <button className="btn blu" type="submit" disabled={title.length < 3}>Gem</button>

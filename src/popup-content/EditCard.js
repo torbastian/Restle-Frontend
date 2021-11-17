@@ -1,10 +1,13 @@
+import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react/cjs/react.development";
 import DateDisplay from "../components/Date";
 import MemberSelect from "../components/MemberSelect";
+import { usePopup } from "../hooks/PopupContext";
 
 function EditCard(popupData) {
   const [title, setTitle] = useState(popupData.card.title);
   const [description, setDescription] = useState(popupData.card.description);
+  const { createDialogue } = usePopup();
 
   function onSubmit(e) {
     e.preventDefault();
@@ -16,6 +19,19 @@ function EditCard(popupData) {
 
     popupData.submitAction(cardDetails);
     popupData.close();
+  }
+
+  function deleteDialogue() {
+    createDialogue(`Vil du slette ${title}?`,
+      { class: 'red', text: 'Slet' },
+      popupData.cancelAction,
+      () => deleteCard()
+    );
+  }
+
+  function deleteCard() {
+    popupData.close();
+    popupData.deleteAction(popupData.card);
   }
 
   function removeMember(selectedMembers) {
@@ -50,6 +66,7 @@ function EditCard(popupData) {
           ]}
           removeMember={removeMember}
         />
+        <button className="btn red delete" type="button" onClick={deleteDialogue}><FaTrashAlt />Slet</button>
 
         <div className="btn-container">
           <button className="btn" type="button" onClick={popupData.close}>Annuller</button>

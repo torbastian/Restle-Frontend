@@ -1,13 +1,14 @@
 import { useRef, useState, useEffect } from "react";
 import BoardCard from "../components/BoardCard";
+import { createBoard, updateBoard } from "../helpers/BoardHelper";
 import { usePopup } from "../hooks/PopupContext";
 import NewBoard from "../popup-content/NewBoard";
 import '../styles/BoardList.scss';
 
 function BoardList() {
   const { createPopup } = usePopup();
-  const [OwnedBoards, setOwnedBoards] = useState(null);
-  const [MemberBoards, setMemberBoards] = useState(null);
+  const [OwnedBoards, setOwnedBoards] = useState([]);
+  const [MemberBoards, setMemberBoards] = useState([]);
   const ws = useRef(null);
 
   useEffect(() => {
@@ -17,39 +18,46 @@ function BoardList() {
     ws.current.onopen = () => {
       console.log("Connection to WS Established");
 
-      //Send en forespørgelse om at abbonnere til brugerens boards
-      ws.current.send(JSON.stringify({
-        request: 'SUBSCRIBE_BOARD_LIST'
-      }));
-    }
+      ws.current.onmessage = (e) => {
+        //Modtag data
+        const data = JSON.parse(e.data);
+        console.log(data);
 
-    ws.current.onmessage = (e) => {
-      //Modtag data
-      const data = JSON.parse(e.data);
-      console.log(data);
+        switch (data.response) {
+          //Modtag boards
+          case 'CONNECTED_READY':
+            //Send en forespørgelse om at abbonnere til brugerens boards
+            ws.current.send(JSON.stringify({
+              request: 'SUBSCRIBE_BOARD_LIST'
+            }));
+            break;
+          case 'BOARD_LIST_RESPONSE':
+            if (data.owned !== undefined) {
+              setOwnedBoards(data.owned);
+            }
 
-      switch (data.response) {
-        //Modtag boards
-        case 'BOARD_LIST_RESPONSE':
-          if (data.owned !== undefined) {
-            setOwnedBoards(data.owned);
-          }
+            if (data.memeberOf !== undefined) {
+              setMemberBoards(data.memeberOf);
+            }
+            break;
+          case 'BOARD_LIST_UPDATE':
+            if (data.owned !== undefined) {
+              console.log('UPDATE OWNER', [...OwnedBoards]);
+              setOwnedBoards(OwnedBoards => (updateBoardState(data.owned, [...OwnedBoards])));
+            }
 
-          if (data.memeberOf !== undefined) {
-            setMemberBoards(data.memeberOf);
-          }
-          break;
-        case 'BOARD_LIST_UPDATE':
-          if (data.owned !== undefined) {
-            setOwnedBoards(updateBoardState(data.owned, OwnedBoards));
-          }
-
-          if (data.memeberOf !== undefined) {
-            setMemberBoards(updateBoardState(data.memeberOf, MemberBoards));
-          }
-          break;
-        default:
-          break;
+            if (data.memeberOf !== undefined) {
+              console.log('UPDATE MEMBEROF');
+              setMemberBoards(MemberBoards => (updateBoardState(data.memeberOf, [...MemberBoards])));
+            }
+            break;
+          case 'BOARD_DELETE':
+            setOwnedBoards(OwnedBoards => (removeBoardFromState(data.boardId, [...OwnedBoards])));
+            setMemberBoards(MemberBoards => (removeBoardFromState(data.boardId, [...MemberBoards])));
+            break;
+          default:
+            break;
+        }
       }
     }
 
@@ -65,9 +73,17 @@ function BoardList() {
     }
   }, []);
 
+  function removeBoardFromState(boardId, _boards) {
+    let boardIndex = _boards.findIndex(b => b._id === boardId);
 
-  function updateBoardState(board, state) {
-    let _boards = [...state];
+    if (boardIndex !== -1) {
+      _boards.splice(boardIndex, 1);
+    }
+
+    return _boards;
+  }
+
+  function updateBoardState(board, _boards) {
     let boardIndex = _boards.findIndex(b => b._id === board._id);
 
     if (boardIndex !== -1) {
@@ -79,18 +95,12 @@ function BoardList() {
     return (_boards);
   }
 
-  function createNewBoard(newBoardDetails) {
-    if (ws.current.readyState === WebSocket.OPEN) {
-
-      ws.current.send(JSON.stringify({
-        request: 'NEW_BOARD',
-        details: newBoardDetails
-      }));
-    }
+  function _createNewBoard(newBoardDetails) {
+    createBoard(ws, newBoardDetails);
   }
 
   function newBoardDialogue() {
-    createPopup(<NewBoard />, "Ny Board", createNewBoard);
+    createPopup(<NewBoard />, "Ny Board", _createNewBoard);
   }
 
   return (
@@ -106,7 +116,7 @@ function BoardList() {
           </div>
         </div>
         <div className="boards">
-          {OwnedBoards !== null &&
+          {OwnedBoards !== [] &&
             OwnedBoards.map((board, index) =>
               <BoardCard
                 key={board._id}
@@ -118,20 +128,19 @@ function BoardList() {
         </div>
       </section>
       {
-        MemberBoards !== null &&
+        MemberBoards !== [] &&
         <section className="board-section">
           <div className="board-section-header">
             <h2>Medlem Boards</h2>
           </div>
           <div className="boards">
-            {
-              MemberBoards.map((board, index) =>
-                <BoardCard
-                  key={board._id}
-                  board={board}
-                  ws={ws}
-                />
-              )
+            {MemberBoards.map((board, index) =>
+              <BoardCard
+                key={board._id}
+                board={board}
+                ws={ws}
+              />
+            )
             }
           </div>
         </section>

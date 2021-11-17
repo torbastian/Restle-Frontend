@@ -25,12 +25,15 @@ function Login() {
 
     fetch(process.env.REACT_APP_API_URL + '/user/login', requestLogin)
       .then(res => {
+        console.log("Login res", res);
+        console.log("Login res.ok",res.ok);
         if (!res.ok) {
           res.json().then(json => {
             console.log(json.message);
           })
         } else {
           return res.json().then(user => {
+            console.log("login user ", user);
             setUser(user);
             history.push('/boards');
             console.log(user);

@@ -2,8 +2,7 @@ import { FaCrown } from 'react-icons/fa';
 import '../styles/UserIcon.scss';
 
 function UserIcon({ user, isOwner = false, onClick, className }) {
-  const intials = user.first_name[0] + user.last_name[0];
-
+console.log(user);
   return (
     <span
       className={`${className} user-icon ${isOwner ? 'owner' : ''}`}
@@ -13,7 +12,13 @@ function UserIcon({ user, isOwner = false, onClick, className }) {
       onClick={onClick}
     >
       {isOwner && <FaCrown className='crown' />}
-      {intials.toUpperCase()}
+      {
+        user.first_name !== undefined
+        && user.last_name !== undefined
+        && user.first_name.length > 0
+        && user.last_name.length > 0
+        && user.first_name[0].toUpperCase() + user.first_name[0].toUpperCase()
+      }
     </span>
   )
 }

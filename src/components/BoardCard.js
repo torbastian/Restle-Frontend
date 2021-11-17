@@ -1,5 +1,6 @@
-import { FaWrench } from 'react-icons/fa';
+import { FaTrashAlt, FaWrench } from 'react-icons/fa';
 import { useHistory } from 'react-router';
+import { deleteBoard } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 import EditBoard from '../popup-content/EditBoard';
 import '../styles/BoardCard.scss';
@@ -8,7 +9,7 @@ import MeatballMenu from './MeatballMenu';
 import Members from './Members';
 
 function BoardCard({ board, ws }) {
-  const { createPopup } = usePopup();
+  const { createPopup, createDialogue, closePopup } = usePopup();
 
   const history = useHistory();
 
@@ -21,6 +22,19 @@ function BoardCard({ board, ws }) {
         details: boardDetails
       }));
     }
+  }
+
+  function _deleteBoard() {
+    closePopup();
+    deleteBoard(ws, board._id);
+  }
+
+  function deleteDialogue() {
+    createDialogue(`Vil du slette ${board.title}?`,
+      { class: 'red', text: 'Slet' },
+      undefined,
+      () => _deleteBoard()
+    );
   }
 
   function editBoard() {
@@ -44,8 +58,13 @@ function BoardCard({ board, ws }) {
         <MeatballMenu options={[
           {
             icon: <FaWrench />,
-            title: 'Edit',
+            title: 'Rediger',
             onClick: editBoard
+          },
+          {
+            icon: <FaTrashAlt />,
+            title: 'Slet',
+            onClick: deleteDialogue
           }
         ]} />
       </div>

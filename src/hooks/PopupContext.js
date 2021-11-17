@@ -32,7 +32,7 @@ function PopupProvider({ children }) {
   }
 
   return (
-    <PopupContext.Provider value={{ createPopup, createDialogue }}>
+    <PopupContext.Provider value={{ createPopup, createDialogue, closePopup }}>
       {/* Hvis popup ikke er null, opret en ny popup */}
       {popup !== null &&
         <div className="popup-container">

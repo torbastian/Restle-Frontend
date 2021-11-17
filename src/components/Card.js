@@ -1,4 +1,5 @@
 import { Draggable } from 'react-beautiful-dnd';
+import { deleteCard, updateCard } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 import EditCard from '../popup-content/EditCard';
 import '../styles/Card.scss';
@@ -7,20 +8,16 @@ import Members from './Members';
 function Card({ cardDetails, ws, index }) {
   const { createPopup } = usePopup();
 
-  function updateCard(_cardDetails) {
-    console.log(_cardDetails);
-    if (ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify({
-        request: 'UPDATE_CARD',
-        boardId: cardDetails.board,
-        cardId: cardDetails._id,
-        details: _cardDetails
-      }));
-    }
+  function _updateCard(_cardDetails) {
+    updateCard(ws, cardDetails.board, cardDetails._id, _cardDetails);
+  }
+
+  function _deleteCard(card) {
+    deleteCard(ws, cardDetails.board, card._id);
   }
 
   function editCard() {
-    createPopup(<EditCard card={cardDetails} />, 'Rediger Card', updateCard)
+    createPopup(<EditCard card={cardDetails} deleteAction={_deleteCard} />, 'Rediger Card', _updateCard)
   }
 
   function addMember() {

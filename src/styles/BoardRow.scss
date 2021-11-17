@@ -1,0 +1,27 @@
+.board-row {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
+  grid-template-columns: 50px 100px 100px auto auto;
+  align-items: center;
+  justify-items: center;
+  background-color: var(--nav-bg-color);
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-1);
+
+  .members {
+    justify-self: end;
+    margin-top: 0;
+  }
+
+  p {
+    //border-left: 1px solid var(--border-1);
+  }
+
+  .board-title {
+    justify-self: start;
+    margin-left: 20px;
+  }
+}
