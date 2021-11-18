@@ -3,6 +3,23 @@
   height: 100%;
   place-content: center;
 
+
+  .chkbox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    width: min-content;
+    
+    svg {
+      border: 1px solid var(--border-color);
+      border-radius: var(--global-radius);
+      padding: 3px;
+      margin-right: 5px;
+    }
+  }
+
   .profile-con {
     display: flex;
     flex-direction: column;

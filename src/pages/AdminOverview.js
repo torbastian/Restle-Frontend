@@ -70,7 +70,7 @@ function AdminOverview() {
                 </div>
                 <div className="profile">
                     {selectedUser !== null &&
-                        <Profile _user={selectedUser}></Profile>
+                        <Profile _user={selectedUser} admin={true}></Profile>
                     }
                 </div>
             </div>
