@@ -1,4 +1,4 @@
-import { deleteUser, updateUser } from '../components/UserFunctions';
+import { deleteUser, updateUser, adminUpdateUser } from '../components/UserFunctions';
 import { FaCheck, FaChevronDown, FaTimes } from 'react-icons/fa';
 import { useContext, useEffect, useState } from 'react';
 import { ChromePicker } from 'react-color';
@@ -7,7 +7,7 @@ import '../styles/User.scss';
 import ColorSelector from '../components/ColorSelector';
 
 //Load the profile if the user is logged in, if not send them to the login screen
-function Profile({ _user }) {
+function Profile({ _user, admin = false }) {
 	const { user, setUser, logout } = useContext(UserContext);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -16,6 +16,7 @@ function Profile({ _user }) {
 	const [showColorPicker, setShowColorPicker] = useState(false);
 	const [oldPass, setOldPass] = useState("");
 	const [newPass, setNewPass] = useState("");
+	const [adminToggle, setAdminToggle] = useState(false);
 	const [newPass2, setNewPass2] = useState("");
 	const [passwordToggle, setPasswordToggle] = useState(false);
 
@@ -24,13 +25,20 @@ function Profile({ _user }) {
 			setFirstName(_user.first_name);
 			setLastName(_user.last_name);
 			setColour(_user.colour);
+			setPasswordToggle(false);
+			setShowColorPicker(false);
+			setNewPass("");
+		    setNewPass2("");
+			setAdminToggle(_user.isAdmin);
 			setUserId(_user._id);
 		} else {
 			setFirstName(user.first_name);
 			setLastName(user.last_name);
 			setColour(user.colour);
 			setUserId(user._id);
+			
 		}
+
 
 	}, [_user]);
 
@@ -55,37 +63,67 @@ function Profile({ _user }) {
 		e.preventDefault();
 
 		if (passwordToggle) {
+			
 			if (newPass !== newPass2) {
 				console.log("Passwords doesnt match")
 				return;
 			}
-			if (oldPass === "") {
-				console.log("Input old password")
-				return;
-			}
-			updateUser(firstName, lastName, colour, oldPass, newPass).then(res => {
-				res.json().then(json => {
-					console.log("User updated")
-					setUser(json);
-				});
 
-			})
+			if (admin){
+				adminUpdateUser(_user._id, firstName, lastName, colour, adminToggle, newPass).then(res => {
+					res.json().then(json => {
+						console.log("User updated")
+						setUser(json);
+					});
+				})
+			}
+			else{
+				if (oldPass === "") {
+					console.log("Input old password")
+					return;
+				}
+				updateUser(firstName, lastName, colour, oldPass, newPass).then(res => {
+					res.json().then(json => {
+						console.log("User updated")
+						setUser(json);
+					});
+				})
+			}
 		} else {
-			updateUser(firstName, lastName, colour).then(res => {
-				res.json().then(json => {
-					console.log("User updated")
-					setUser(json);
+			
+			if(admin){
+				adminUpdateUser(_user._id, firstName, lastName, colour, adminToggle).then(res => {
+					res.json().then(json => {
+						console.log("User updated")
+						setUser(json);
+					});
 				});
-			});
+			}
+			else{
+				updateUser(firstName, lastName, colour).then(res => {
+					res.json().then(json => {
+						console.log("User updated")
+						setUser(json);
+					});
+				});
+			}
 		}
 	}
 
 	function _deleteUser() {
+		if(admin){
+			deleteUser(_user._id).then(res => {
+				console.log("User was deleted")
+				logout();
+			});
+		}
+		else{
 		deleteUser(userId).then(res => {
 			console.log("User was deleted")
 			logout();
 
 		});
+	}
 	}
 
 	return (
@@ -102,6 +140,18 @@ function Profile({ _user }) {
 					<label>Last name</label>
 				</div>
 				<ColorSelector color={colour} setColor={setColour} user={{ first_name: firstName, last_name: lastName, colour: colour }} />
+
+
+				{admin &&
+					<div className="header" onClick={() => setAdminToggle(!adminToggle)}>
+						<h1>
+						{adminToggle ?
+							<FaCheck /> : <FaTimes />}
+						Admin
+						</h1>
+					</div>
+				}
+
 				<div>
 					<div className={`header ${passwordToggle && "active"}`} onClick={() => setPasswordToggle(!passwordToggle)}>
 						<h1>
@@ -114,12 +164,16 @@ function Profile({ _user }) {
 					</div>
 					<div className={`input-container ${!passwordToggle ? "hidden" : ""}`}>
 						<label></label>
+						{!admin &&
 						<input type="password" name="password" placeholder="Current Password"
 							maxLength={1024}
 							value={oldPass}
 							onChange={(e) => setOldPass(e.target.value)}
 						/>
-						<br />
+					    }
+					    {!admin &&
+						<br/>
+					    }
 
 						<label></label>
 						<input type="password" name="new-password1" placeholder="New Password"
@@ -140,7 +194,9 @@ function Profile({ _user }) {
 				</div>
 				<div className="btn-container">
 					<button className="btn red" type="button" onClick={_deleteUser}>Delete</button>
+					{!admin &&
 					<button className="btn" type="button" onClick={logout}>Logout</button>
+					}
 				</div>
 
 			</form>
