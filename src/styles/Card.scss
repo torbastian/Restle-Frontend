@@ -5,6 +5,7 @@
   cursor: pointer;
   transition: border 0.2s ease;
   background-color: var(--nav-bg-color);
+  user-select: none;
 
   &:hover {
     border-color: var(--nav-bg-hover-2);
