@@ -4,8 +4,9 @@ import '../styles/BoardRow.scss';
 import { FaPencilAlt } from "react-icons/fa";
 import { usePopup } from "../hooks/PopupContext";
 import EditBoard from "../popup-content/EditBoard";
-import { deleteBoard, updateBoard } from "../helpers/BoardHelper";
+import { createNewCard, createNewList, deleteBoard, inviteToBoard, moveCard, moveList, RemoveFromBoard, TransferOwnership, updateBoard } from "../helpers/BoardHelper";
 import { Link } from "react-router-dom";
+import InivteUser from "../popup-content/InviteUser";
 
 function BoardRow({ board, ws }) {
   const { createPopup } = usePopup();
@@ -16,6 +17,14 @@ function BoardRow({ board, ws }) {
 
   function _updateBoard(boardDetails) {
     updateBoard(ws, board._id, boardDetails);
+  }
+
+  function _removeMember(users) {
+    RemoveFromBoard(ws, board._id, users);
+  }
+
+  function _inviteMember(user) {
+    inviteToBoard(ws, board._id, user._id);
   }
 
   function editBoardDialogue(e) {
@@ -31,13 +40,25 @@ function BoardRow({ board, ws }) {
     );
   }
 
+  function inviteMemberPopup() {
+    createPopup(
+      <InivteUser
+        members={board.members}
+        owner={board.owner}
+        removeMember={_removeMember}
+      />,
+      'Inviter Medlem',
+      _inviteMember
+    )
+  }
+
   return (
     <div className="board-row">
       <button className="edit" onClick={editBoardDialogue}><FaPencilAlt /></button>
       <DateDisplay short={true} date={board.create_date} />
       <DateDisplay short={true} date={board.last_edited} />
       <Link className="board-title" to={`/boards/${board._id}`}>{board.title}</Link>
-      <Members owner={board.owner} members={board.members} invite={() => { }} />
+      <Members owner={board.owner} members={board.members} invite = {inviteMemberPopup} />
     </div>
   )
 }

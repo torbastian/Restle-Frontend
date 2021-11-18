@@ -3,7 +3,8 @@ import { FaChevronDown, FaFilter, FaSearch, FaSync } from "react-icons/fa";
 import BoardRow from "../components/BoardRow";
 import '../styles/AdminBoardOverview.scss';
 
-function AdminBoardOverview() {
+function AdminBoardOverview() 
+{
   const [search, setSearch] = useState("");
   const [boards, setBoards] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
