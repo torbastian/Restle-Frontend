@@ -27,6 +27,26 @@ export function updateBoard(ws, boardId, boardDetails) {
   }
 }
 
+export function inviteToBoard(ws, boardId, userId) {
+  if (ws.current.readyState === WebSocket.OPEN) {
+    ws.current.send(JSON.stringify({
+      request: 'INVITE_BOARD_MEMBER',
+      boardId: boardId,
+      userId: userId
+    }));
+  }
+}
+
+export function RemoveFromBoard(ws, boardId, userId) {
+  if (ws.current.readyState === WebSocket.OPEN) {
+    ws.current.send(JSON.stringify({
+      request: 'REMOVE_BOARD_MEMBER',
+      boardId: boardId,
+      userId: userId
+    }));
+  }
+}
+
 // LISTS
 export function moveList(ws, boardId, listToMove, destination) {
   if (ws.current.readyState === WebSocket.OPEN) {
@@ -113,6 +133,28 @@ export function updateCard(ws, boardId, cardId, cardDetails) {
       boardId: boardId,
       cardId: cardId,
       details: cardDetails
+    }));
+  }
+}
+
+export function inviteToCard(ws, boardId, cardId, userId) {
+  if (ws.current.readyState === WebSocket.OPEN) {
+    ws.current.send(JSON.stringify({
+      request: 'INVITE_CARD_MEMBER',
+      boardId: boardId,
+      cardId: cardId,
+      userId: userId
+    }));
+  }
+}
+
+export function removeFromCard(ws, boardId, cardId, userId) {
+  if (ws.current.readyState === WebSocket.OPEN) {
+    ws.current.send(JSON.stringify({
+      request: 'REMOVE_CARD_MEMBER',
+      boardId: boardId,
+      cardId: cardId,
+      userId: userId
     }));
   }
 }

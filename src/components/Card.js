@@ -1,7 +1,8 @@
 import { Draggable } from 'react-beautiful-dnd';
-import { deleteCard, updateCard } from '../helpers/BoardHelper';
+import { deleteCard, inviteToCard, removeFromCard, updateCard } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 import EditCard from '../popup-content/EditCard';
+import InivteUser from '../popup-content/InviteUser';
 import '../styles/Card.scss';
 import Members from './Members';
 
@@ -17,11 +18,32 @@ function Card({ cardDetails, ws, index }) {
   }
 
   function editCard() {
-    createPopup(<EditCard card={cardDetails} deleteAction={_deleteCard} />, 'Rediger Card', _updateCard)
+    createPopup(
+      <EditCard
+        card={cardDetails}
+        deleteAction={_deleteCard}
+      />,
+      'Rediger Card',
+      _updateCard)
+  }
+
+  function _removeMember(user) {
+    removeFromCard(ws, cardDetails.board, cardDetails._id, user._id);
+  }
+
+  function _inviteMember(user) {
+    inviteToCard(ws, cardDetails.board, cardDetails._id, user._id);
   }
 
   function addMember() {
-    createPopup(<div>Invite</div>, 'Tilføj Medlem', undefined);
+    createPopup(
+      <InivteUser
+        members={cardDetails.members}
+        removeMember={_removeMember}
+      />,
+      'Inviter Medlem',
+      _inviteMember
+    )
   }
 
   return (

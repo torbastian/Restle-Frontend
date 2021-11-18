@@ -12,8 +12,9 @@ import '../styles/Board.scss';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { createNewCard, createNewList, deleteBoard, moveCard, moveList, updateBoard } from "../helpers/BoardHelper";
+import { createNewCard, createNewList, deleteBoard, inviteToBoard, moveCard, moveList, RemoveFromBoard, updateBoard } from "../helpers/BoardHelper";
 import { useCookies } from 'react-cookie';
+import InivteUser from "../popup-content/InviteUser";
 
 function Board() {
   const { createPopup } = usePopup();
@@ -188,14 +189,37 @@ function Board() {
     createPopup(<NewCard listId={listId} />, "Ny Card", _createNewCard);
   }
 
+  function _removeMember(user) {
+    RemoveFromBoard(ws, board._id, user._id);
+  }
+
+  function _inviteMember(user) {
+    inviteToBoard(ws, board._id, user._id);
+  }
+
   function editBoardDialogue() {
     createPopup(
       <EditBoard board={board}
         cancelAction={editBoardDialogue}
-        deleteAction={_deleteBoard} />,
+        deleteAction={_deleteBoard}
+        removeMemberAction={_removeMember}
+      />
+      ,
       'Rediger Board',
       _updateBoard
     );
+  }
+
+  function inviteMemberPopup() {
+    createPopup(
+      <InivteUser
+        members={board.members}
+        owner={board.owner}
+        removeMember={_removeMember}
+      />,
+      'Inviter Medlem',
+      _inviteMember
+    )
   }
 
   if (board !== null) {
@@ -209,7 +233,7 @@ function Board() {
           <div className="controls">
             <button className="btn" onClick={editBoardDialogue}>Rediger</button>
             <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
-            <Members owner={board.owner} members={board.members} invite={true} />
+            <Members owner={board.owner} members={board.members} invite={inviteMemberPopup} />
           </div>
           <Droppable
             droppableId={'list-droppable'}

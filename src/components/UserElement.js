@@ -1,20 +1,28 @@
-import { FaCrown } from 'react-icons/fa';
+import { FaCrown, FaPlus, FaTimes } from 'react-icons/fa';
 import '../styles/UserElement.scss';
 import UserIcon from '../components/UserIcon';
 import { IoMdCreate } from 'react-icons/io';
 
-function UserElement({ user, onClick }) {
+function UserElement({ user, onClick, invite = false, isMember = false, isOwner = false }) {
+  function returnIcon() {
+    if (!invite) return <IoMdCreate />
+
+    if (isOwner) return <FaCrown />
+
+    if (isMember) return <FaTimes />
+
+    return <FaPlus />
+  }
+
   return (
-    <div className="userElement" onClick={onClick}>
-      <div className="UserIcon">
-        {user !== null && <UserIcon user={user} />}
-      </div>
+    <div className={`userElement ${isMember ? 'member' : ''} ${isOwner ? 'owner' : ''}`} onClick={onClick}>
+      {user !== null && <UserIcon user={user} />}
       <div className="infoBox">
         {user !== null && <p className="info">{user.first_name}</p>}
         {user !== null && <p className="info">{user.email}</p>}
       </div>
       <span className="icon">
-        <IoMdCreate />
+        {returnIcon()}
       </span>
     </div>
   )

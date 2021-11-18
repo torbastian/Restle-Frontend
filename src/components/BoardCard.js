@@ -1,6 +1,6 @@
 import { FaTrashAlt, FaWrench } from 'react-icons/fa';
 import { useHistory } from 'react-router';
-import { deleteBoard } from '../helpers/BoardHelper';
+import { deleteBoard, inviteToBoard, RemoveFromBoard } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 import EditBoard from '../popup-content/EditBoard';
 import InivteUser from '../popup-content/InviteUser';
@@ -53,13 +53,19 @@ function BoardCard({ board, ws }) {
   }
 
   function _inviteMember(user) {
-    console.log('INVITE MEMBER', user);
+    inviteToBoard(ws, board._id, user._id);
+  }
+
+  function _removeMember(user) {
+    RemoveFromBoard(ws, board._id, user._id);
   }
 
   function inviteMemberPopup() {
     createPopup(
       <InivteUser
-
+        members={board.members}
+        owner={board.owner}
+        removeMember={_removeMember}
       />,
       'Inviter Medlem',
       _inviteMember

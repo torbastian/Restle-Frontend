@@ -36,6 +36,11 @@ function EditBoard(popupData) {
   }
 
   function removeMember(selectedMembers) {
+    if (!popupData.removeMemberAction) return;
+
+    selectedMembers.forEach(member => {
+      popupData.removeMemberAction(member);
+    });
     console.log(selectedMembers);
   }
 

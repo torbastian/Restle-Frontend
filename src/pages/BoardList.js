@@ -42,7 +42,6 @@ function BoardList() {
             break;
           case 'BOARD_LIST_UPDATE':
             if (data.owned !== undefined) {
-              console.log('UPDATE OWNER', [...OwnedBoards]);
               setOwnedBoards(OwnedBoards => (updateBoardState(data.owned, [...OwnedBoards])));
             }
 
@@ -72,6 +71,10 @@ function BoardList() {
       ws.current.close();
     }
   }, []);
+
+  useEffect(() => {
+    console.log(OwnedBoards, MemberBoards);
+  }, [OwnedBoards, MemberBoards]);
 
   function removeBoardFromState(boardId, _boards) {
     let boardIndex = _boards.findIndex(b => b._id === boardId);
