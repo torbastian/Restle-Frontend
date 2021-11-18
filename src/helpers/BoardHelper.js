@@ -37,11 +37,21 @@ export function inviteToBoard(ws, boardId, userId) {
   }
 }
 
-export function RemoveFromBoard(ws, boardId, userId) {
+export function RemoveFromBoard(ws, boardId, users) {
   if (ws.current.readyState === WebSocket.OPEN) {
     ws.current.send(JSON.stringify({
       request: 'REMOVE_BOARD_MEMBER',
       boardId: boardId,
+      users: users
+    }));
+  }
+}
+
+export function TransferOwnership(ws, boardId, userId) {
+  if (ws.current.readyState === WebSocket.OPEN) {
+    ws.current.send(JSON.stringify({
+      request: 'TRANSFER_BOARD_OWNERSHIP',
+      boardid: boardId,
       userId: userId
     }));
   }

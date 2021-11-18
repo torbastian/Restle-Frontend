@@ -12,7 +12,7 @@ import '../styles/Board.scss';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { createNewCard, createNewList, deleteBoard, inviteToBoard, moveCard, moveList, RemoveFromBoard, updateBoard } from "../helpers/BoardHelper";
+import { createNewCard, createNewList, deleteBoard, inviteToBoard, moveCard, moveList, RemoveFromBoard, TransferOwnership, updateBoard } from "../helpers/BoardHelper";
 import { useCookies } from 'react-cookie';
 import InivteUser from "../popup-content/InviteUser";
 
@@ -189,12 +189,16 @@ function Board() {
     createPopup(<NewCard listId={listId} />, "Ny Card", _createNewCard);
   }
 
-  function _removeMember(user) {
-    RemoveFromBoard(ws, board._id, user._id);
+  function _removeMember(users) {
+    RemoveFromBoard(ws, board._id, users);
   }
 
   function _inviteMember(user) {
     inviteToBoard(ws, board._id, user._id);
+  }
+
+  function _transferOwnership(user) {
+    TransferOwnership(ws, board._id, user._id);
   }
 
   function editBoardDialogue() {
@@ -203,6 +207,7 @@ function Board() {
         cancelAction={editBoardDialogue}
         deleteAction={_deleteBoard}
         removeMemberAction={_removeMember}
+        transferOwnership={_transferOwnership}
       />
       ,
       'Rediger Board',

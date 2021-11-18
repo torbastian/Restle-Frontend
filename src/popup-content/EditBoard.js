@@ -2,6 +2,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { useState } from 'react/cjs/react.development';
 import DateDisplay from '../components/Date';
 import MemberSelect from '../components/MemberSelect';
+import { TransferOwnership } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 
 function EditBoard(popupData) {
@@ -38,14 +39,13 @@ function EditBoard(popupData) {
   function removeMember(selectedMembers) {
     if (!popupData.removeMemberAction) return;
 
-    selectedMembers.forEach(member => {
-      popupData.removeMemberAction(member);
-    });
-    console.log(selectedMembers);
+    popupData.removeMemberAction(selectedMembers);
   }
 
-  function transferOwnership(selectedMembers) {
-    console.log(selectedMembers);
+  function transferOwnership(selectedMember) {
+    if (!popupData.transferOwnership) return;
+
+    popupData.transferOwnership(selectedMember);
   }
 
   return (

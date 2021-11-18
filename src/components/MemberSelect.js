@@ -48,7 +48,7 @@ function MemberSelect({ members, transferOwnership = undefined, removeMember = u
             onClick={() =>
               areYouSure(`Vil du overføre ejerskab til ${selectedMembers[0].first_name}?`,
                 { class: 'ylw', text: 'Overfør' },
-                () => transferOwnership([...selectedMembers])
+                () => transferOwnership(selectedMembers[0])
               )}
             disabled={selectedMembers.length !== 1}
             type='button'
