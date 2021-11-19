@@ -1,4 +1,6 @@
 nav {
+  display: flex;
+  flex-direction: column;
   position: sticky;
   top: 0;
   background-color: var(--nav-bg-color);
@@ -66,6 +68,9 @@ nav {
     color: var(--text-color);
     align-items: center;
     text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 
     svg {
       justify-self: center;
@@ -78,6 +83,10 @@ nav {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+
+    &.bottom {
+      margin-top: auto;
     }
 
     &:hover {
