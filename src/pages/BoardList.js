@@ -143,6 +143,7 @@ function BoardList() {
                 key={board._id}
                 board={board}
                 ws={ws}
+                memberBoard={true}
               />
             )
             }

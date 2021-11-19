@@ -58,6 +58,15 @@ export function TransferOwnership(ws, boardId, userId) {
   }
 }
 
+export function LeaveBoard(ws, boardId) {
+  if (ws.current.readyState === WebSocket.OPEN) {
+    ws.current.send(JSON.stringify({
+      request: 'LEAVE_BOARD',
+      boardId: boardId
+    }));
+  }
+}
+
 // LISTS
 export function moveList(ws, boardId, listToMove, destination) {
   if (ws.current.readyState === WebSocket.OPEN) {

@@ -240,8 +240,8 @@ function Board() {
           <div className="controls">
             {
               user._id === board.owner._id && [
-                <button className="btn" onClick={editBoardDialogue}>Rediger</button>,
-                <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
+                <button key='1' className="btn" onClick={editBoardDialogue}>Rediger</button>,
+                <button key='2' className="btn" onClick={newListDialogue}>+ Ny Liste</button>
               ]
             }
             <Members

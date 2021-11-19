@@ -1,6 +1,6 @@
-import { FaTrashAlt, FaWrench } from 'react-icons/fa';
+import { FaTrashAlt, FaUserMinus, FaWrench } from 'react-icons/fa';
 import { useHistory } from 'react-router';
-import { deleteBoard, inviteToBoard, RemoveFromBoard } from '../helpers/BoardHelper';
+import { deleteBoard, inviteToBoard, LeaveBoard, RemoveFromBoard } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 import EditBoard from '../popup-content/EditBoard';
 import InivteUser from '../popup-content/InviteUser';
@@ -9,7 +9,7 @@ import DateDisplay from './Date';
 import MeatballMenu from './MeatballMenu';
 import Members from './Members';
 
-function BoardCard({ board, ws }) {
+function BoardCard({ board, ws, memberBoard = false }) {
   const { createPopup, createDialogue, closePopup } = usePopup();
 
   const history = useHistory();
@@ -61,6 +61,20 @@ function BoardCard({ board, ws }) {
     RemoveFromBoard(ws, board._id, users);
   }
 
+  function _leaveBoard() {
+    console.log('LEAVE BOARD');
+    LeaveBoard(ws, board._id);
+    closePopup();
+  }
+
+  function leaveBoardDialogue() {
+    createDialogue(`Forlad board ${board.title}?`,
+      { class: 'red', text: 'Forlad' },
+      undefined,
+      () => _leaveBoard()
+    );
+  }
+
   function inviteMemberPopup() {
     createPopup(
       <InivteUser
@@ -77,18 +91,30 @@ function BoardCard({ board, ws }) {
     <div className="board-card" onClick={navigateToBoard}>
       <div className="header">
         <h1>{board.title}</h1>
-        <MeatballMenu options={[
-          {
-            icon: <FaWrench />,
-            title: 'Rediger',
-            onClick: editBoard
-          },
-          {
-            icon: <FaTrashAlt />,
-            title: 'Slet',
-            onClick: deleteDialogue
-          }
-        ]} />
+        {
+          <MeatballMenu options={
+            memberBoard ?
+              [
+                {
+                  icon: <FaUserMinus />,
+                  title: 'Forlad',
+                  onClick: leaveBoardDialogue
+                }
+              ]
+              :
+              [
+                {
+                  icon: <FaWrench />,
+                  title: 'Rediger',
+                  onClick: editBoard
+                },
+                {
+                  icon: <FaTrashAlt />,
+                  title: 'Slet',
+                  onClick: deleteDialogue
+                }
+              ]} />
+        }
       </div>
       <DateDisplay date={board.last_edited} />
       <p className="description">{board.description}</p>

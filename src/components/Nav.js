@@ -1,5 +1,5 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { FaUser, FaSquare, FaChevronRight, FaBars, FaUsers } from 'react-icons/fa';
+import { FaUser, FaSquare, FaChevronRight, FaBars, FaUsers, FaSignOutAlt } from 'react-icons/fa';
 import '../styles/Nav.scss';
 import { useState } from 'react';
 import { ReactComponent as Logo } from '../Restle_Logo.svg';
@@ -8,7 +8,7 @@ import { useUserContext } from '../hooks/UserContext';
 function Nav() {
   const [expand, setExpand] = useState(false);
   const { pathname } = useLocation();
-  const { user } = useUserContext();
+  const { user, logout } = useUserContext();
 
   return (
     <nav className={expand ? 'expand' : ''}>
@@ -32,24 +32,33 @@ function Nav() {
         }
       </NavLink>
 
-      <NavLink className='link' to='/boards' activeClassName="active">
-        <FaSquare />
-        <p>Board List</p>
-      </NavLink>
-
-    
-      { user !== null && user.isAdmin &&
-        [
-        <NavLink className='link' to='/AdminOverview' activeClassName="active">
-          <FaUsers />
-          <p>Admin Overview</p>
-        </NavLink>,
-        <NavLink className='link' to='/AdminBoardOverview' activeClassName="active">
-          <FaBars />
-          <p>Bruger Boards Oversigt</p>
+      {
+        user !== null &&
+        <NavLink className='link' to='/boards' activeClassName="active">
+          <FaSquare />
+          <p>Board List</p>
         </NavLink>
+      }
+
+      {user !== null && user.isAdmin &&
+        [
+          <NavLink key='1' className='link' to='/AdminOverview' activeClassName="active">
+            <FaUsers />
+            <p>Admin Overview</p>
+          </NavLink>,
+          <NavLink key='2' className='link' to='/AdminBoardOverview' activeClassName="active">
+            <FaBars />
+            <p>Bruger Boards Oversigt</p>
+          </NavLink>
         ]
-        }
+      }
+
+      {user !== null &&
+        <li className='link bottom' onClick={logout}>
+          <FaSignOutAlt />
+          <p>Logout</p>
+        </li>
+      }
     </nav>
   )
 }
