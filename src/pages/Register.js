@@ -9,6 +9,7 @@ function Register() {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("")
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [colour, setColour] = useState("#fff");
@@ -18,6 +19,12 @@ function Register() {
 
 	function onSubmit(e) {
 		e.preventDefault();
+
+
+		if (password !== confirmPassword) {
+			console.log("Passwords doesnt match")
+			return;
+		}
 
 		const requestNewUser = {
 			method: 'POST',
@@ -56,6 +63,10 @@ function Register() {
 					<div className="input-container">
 						<input type="password" required="" onChange={(e) => setPassword(e.target.value)} />
 						<label>Password</label>
+					</div>
+					<div className="input-container">
+						<input type="password" required="" onChange={(e) => setConfirmPassword(e.target.value)} />
+						<label>Confirm password</label>
 					</div>
 					<div className="input-container">
 						<input type="text" required="" onChange={(e) => setEmail(e.target.value)} />
