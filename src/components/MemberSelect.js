@@ -3,19 +3,24 @@ import UserIcon from "./UserIcon";
 import '../styles/MemberSelect.scss';
 import { usePopup } from "../hooks/PopupContext";
 
-function MemberSelect({ members, transferOwnership = undefined, removeMember = undefined, cancelAction = undefined }) {
+function MemberSelect({
+  members,
+  transferOwnership = undefined,
+  removeMember = undefined,
+  cancelAction = undefined,
+  addMember = undefined }) {
   const [selectedMembers, setSelectedMembers] = useState([]);
   const { createDialogue } = usePopup();
 
 
   function selectMember(user) {
     let newMembers = [...selectedMembers];
-    let index = newMembers.indexOf(user);
+    let index = newMembers.indexOf(user._id);
 
     if (index > -1) {
       newMembers.splice(index, 1);
     } else {
-      newMembers.push(user);
+      newMembers.push(user._id);
     }
 
     setSelectedMembers(newMembers);
@@ -35,7 +40,7 @@ function MemberSelect({ members, transferOwnership = undefined, removeMember = u
               key={index}
               user={user}
               onClick={() => selectMember(user)}
-              className={selectedMembers.includes(user) ? 'selected' : ''} />
+              className={selectedMembers.includes(user._id) ? 'selected' : ''} />
           )
         }
       </div>
@@ -61,14 +66,24 @@ function MemberSelect({ members, transferOwnership = undefined, removeMember = u
           <button
             className="btn red"
             onClick={() =>
-              areYouSure(`Vil du fjerne ${selectedMembers.length} medlemmer fra boardet?`,
+              areYouSure(`Vil du fjerne ${selectedMembers.length} medlemmer?`,
                 { class: 'red', text: 'Fjern' },
-                () => removeMember([...selectedMembers])
+                () => removeMember(selectedMembers)
               )}
             disabled={selectedMembers.length === 0}
             type='button'
           >
             Fjern Medlem
+          </button>
+        }
+        {
+          addMember !== undefined &&
+          <button className="btn blu"
+            onClick={() => addMember([...selectedMembers])}
+            disabled={selectedMembers.length === 0}
+            type='button'
+          >
+            Tilføj Medlem
           </button>
         }
       </div>

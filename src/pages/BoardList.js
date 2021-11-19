@@ -73,7 +73,7 @@ function BoardList() {
   }, []);
 
   useEffect(() => {
-    console.log(OwnedBoards, MemberBoards);
+
   }, [OwnedBoards, MemberBoards]);
 
   function removeBoardFromState(boardId, _boards) {

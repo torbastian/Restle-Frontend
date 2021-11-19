@@ -38,6 +38,7 @@ export function inviteToBoard(ws, boardId, userId) {
 }
 
 export function RemoveFromBoard(ws, boardId, users) {
+  console.log('Remove members', users);
   if (ws.current.readyState === WebSocket.OPEN) {
     ws.current.send(JSON.stringify({
       request: 'REMOVE_BOARD_MEMBER',
@@ -147,24 +148,24 @@ export function updateCard(ws, boardId, cardId, cardDetails) {
   }
 }
 
-export function inviteToCard(ws, boardId, cardId, userId) {
+export function inviteToCard(ws, boardId, cardId, members) {
   if (ws.current.readyState === WebSocket.OPEN) {
     ws.current.send(JSON.stringify({
       request: 'INVITE_CARD_MEMBER',
       boardId: boardId,
       cardId: cardId,
-      userId: userId
+      members: members
     }));
   }
 }
 
-export function removeFromCard(ws, boardId, cardId, userId) {
+export function removeFromCard(ws, boardId, cardId, members) {
   if (ws.current.readyState === WebSocket.OPEN) {
     ws.current.send(JSON.stringify({
       request: 'REMOVE_CARD_MEMBER',
       boardId: boardId,
       cardId: cardId,
-      userId: userId
+      members: members
     }));
   }
 }

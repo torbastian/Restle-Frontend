@@ -2,11 +2,12 @@ import { Draggable } from 'react-beautiful-dnd';
 import { deleteCard, inviteToCard, removeFromCard, updateCard } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 import EditCard from '../popup-content/EditCard';
+import InviteToCard from '../popup-content/InviteToCard';
 import InivteUser from '../popup-content/InviteUser';
 import '../styles/Card.scss';
 import Members from './Members';
 
-function Card({ cardDetails, ws, index }) {
+function Card({ cardDetails, ws, index, boardMembers }) {
   const { createPopup } = usePopup();
 
   function _updateCard(_cardDetails) {
@@ -22,26 +23,37 @@ function Card({ cardDetails, ws, index }) {
       <EditCard
         card={cardDetails}
         deleteAction={_deleteCard}
+        removeMemberAction={_removeMember}
       />,
       'Rediger Card',
       _updateCard)
   }
 
-  function _removeMember(user) {
-    removeFromCard(ws, cardDetails.board, cardDetails._id, user._id);
+  function _removeMember(members) {
+    removeFromCard(ws, cardDetails.board, cardDetails._id, members);
   }
 
-  function _inviteMember(user) {
-    inviteToCard(ws, cardDetails.board, cardDetails._id, user._id);
+  function _inviteMember(members) {
+    inviteToCard(ws, cardDetails.board, cardDetails._id, members);
   }
 
   function addMember() {
+    let availableMembers = [];
+
+    for (let i = 0; i < boardMembers.length; i++) {
+      const member = boardMembers[i];
+      console.log(member);
+      if (cardDetails.members.findIndex(m => m._id === member._id) === -1) {
+        availableMembers.push(member);
+      }
+    }
+
     createPopup(
-      <InivteUser
-        members={cardDetails.members}
-        removeMember={_removeMember}
+      <InviteToCard
+        availableMembers={availableMembers}
+        addMember={_inviteMember}
       />,
-      'Inviter Medlem',
+      'Inviter Medlemmer',
       _inviteMember
     )
   }

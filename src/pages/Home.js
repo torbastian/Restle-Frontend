@@ -9,7 +9,7 @@ function Home() {
           med at skabe en bedre oversigt over
           jeres arbejdsopgaver
         </p>
-        <button className="btn">
+        <button className="btn blu">
           Kom i gang
         </button>
       </div>

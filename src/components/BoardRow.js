@@ -8,23 +8,27 @@ import { createNewCard, createNewList, deleteBoard, inviteToBoard, moveCard, mov
 import { Link } from "react-router-dom";
 import InivteUser from "../popup-content/InviteUser";
 
-function BoardRow({ board, ws }) {
+function BoardRow({ board, ws, sync }) {
   const { createPopup } = usePopup();
 
   function _deleteBoard() {
     deleteBoard(ws, board._id);
+    sync();
   }
 
   function _updateBoard(boardDetails) {
     updateBoard(ws, board._id, boardDetails);
+    sync();
   }
 
   function _removeMember(users) {
     RemoveFromBoard(ws, board._id, users);
+    sync();
   }
 
   function _inviteMember(user) {
     inviteToBoard(ws, board._id, user._id);
+    sync();
   }
 
   function editBoardDialogue(e) {
@@ -58,7 +62,7 @@ function BoardRow({ board, ws }) {
       <DateDisplay short={true} date={board.create_date} />
       <DateDisplay short={true} date={board.last_edited} />
       <Link className="board-title" to={`/boards/${board._id}`}>{board.title}</Link>
-      <Members owner={board.owner} members={board.members} invite = {inviteMemberPopup} />
+      <Members owner={board.owner} members={board.members} invite={inviteMemberPopup} />
     </div>
   )
 }

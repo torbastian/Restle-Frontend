@@ -43,6 +43,7 @@ function BoardCard({ board, ws }) {
       <EditBoard
         board={board}
         cancelAction={editBoard}
+        removeMember={_removeMember}
       />,
       'Rediger Board',
       updateBoard);
@@ -56,8 +57,8 @@ function BoardCard({ board, ws }) {
     inviteToBoard(ws, board._id, user._id);
   }
 
-  function _removeMember(user) {
-    RemoveFromBoard(ws, board._id, user._id);
+  function _removeMember(users) {
+    RemoveFromBoard(ws, board._id, users);
   }
 
   function inviteMemberPopup() {

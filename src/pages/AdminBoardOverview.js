@@ -3,8 +3,7 @@ import { FaChevronDown, FaFilter, FaSearch, FaSync } from "react-icons/fa";
 import BoardRow from "../components/BoardRow";
 import '../styles/AdminBoardOverview.scss';
 
-function AdminBoardOverview() 
-{
+function AdminBoardOverview() {
   const [search, setSearch] = useState("");
   const [boards, setBoards] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -13,6 +12,7 @@ function AdminBoardOverview()
   const [selectedTerm, setSelectedTerm] = useState('title');
   const [selectedSort, setSelectedSort] = useState('last_edited');
   const [desc, setDesc] = useState(true);
+  const [syncing, setSyncing] = useState(false);
   const terms = [{ title: 'Titel', value: 'title' }, { title: 'Medlem', value: 'member' }, { title: 'Ejer', value: 'owner' }];
   const sorts = [{ title: 'Oprettet', value: 'create_date' }, { title: 'Ændret', value: 'last_edited' }, { title: 'Titel', value: 'title' }];
 
@@ -38,6 +38,7 @@ function AdminBoardOverview()
             setBoards(data.result.boards);
             setTotalPages(data.result.totalPages);
             setCurrentPage(data.result.currentPage);
+            setSyncing(false);
           }
           break;
         default:
@@ -59,11 +60,18 @@ function AdminBoardOverview()
   }
 
   function sync() {
+    console.log('sync');
+    setSyncing(true);
     if (filter) {
       searchBoards();
     } else {
       getBoards();
     }
+  }
+
+  function waitSync() {
+    setSyncing(true);
+    setTimeout(() => { sync() }, 1000);
   }
 
   function searchBoards() {
@@ -112,7 +120,7 @@ function AdminBoardOverview()
                 checked={selectedTerm === term.value}
                 onChange={(e) => setSelectedTerm(e.target.value)}
               />,
-              <label key={term.value} for={term.value} className={selectedTerm === term.value && 'checked'}>{term.title}</label>
+              <label key={term.value} htmlFor={term.value} className={selectedTerm === term.value ? 'checked' : ''}>{term.title}</label>
             ]
           )}
         </div>
@@ -128,11 +136,11 @@ function AdminBoardOverview()
               {sort.title}
             </button>
           )}
-          <button className="btn right" onClick={sync}><FaSync /></button>
+          <button className={`btn right ${syncing ? 'sync' : ''}`} onClick={sync}><FaSync /></button>
         </div>
         {boards !== [] &&
           boards.map((board, index) =>
-            <BoardRow key={index} ws={ws} board={board} />
+            <BoardRow key={index} ws={ws} board={board} sync={waitSync} />
           )
         }
       </div>

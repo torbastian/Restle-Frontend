@@ -7,7 +7,7 @@ import MeatballMenu from './MeatballMenu';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { deleteList, updateList } from '../helpers/BoardHelper';
 
-function List({ listDetails, newCardDialogue, ws, index }) {
+function List({ listDetails, newCardDialogue, ws, index, boardMembers }) {
   const { createPopup, createDialogue, closePopup } = usePopup();
 
   function _updateList(_listDetails) {
@@ -67,7 +67,7 @@ function List({ listDetails, newCardDialogue, ws, index }) {
                 >
                   {listDetails.cards !== null &&
                     listDetails.cards.map((card, index) =>
-                      <Card key={card._id} index={index} cardDetails={card} ws={ws} />
+                      <Card key={card._id} index={index} cardDetails={card} ws={ws} boardMembers={boardMembers} />
                     )}
                   {provided.placeholder}
                 </div>

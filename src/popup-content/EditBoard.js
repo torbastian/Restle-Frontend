@@ -37,15 +37,18 @@ function EditBoard(popupData) {
   }
 
   function removeMember(selectedMembers) {
-    if (!popupData.removeMemberAction) return;
+    if (popupData.removeMember === undefined) return;
+    console.log('REMOVE MEBMER');
 
-    popupData.removeMemberAction(selectedMembers);
+    popupData.removeMember(selectedMembers);
+    popupData.close();
   }
 
   function transferOwnership(selectedMember) {
     if (!popupData.transferOwnership) return;
 
     popupData.transferOwnership(selectedMember);
+    popupData.close();
   }
 
   return (

@@ -30,12 +30,13 @@ function EditCard(popupData) {
   }
 
   function deleteCard() {
-    popupData.close();
     popupData.deleteAction(popupData.card);
+    popupData.close();
   }
 
   function removeMember(selectedMembers) {
-    console.log(selectedMembers);
+    popupData.removeMemberAction(selectedMembers);
+    popupData.close();
   }
 
   return (

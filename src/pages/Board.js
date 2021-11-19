@@ -15,6 +15,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { createNewCard, createNewList, deleteBoard, inviteToBoard, moveCard, moveList, RemoveFromBoard, TransferOwnership, updateBoard } from "../helpers/BoardHelper";
 import { useCookies } from 'react-cookie';
 import InivteUser from "../popup-content/InviteUser";
+import InviteToCard from "../popup-content/InviteToCard";
 
 function Board() {
   const { createPopup } = usePopup();
@@ -201,6 +202,10 @@ function Board() {
     TransferOwnership(ws, board._id, user._id);
   }
 
+  function _inviteCardMembers(members) {
+
+  }
+
   function editBoardDialogue() {
     createPopup(
       <EditBoard board={board}
@@ -258,6 +263,7 @@ function Board() {
                       listDetails={list}
                       ws={ws}
                       newCardDialogue={newCardDialogue}
+                      boardMembers={[...board.members, board.owner]}
                     />
                   )}
                 {provided.placeholder}

@@ -1,9 +1,9 @@
 .home {
+  display: grid;
+  place-content: center;
   width: min-content;
-  display: flex;
-  flex-wrap: wrap;
-
-  margin: auto;
+  height: 100%;
+  width: 100%;
 
   .call-to-action {
     width: 400px;
