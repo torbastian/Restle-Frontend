@@ -14,6 +14,7 @@ function AdminOverview() {
     const [user, setUser] = useState([]);
     const [search, setSearch] = useState("");
     const [selectedUser, setSelectedUser] = useState(null);
+    const [syncing, setSyncing] = useState(false);
 
     const requestData = {
         method: 'GET',
@@ -51,6 +52,21 @@ function AdminOverview() {
         setSelectedUser(user);
     }
 
+    function sync() {
+        setSyncing(true);
+        if(search){
+            Search();
+        }else{
+            getUsers();
+        }
+        SelectUser(null);
+      }
+
+    function waitSync() {
+        setSyncing(true);
+        setTimeout(() => { sync() }, 1000);
+      }
+
 
     return (
         <div id="admin-overview">
@@ -70,7 +86,7 @@ function AdminOverview() {
                 </div>
                 <div className="profile">
                     {selectedUser !== null &&
-                        <Profile _user={selectedUser} admin={true}></Profile>
+                        <Profile _user={selectedUser} admin={true} sync={waitSync}></Profile>
                     }
                 </div>
             </div>
