@@ -14,7 +14,6 @@ function Register() {
 	const [lastName, setLastName] = useState("");
 	const [colour, setColour] = useState("#fff");
 	const [showColorPicker, setShowColorPicker] = useState(false);
-	const [failedLogin, setFailedLogin] = useState("");
 
 	const history = useHistory();
 
@@ -49,11 +48,6 @@ function Register() {
 				if (res.ok) {
 					history.push('/boards');
 				}
-				else{
-					res.json().then(data => {
-						setFailedLogin(data.message)
-					})
-				}
 			})
 	}
 
@@ -87,7 +81,6 @@ function Register() {
 						<label>Last name</label>
 					</div>
 					<ColorSelector color={colour} setColor={setColour} user={{ first_name: firstName, last_name: lastName, colour: colour }} />
-					{ failedLogin !== null && <p className="errorMessage">{failedLogin}</p>}
 					<button type="button" className="btn" onClick={onSubmit}>Sign up</button>
 					<Link to="/login"><button type="button" className="btn">Cancel</button></Link>
 				</form>
