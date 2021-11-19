@@ -1,7 +1,7 @@
 import UserIcon from "./UserIcon";
 import '../styles/Members.scss';
 
-function Members({ owner = null, members = null, invite = undefined }) {
+function Members({ owner = null, members = null, invite = undefined, className = '' }) {
 
   function onClick(e) {
     e.stopPropagation();
@@ -12,7 +12,7 @@ function Members({ owner = null, members = null, invite = undefined }) {
   }
 
   return (
-    <div className="members">
+    <div className={`members ${className}`}>
       {owner !== null &&
         <UserIcon user={owner} isOwner={true} />
       }

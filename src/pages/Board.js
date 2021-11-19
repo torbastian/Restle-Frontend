@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import List from "../components/List";
 import Loading from '../components/Loading';
@@ -15,13 +15,14 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { createNewCard, createNewList, deleteBoard, inviteToBoard, moveCard, moveList, RemoveFromBoard, TransferOwnership, updateBoard } from "../helpers/BoardHelper";
 import { useCookies } from 'react-cookie';
 import InivteUser from "../popup-content/InviteUser";
-import InviteToCard from "../popup-content/InviteToCard";
+import { UserContext } from "../hooks/UserContext";
 
 function Board() {
   const { createPopup } = usePopup();
   const { id } = useParams();
   const [board, setBoard] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies([id]);
+  const { user, setUser, logout } = useContext(UserContext);
   const history = useHistory();
 
   const ws = useRef(null);
@@ -202,10 +203,6 @@ function Board() {
     TransferOwnership(ws, board._id, user._id);
   }
 
-  function _inviteCardMembers(members) {
-
-  }
-
   function editBoardDialogue() {
     createPopup(
       <EditBoard board={board}
@@ -241,9 +238,18 @@ function Board() {
             <h1>{board.title}</h1>
           </div>
           <div className="controls">
-            <button className="btn" onClick={editBoardDialogue}>Rediger</button>
-            <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
-            <Members owner={board.owner} members={board.members} invite={inviteMemberPopup} />
+            {
+              user._id === board.owner._id && [
+                <button className="btn" onClick={editBoardDialogue}>Rediger</button>,
+                <button className="btn" onClick={newListDialogue}>+ Ny Liste</button>
+              ]
+            }
+            <Members
+              owner={board.owner}
+              members={board.members}
+              className={user._id === board.owner._id ? '' : 'no-border-left'}
+              invite={user._id === board.owner._id ? inviteMemberPopup : undefined}
+            />
           </div>
           <Droppable
             droppableId={'list-droppable'}

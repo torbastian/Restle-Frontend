@@ -36,8 +36,9 @@ function BoardList() {
               setOwnedBoards(data.owned);
             }
 
-            if (data.memeberOf !== undefined) {
-              setMemberBoards(data.memeberOf);
+            console.log('MEMBER OF; ', data.memberOf);
+            if (data.memberOf !== undefined) {
+              setMemberBoards(data.memberOf);
             }
             break;
           case 'BOARD_LIST_UPDATE':
@@ -45,9 +46,9 @@ function BoardList() {
               setOwnedBoards(OwnedBoards => (updateBoardState(data.owned, [...OwnedBoards])));
             }
 
-            if (data.memeberOf !== undefined) {
+            if (data.memberOf !== undefined) {
               console.log('UPDATE MEMBEROF');
-              setMemberBoards(MemberBoards => (updateBoardState(data.memeberOf, [...MemberBoards])));
+              setMemberBoards(MemberBoards => (updateBoardState(data.memberOf, [...MemberBoards])));
             }
             break;
           case 'BOARD_DELETE':
@@ -131,7 +132,7 @@ function BoardList() {
         </div>
       </section>
       {
-        MemberBoards !== [] &&
+        MemberBoards !== [] && MemberBoards.length > 0 &&
         <section className="board-section">
           <div className="board-section-header">
             <h2>Medlem Boards</h2>
