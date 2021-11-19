@@ -50,6 +50,11 @@
     .btn {
       width: 125px;
       margin: 7px;
+
+
+      &.stretch {
+        width: 100%;
+      }
     }
 
     .text-center {
