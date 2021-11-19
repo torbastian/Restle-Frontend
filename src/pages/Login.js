@@ -8,6 +8,7 @@ function Login() {
   const { user, setUser } = useUserContext();
   const [loginUsername, setUsername] = useState("");
   const [loginPassword, setPassword] = useState("");
+  const [failedLogin, setFailedLogin] = useState("");
 
   const history = useHistory();
 
@@ -29,6 +30,7 @@ function Login() {
         console.log("Login res.ok",res.ok);
         if (!res.ok) {
           res.json().then(json => {
+            setFailedLogin("brugernavn eller password er forkært");
             console.log(json.message);
           })
         } else {
@@ -55,6 +57,7 @@ function Login() {
             <input type="password" required="" onChange={(e) => setPassword(e.target.value)} />
             <label>Password</label>
           </div>
+          { failedLogin !== null && <p className="errorMessage">{failedLogin}</p>}
           <button type="button" className="btn" onClick={onLogin}>Login</button>
           <Link to="/register"><button type="button" className="btn">Register</button></Link>
           <p>Forgot your password? <Link to="/resetpass">Reset password</Link></p>
