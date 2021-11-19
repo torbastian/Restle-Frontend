@@ -56,9 +56,6 @@ export async function adminUpdateUser(userId, firstName, lastName, colour, isAdm
 }
 
 
-
-
-
 export async function deleteUser(userId) {
 	return fetch(`${route}/${userId}`, {
 		method: 'DELETE',
