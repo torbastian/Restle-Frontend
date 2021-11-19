@@ -29,6 +29,17 @@ function Board() {
 
   useEffect(() => {
     connectToWs();
+
+    return () => {
+      if (ws.current.readyState === WebSocket.OPEN) {
+        ws.current.send(JSON.stringify({
+          request: 'UNSUBSCRIBE_BOARD',
+          boardId: id
+        }));
+      }
+
+      ws.current.close();
+    }
   }, []);
 
   function connectToWs() {
@@ -90,17 +101,6 @@ function Board() {
         default:
           break;
       }
-    }
-
-    return () => {
-      if (ws.current.readyState === WebSocket.OPEN) {
-        ws.current.send(JSON.stringify({
-          request: 'UNSUBSCRIBE_BOARD',
-          boardId: id
-        }));
-      }
-
-      ws.current.close();
     }
   }
 
