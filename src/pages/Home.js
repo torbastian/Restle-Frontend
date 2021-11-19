@@ -1,4 +1,5 @@
 import '../styles/Home.scss';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -9,9 +10,13 @@ function Home() {
           med at skabe en bedre oversigt over
           jeres arbejdsopgaver
         </p>
-        <button className="btn blu">
+        
+        <Link to="/register"><button className="btn blu">
           Kom i gang
-        </button>
+        </button></Link>
+
+
+
       </div>
     </div>
   )

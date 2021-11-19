@@ -37,15 +37,19 @@ function Nav() {
         <p>Board List</p>
       </NavLink>
 
-      <NavLink className='link' to='/AdminOverview' activeClassName="active">
-        <FaUsers />
-        <p>Admin Overview</p>
-      </NavLink>
-
-      <NavLink className='link' to='/AdminBoardOverview' activeClassName="active">
-        <FaBars />
-        <p>Bruger Boards Oversigt</p>
-      </NavLink>
+    
+      { user !== null && user.isAdmin &&
+        [
+        <NavLink className='link' to='/AdminOverview' activeClassName="active">
+          <FaUsers />
+          <p>Admin Overview</p>
+        </NavLink>,
+        <NavLink className='link' to='/AdminBoardOverview' activeClassName="active">
+          <FaBars />
+          <p>Bruger Boards Oversigt</p>
+        </NavLink>
+        ]
+        }
     </nav>
   )
 }

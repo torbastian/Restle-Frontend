@@ -9,6 +9,7 @@ import UserProvider from './hooks/UserContext';
 import PopupProvider from './hooks/PopupContext';
 import Board from './pages/Board';
 import PrivateRoute from './routes/PrivateRoute';
+import AdminRoute from './routes/AdminRoute';
 import AdminOverview from './pages/AdminOverview';
 import Profile from './pages/Profile';
 import LoggedInRoute from './routes/LoggedInRoute';
@@ -33,11 +34,11 @@ function App() {
                   <Route path="/register" component={Register} />
                   <Route path="/resetpass" exact component={Reset} />
                   <Route path="/resetPassword/:token" component={ActuelPasswordReset}/>
-                  <PrivateRoute path="/AdminOverview" component={AdminOverview} />
+                  <AdminRoute path="/AdminOverview" component={AdminOverview} />
                   <PrivateRoute path="/boards" exact component={BoardList} />
                   <PrivateRoute path="/profile" component={Profile} />
                   <PrivateRoute path="/boards/:id" component={Board} />
-                  <PrivateRoute path="/AdminBoardOverview" component={AdminBoardOverview} />
+                  <AdminRoute path="/AdminBoardOverview" component={AdminBoardOverview} />
                 </Switch>
               </div>
             </div>
