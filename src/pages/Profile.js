@@ -5,6 +5,7 @@ import { ChromePicker } from 'react-color';
 import { UserContext } from '../hooks/UserContext';
 import '../styles/User.scss';
 import ColorSelector from '../components/ColorSelector';
+import { usePopup } from "../hooks/PopupContext";
 
 //Load the profile if the user is logged in, if not send them to the login screen
 function Profile({ _user, admin = false }) {
@@ -19,6 +20,7 @@ function Profile({ _user, admin = false }) {
 	const [adminToggle, setAdminToggle] = useState(false);
 	const [newPass2, setNewPass2] = useState("");
 	const [passwordToggle, setPasswordToggle] = useState(false);
+	const {createDialogue, closePopup} = usePopup();
 
 	useEffect(() => {
 		if (_user) {
@@ -36,7 +38,6 @@ function Profile({ _user, admin = false }) {
 			setLastName(user.last_name);
 			setColour(user.colour);
 			setUserId(user._id);
-			
 		}
 
 
@@ -111,6 +112,11 @@ function Profile({ _user, admin = false }) {
 	}
 
 	function _deleteUser() {
+		createDialogue("er du helt siker på at du vil slettebrugeren du er logget ind på?", {class: "blu", text: "Delete"}, undefined, doDelete);
+	}
+
+	function doDelete(){
+		closePopup();
 		if(admin){
 			deleteUser(_user._id).then(res => {
 				console.log("User was deleted")
@@ -121,9 +127,8 @@ function Profile({ _user, admin = false }) {
 		deleteUser(userId).then(res => {
 			console.log("User was deleted")
 			logout();
-
 		});
-	}
+		}
 	}
 
 	return (
