@@ -2,10 +2,13 @@ import { useState } from "react";
 import { useHistory } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import { useUserContext } from "../hooks/UserContext";
+import { usePopup } from "../hooks/PopupContext";
 import '../styles/ResetPassword.scss';
 
 function Reset() {
   const [email, setEmail] = useState("");
+  const {createDialogue, closePopup} = usePopup();
+  const history = useHistory();
 
 function onReset(_email) {
   console.log("onReset");
@@ -20,10 +23,14 @@ function onReset(_email) {
   };
 
   fetch(process.env.REACT_APP_API_URL + '/user/resetPassword', requestLogin);
-  console.log("should have posted");
-}
+  createDialogue("Mail sendt", {class: "blu", text: "OK"}, undefined, goToLogin);
   
+}
 
+function goToLogin(){
+  closePopup();
+  history.push("/login");
+}
   return (
     <div id="Reset">
       <div className="reset-con">
