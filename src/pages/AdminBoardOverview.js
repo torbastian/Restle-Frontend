@@ -19,11 +19,31 @@ function AdminBoardOverview() {
   const ws = useRef(null);
 
   useEffect(() => {
+    connectToWs();
+    return () => {
+      ws.current.close();
+    }
+  }, []);
+
+  useEffect(() => {
+    sync();
+  }, [selectedSort, desc]);
+
+  function connectToWs() {
     ws.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_CONNECTION);
 
     ws.current.onopen = () => {
       console.log('Connection to WS Established');
     };
+
+    ws.current.onclose = function (e) {
+      if (e.code !== 1005 && e.code !== 1008) {
+        console.log('Lost connection to socket ', e.reason);
+        setTimeout(function () {
+          connectToWs();
+        }, 1000);
+      }
+    }
 
     ws.current.onmessage = (e) => {
       const data = JSON.parse(e.data);
@@ -45,11 +65,7 @@ function AdminBoardOverview() {
           break;
       }
     }
-  }, []);
-
-  useEffect(() => {
-    sync();
-  }, [selectedSort, desc]);
+  }
 
   function sortHandler(value) {
     if (selectedSort === value) {

@@ -12,54 +12,7 @@ function BoardList() {
   const ws = useRef(null);
 
   useEffect(() => {
-    //Forbind til websocket
-    ws.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_CONNECTION);
-
-    ws.current.onopen = () => {
-      console.log("Connection to WS Established");
-
-      ws.current.onmessage = (e) => {
-        //Modtag data
-        const data = JSON.parse(e.data);
-        console.log(data);
-
-        switch (data.response) {
-          //Modtag boards
-          case 'CONNECTED_READY':
-            //Send en forespørgelse om at abbonnere til brugerens boards
-            ws.current.send(JSON.stringify({
-              request: 'SUBSCRIBE_BOARD_LIST'
-            }));
-            break;
-          case 'BOARD_LIST_RESPONSE':
-            if (data.owned !== undefined) {
-              setOwnedBoards(data.owned);
-            }
-
-            console.log('MEMBER OF; ', data.memberOf);
-            if (data.memberOf !== undefined) {
-              setMemberBoards(data.memberOf);
-            }
-            break;
-          case 'BOARD_LIST_UPDATE':
-            if (data.owned !== undefined) {
-              setOwnedBoards(OwnedBoards => (updateBoardState(data.owned, [...OwnedBoards])));
-            }
-
-            if (data.memberOf !== undefined) {
-              console.log('UPDATE MEMBEROF');
-              setMemberBoards(MemberBoards => (updateBoardState(data.memberOf, [...MemberBoards])));
-            }
-            break;
-          case 'BOARD_DELETE':
-            setOwnedBoards(OwnedBoards => (removeBoardFromState(data.boardId, [...OwnedBoards])));
-            setMemberBoards(MemberBoards => (removeBoardFromState(data.boardId, [...MemberBoards])));
-            break;
-          default:
-            break;
-        }
-      }
-    }
+    connectToWs();
 
     return () => {
       //Når siden bliver unloadet, send en forespørgelse om at unsubscribe og luk forbindelsen
@@ -72,6 +25,83 @@ function BoardList() {
       ws.current.close();
     }
   }, []);
+
+
+  function connectToWs() {
+    //Forbind til websocket
+    ws.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_CONNECTION);
+
+    ws.current.onopen = () => {
+      console.log("Connection to WS Established");
+    };
+
+    ws.current.onclose = function (e) {
+      if (e.code !== 1005 && e.code !== 1008) {
+        console.log('Lost connection to socket ', e.reason);
+        setTimeout(function () {
+          connectToWs();
+        }, 1000);
+      }
+
+      if (e.code === 1008) {
+        ws.current.onclose = function (e) {
+          if (e.code !== 1005 && e.code !== 1008) {
+            console.log('Lost connection to socket ', e.reason);
+            setTimeout(function () {
+              connectToWs();
+            }, 1000);
+          }
+
+          if (e.code === 1008) {
+            setMemberBoards([]);
+            setOwnedBoards([]);
+          }
+        }
+      }
+    }
+
+    ws.current.onmessage = (e) => {
+      //Modtag data
+      const data = JSON.parse(e.data);
+      console.log(data);
+
+      switch (data.response) {
+        //Modtag boards
+        case 'CONNECTED_READY':
+          //Send en forespørgelse om at abbonnere til brugerens boards
+          ws.current.send(JSON.stringify({
+            request: 'SUBSCRIBE_BOARD_LIST'
+          }));
+          break;
+        case 'BOARD_LIST_RESPONSE':
+          if (data.owned !== undefined) {
+            setOwnedBoards(data.owned);
+          }
+
+          console.log('MEMBER OF; ', data.memberOf);
+          if (data.memberOf !== undefined) {
+            setMemberBoards(data.memberOf);
+          }
+          break;
+        case 'BOARD_LIST_UPDATE':
+          if (data.owned !== undefined) {
+            setOwnedBoards(OwnedBoards => (updateBoardState(data.owned, [...OwnedBoards])));
+          }
+
+          if (data.memberOf !== undefined) {
+            console.log('UPDATE MEMBEROF');
+            setMemberBoards(MemberBoards => (updateBoardState(data.memberOf, [...MemberBoards])));
+          }
+          break;
+        case 'BOARD_DELETE':
+          setOwnedBoards(OwnedBoards => (removeBoardFromState(data.boardId, [...OwnedBoards])));
+          setMemberBoards(MemberBoards => (removeBoardFromState(data.boardId, [...MemberBoards])));
+          break;
+        default:
+          break;
+      }
+    }
+  }
 
   useEffect(() => {
 

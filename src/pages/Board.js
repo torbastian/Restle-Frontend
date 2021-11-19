@@ -28,12 +28,28 @@ function Board() {
   const ws = useRef(null);
 
   useEffect(() => {
-    //Forbind til websocket
+    connectToWs();
+  }, []);
+
+  function connectToWs() {
     ws.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_CONNECTION);
 
     ws.current.onopen = () => {
       console.log("Connection to WS Established");
     };
+
+    ws.current.onclose = function (e) {
+      if (e.code !== 1005 && e.code !== 1008) {
+        console.log('Lost connection to socket ', e.reason);
+        setTimeout(function () {
+          connectToWs();
+        }, 1000);
+      }
+
+      if (e.code === 1008) {
+        setBoard(null);
+      }
+    }
 
     ws.current.onmessage = (e) => {
       //Modtag data
@@ -86,8 +102,7 @@ function Board() {
 
       ws.current.close();
     }
-
-  }, []);
+  }
 
   function _createNewList(newListDetails) {
     createNewList(ws, board._id, newListDetails);
