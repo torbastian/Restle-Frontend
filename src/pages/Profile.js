@@ -4,8 +4,8 @@ import { useContext, useEffect, useState } from 'react';
 import { ChromePicker } from 'react-color';
 import { UserContext } from '../hooks/UserContext';
 import '../styles/User.scss';
-import ColorSelector from '../components/ColorSelector';
 import { usePopup } from "../hooks/PopupContext";
+import ColorSelector from '../components/ColorSelector';
 
 //Load the profile if the user is logged in, if not send them to the login screen
 function Profile({ _user, admin = false }) {
@@ -20,7 +20,7 @@ function Profile({ _user, admin = false }) {
 	const [adminToggle, setAdminToggle] = useState(false);
 	const [newPass2, setNewPass2] = useState("");
 	const [passwordToggle, setPasswordToggle] = useState(false);
-	const {createDialogue, closePopup} = usePopup();
+	const {createPopup, closePopup, createDialogue} = usePopup();
 
 	useEffect(() => {
 		if (_user) {
@@ -74,6 +74,7 @@ function Profile({ _user, admin = false }) {
 				adminUpdateUser(_user._id, firstName, lastName, colour, adminToggle, newPass).then(res => {
 					res.json().then(json => {
 						console.log("User updated")
+						createPopup(<div><button className="btn blu" onClick={closePopup}>OK</button></div>,"User updated", undefined);
 						setUser(json);
 					});
 				})
@@ -86,6 +87,7 @@ function Profile({ _user, admin = false }) {
 				updateUser(firstName, lastName, colour, oldPass, newPass).then(res => {
 					res.json().then(json => {
 						console.log("User updated")
+						createPopup(<div><button className="btn blu" onClick={closePopup}>OK</button></div>,"User updated", undefined);
 						setUser(json);
 					});
 				})
@@ -96,6 +98,7 @@ function Profile({ _user, admin = false }) {
 				adminUpdateUser(_user._id, firstName, lastName, colour, adminToggle).then(res => {
 					res.json().then(json => {
 						console.log("User updated")
+						createPopup(<div><button className="btn blu" onClick={closePopup}>OK</button></div>,"User updated", undefined);
 						setUser(json);
 					});
 				});
@@ -104,6 +107,7 @@ function Profile({ _user, admin = false }) {
 				updateUser(firstName, lastName, colour).then(res => {
 					res.json().then(json => {
 						console.log("User updated")
+						createPopup(<div><button className="btn blu" onClick={closePopup}>OK</button></div>,"User updated", undefined);
 						setUser(json);
 					});
 				});
@@ -194,14 +198,15 @@ function Profile({ _user, admin = false }) {
 				</div>
 
 				<div className="btn-container">
-					<button type="button" className="btn" onClick={_updateUser}>Save</button>
+					
+					
+					
+					
 					<button className="btn" type="button" onClick={cancel}>Cancel</button>
+					<button type="button" className="btn blu" onClick={_updateUser}>Save</button>
 				</div>
 				<div className="btn-container">
-					<button className="btn red" type="button" onClick={_deleteUser}>Delete</button>
-					{!admin &&
-					<button className="btn" type="button" onClick={logout}>Logout</button>
-					}
+				<button className="btn red" type="button" onClick={_deleteUser}>Delete</button>
 				</div>
 
 			</form>
