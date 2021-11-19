@@ -19,8 +19,8 @@ function UserProvider({ children }) {
       credentials: 'include'
     }).then(res => {
       if (res.ok) {
-        setUser(null);
         history.push('/login');
+        setUser(null);
       }
     });
   }
