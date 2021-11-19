@@ -8,7 +8,7 @@ import ColorSelector from '../components/ColorSelector';
 import { usePopup } from "../hooks/PopupContext";
 
 //Load the profile if the user is logged in, if not send them to the login screen
-function Profile({ _user, admin = false }) {
+function Profile({ _user, admin = false, sync=undefined }) {
 	const { user, setUser, logout } = useContext(UserContext);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -39,8 +39,6 @@ function Profile({ _user, admin = false }) {
 			setColour(user.colour);
 			setUserId(user._id);
 		}
-
-
 	}, [_user]);
 
 	function cancel() {
@@ -74,7 +72,9 @@ function Profile({ _user, admin = false }) {
 				adminUpdateUser(_user._id, firstName, lastName, colour, adminToggle, newPass).then(res => {
 					res.json().then(json => {
 						console.log("User updated")
-						setUser(json);
+						if(!admin){
+							setUser(json);
+						}
 					});
 				})
 			}
@@ -86,7 +86,9 @@ function Profile({ _user, admin = false }) {
 				updateUser(firstName, lastName, colour, oldPass, newPass).then(res => {
 					res.json().then(json => {
 						console.log("User updated")
-						setUser(json);
+						if(!admin){
+							setUser(json);
+						}
 					});
 				})
 			}
@@ -96,7 +98,9 @@ function Profile({ _user, admin = false }) {
 				adminUpdateUser(_user._id, firstName, lastName, colour, adminToggle).then(res => {
 					res.json().then(json => {
 						console.log("User updated")
-						setUser(json);
+						if(!admin){
+							setUser(json);
+						}
 					});
 				});
 			}
@@ -104,10 +108,15 @@ function Profile({ _user, admin = false }) {
 				updateUser(firstName, lastName, colour).then(res => {
 					res.json().then(json => {
 						console.log("User updated")
-						setUser(json);
+						if(!admin){
+							setUser(json);
+						}
 					});
 				});
 			}
+		}
+		if(sync){
+			sync();
 		}
 	}
 
@@ -128,6 +137,9 @@ function Profile({ _user, admin = false }) {
 			console.log("User was deleted")
 			logout();
 		});
+		}
+		if(sync){
+			sync();
 		}
 	}
 
