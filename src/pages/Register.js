@@ -47,7 +47,7 @@ function Register() {
 			.then(res => {
 				console.log(res);
 				if (res.ok) {
-					history.push('/boards');
+					history.push('/login');
 				}
 				else{
 					res.json().then(data => {
