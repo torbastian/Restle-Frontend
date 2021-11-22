@@ -118,7 +118,7 @@ function BoardCard({ board, ws, memberBoard = false }) {
       </div>
       <DateDisplay date={board.last_edited} />
       <p className="description">{board.description}</p>
-      <Members owner={board.owner} members={board.members} invite={inviteMemberPopup} />
+      <Members owner={board.owner} members={board.members} invite={memberBoard ? undefined : inviteMemberPopup} />
     </div>
   )
 }

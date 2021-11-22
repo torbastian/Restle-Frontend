@@ -80,9 +80,17 @@ nav {
     }
 
     p {
-      overflow: hidden;
+      //overflow: hidden;
+      opacity: 0;
+      background-color: var(--nav-bg-color);
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid var(--border-1);
       white-space: nowrap;
+      transition: opacity 0.2s ease;
       text-overflow: ellipsis;
+      z-index: 2;
+      pointer-events: none;
     }
 
     &.bottom {
@@ -91,6 +99,10 @@ nav {
 
     &:hover {
       background-color: var(--nav-bg-hover);
+      p {
+        display: block;
+        opacity: 1;
+      }
     }
 
     &.active {
@@ -121,6 +133,13 @@ nav {
   &.expand {
     width: var(--nav-expand-width);
     min-width: var(--nav-expand-width);
+
+    p {
+      opacity: 1;
+      background-color: transparent;
+      border: none;
+      overflow: hidden;
+    }
 
     .expand-btn {
       margin-left: calc(var(--nav-expand-width) - 15px);

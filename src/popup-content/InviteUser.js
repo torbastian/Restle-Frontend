@@ -47,7 +47,14 @@ function InivteUser(popupData) {
       </div>
       <div className="user-container">
         {users.map((user, index) =>
-          <UserElement key={index} user={user} invite={true} onClick={() => invite(user)} isMember={members.findIndex(u => u._id === user._id) !== -1} isOwner={owner && user._id === owner._id} />
+          <UserElement
+            key={index}
+            user={user}
+            invite={true}
+            onClick={() => invite(user)}
+            isMember={members.findIndex(u => u._id === user._id) !== -1}
+            isOwner={owner && user._id === owner._id}
+          />
         )}
       </div>
     </div>
