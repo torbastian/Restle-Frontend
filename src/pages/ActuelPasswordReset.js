@@ -13,6 +13,7 @@ function Reset() {
   const {token} = useParams();
   const [ok, setOK] = useState(false);
   const history = useHistory();
+  const [resetFailed, setResetFailed] = useState("");
 
   function getToken(){
     if(token){
@@ -45,8 +46,19 @@ function onReset(_password, _confirmPassword) {
         body: JSON.stringify({ token: token, password:_password })
       };
     
-      fetch(process.env.REACT_APP_API_URL + '/user/PasswordReset', requestLogin);
-      history.push("/login");
+      fetch(process.env.REACT_APP_API_URL + '/user/PasswordReset', requestLogin).then(res => {
+        if(!res.ok){
+          console.log("Hej not ok")
+          res.json().then(data => {
+            console.log("DATA! ",data.message);
+            setResetFailed(data.message);
+          });
+        }else{
+          history.push("/login");
+        }
+      });  
+  }else{
+    setResetFailed("passwords skal matche");
   }
 }
   
@@ -71,6 +83,8 @@ if(!ok){
                 <input type="password" required="" onChange={(e) => setConfirmPassword(e.target.value)} />
                 <label>Confirm Password</label>
               </div>
+
+              <div className="errorMessage">{resetFailed}</div>
               
               <button type="button" className="btn" onClick={() => onReset(password, confirmPassword)}>Reset password</button>
               <Link to="/login"><button type="button" className="btn">Cancel</button></Link>

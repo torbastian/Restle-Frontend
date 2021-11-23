@@ -225,5 +225,11 @@ html {
       border-radius: 0 4px 4px 0;
       cursor: pointer;
     }
-  }
+  }  
+}
+
+.errorMessage {
+  color: var(--red);
+  text-align: center;
+  width: 200px;
 }
