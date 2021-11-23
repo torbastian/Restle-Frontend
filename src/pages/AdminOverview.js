@@ -54,18 +54,18 @@ function AdminOverview() {
 
     function sync() {
         setSyncing(true);
-        if(search){
+        if (search) {
             Search();
-        }else{
+        } else {
             getUsers();
         }
         SelectUser(null);
-      }
+    }
 
     function waitSync() {
         setSyncing(true);
         setTimeout(() => { sync() }, 1000);
-      }
+    }
 
 
     return (

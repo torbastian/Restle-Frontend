@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import ColorSelector from '../components/ColorSelector';
 import { ChromePicker } from 'react-color';
-import '../styles/User.scss';
-
+import '../styles/Register.scss';
 
 function Register() {
 	const [username, setUsername] = useState("");
@@ -49,7 +48,7 @@ function Register() {
 				if (res.ok) {
 					history.push('/login');
 				}
-				else{
+				else {
 					res.json().then(data => {
 						setFailedLogin(data.message)
 					})
@@ -87,7 +86,7 @@ function Register() {
 						<label>Last name</label>
 					</div>
 					<ColorSelector color={colour} setColor={setColour} user={{ first_name: firstName, last_name: lastName, colour: colour }} />
-					{ failedLogin !== null && <p className="errorMessage">{failedLogin}</p>}
+					{failedLogin !== null && <p className="errorMessage">{failedLogin}</p>}
 					<button type="button" className="btn" onClick={onSubmit}>Sign up</button>
 					<Link to="/login"><button type="button" className="btn">Cancel</button></Link>
 				</form>

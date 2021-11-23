@@ -3,7 +3,6 @@
   height: 100%;
   place-content: center;
 
-
   .chkbox {
     display: flex;
     align-items: center;
@@ -11,7 +10,7 @@
     text-align: center;
     cursor: pointer;
     width: min-content;
-    
+
     svg {
       border: 1px solid var(--border-color);
       border-radius: var(--global-radius);
@@ -51,7 +50,6 @@
       width: 125px;
       margin: 7px;
 
-
       &.stretch {
         width: 100%;
       }
@@ -59,9 +57,9 @@
 
     .text-center {
       color: #fff;
-      margin: -50px 0 60px 0;
       display: block;
       font-size: 23px;
+      margin-bottom: 50px;
       text-align: center;
     }
 
