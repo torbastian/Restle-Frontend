@@ -14,7 +14,6 @@ function Reset() {
   const [ok, setOK] = useState(false);
 
   function getToken(){
-      console.log("i am getToken");
     if(token){
         const requestLogin = {
             method: 'POST',
@@ -33,7 +32,6 @@ function Reset() {
   }
 
 function onReset(_password, _confirmPassword) {
-  console.log("onReset");
   //checkToken
 
   if(_password == _confirmPassword){
@@ -47,7 +45,7 @@ function onReset(_password, _confirmPassword) {
       };
     
       fetch(process.env.REACT_APP_API_URL + '/user/PasswordReset', requestLogin);
-      console.log("should have posted");
+      history.push("/login");
   }
 }
   
