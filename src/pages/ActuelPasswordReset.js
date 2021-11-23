@@ -12,6 +12,7 @@ function Reset() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const {token} = useParams();
   const [ok, setOK] = useState(false);
+  const history = useHistory();
 
   function getToken(){
     if(token){
