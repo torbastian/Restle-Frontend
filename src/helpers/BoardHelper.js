@@ -49,10 +49,11 @@ export function RemoveFromBoard(ws, boardId, users) {
 }
 
 export function TransferOwnership(ws, boardId, userId) {
+  console.log(userId);
   if (ws.current.readyState === WebSocket.OPEN) {
     ws.current.send(JSON.stringify({
       request: 'TRANSFER_BOARD_OWNERSHIP',
-      boardid: boardId,
+      boardId: boardId,
       userId: userId
     }));
   }

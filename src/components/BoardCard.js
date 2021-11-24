@@ -1,6 +1,6 @@
 import { FaTrashAlt, FaUserMinus, FaWrench } from 'react-icons/fa';
 import { useHistory } from 'react-router';
-import { deleteBoard, inviteToBoard, LeaveBoard, RemoveFromBoard } from '../helpers/BoardHelper';
+import { deleteBoard, inviteToBoard, LeaveBoard, RemoveFromBoard, TransferOwnership } from '../helpers/BoardHelper';
 import { usePopup } from '../hooks/PopupContext';
 import EditBoard from '../popup-content/EditBoard';
 import InivteUser from '../popup-content/InviteUser';
@@ -44,9 +44,14 @@ function BoardCard({ board, ws, memberBoard = false }) {
         board={board}
         cancelAction={editBoard}
         removeMember={_removeMember}
+        transferOwnership={_transferOwnership}
       />,
       'Rediger Board',
       updateBoard);
+  }
+
+  function _transferOwnership(userId) {
+    TransferOwnership(ws, board._id, userId);
   }
 
   function navigateToBoard() {

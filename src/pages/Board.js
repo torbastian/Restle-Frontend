@@ -214,8 +214,8 @@ function Board() {
     inviteToBoard(ws, board._id, user._id);
   }
 
-  function _transferOwnership(user) {
-    TransferOwnership(ws, board._id, user._id);
+  function _transferOwnership(userId) {
+    TransferOwnership(ws, board._id, userId);
   }
 
   function editBoardDialogue() {
