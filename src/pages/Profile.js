@@ -69,7 +69,7 @@ function Profile({ _user, admin = false, sync = undefined }) {
 			}
 
 			if (newPass !== newPass2) {
-				console.log("Passwords matcher ikke");
+				setErrorMsg("Passwords matcher ikke");
 				return;
 			}
 
