@@ -223,7 +223,7 @@ function Board() {
       <EditBoard board={board}
         cancelAction={editBoardDialogue}
         deleteAction={_deleteBoard}
-        removeMemberAction={_removeMember}
+        removeMember={_removeMember}
         transferOwnership={_transferOwnership}
       />
       ,
