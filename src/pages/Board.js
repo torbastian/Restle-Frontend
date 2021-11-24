@@ -285,6 +285,7 @@ function Board() {
                       ws={ws}
                       newCardDialogue={newCardDialogue}
                       boardMembers={[...board.members, board.owner]}
+                      isOwner={user._id === board.owner._id}
                     />
                   )}
                 {provided.placeholder}

@@ -7,7 +7,7 @@ import MeatballMenu from './MeatballMenu';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { deleteList, updateList } from '../helpers/BoardHelper';
 
-function List({ listDetails, newCardDialogue, ws, index, boardMembers }) {
+function List({ listDetails, newCardDialogue, ws, index, boardMembers, isOwner = false }) {
   const { createPopup, createDialogue, closePopup } = usePopup();
 
   function _updateList(_listDetails) {
@@ -37,6 +37,7 @@ function List({ listDetails, newCardDialogue, ws, index, boardMembers }) {
     <Draggable
       draggableId={listDetails._id}
       index={index}
+      isDragDisabled={!isOwner}
     >
       {(provided) => (
         <div className="list"
@@ -45,18 +46,20 @@ function List({ listDetails, newCardDialogue, ws, index, boardMembers }) {
         >
           <div className="list-header" {...provided.dragHandleProps}>
             <h1>{listDetails.title}</h1>
-            <MeatballMenu options={[
-              {
-                icon: <FaWrench />,
-                title: 'Rediger',
-                onClick: editList
-              },
-              {
-                icon: <FaTrashAlt />,
-                title: 'Slet',
-                onClick: deleteDialogue
-              }
-            ]} />
+            {isOwner &&
+              <MeatballMenu options={[
+                {
+                  icon: <FaWrench />,
+                  title: 'Rediger',
+                  onClick: editList
+                },
+                {
+                  icon: <FaTrashAlt />,
+                  title: 'Slet',
+                  onClick: deleteDialogue
+                }
+              ]} />
+            }
           </div>
           <div className="list-content">
             <Droppable droppableId={listDetails._id} type='card'>
