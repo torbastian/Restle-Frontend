@@ -31,8 +31,8 @@ function App() {
                 <Switch>
                   <Route path="/" exact component={Home} />
                   <LoggedInRoute path="/login" component={Login} />
-                  <Route path="/register" component={Register} />
-                  <Route path="/resetpass" exact component={Reset} />
+                  <LoggedInRoute path="/register" component={Register} />
+                  <LoggedInRoute path="/resetpass" exact component={Reset} />
                   <Route path="/resetPassword/:token" component={ActuelPasswordReset}/>
                   <AdminRoute path="/AdminOverview" component={AdminOverview} />
                   <PrivateRoute path="/boards" exact component={BoardList} />
