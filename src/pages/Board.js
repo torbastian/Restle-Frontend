@@ -254,7 +254,7 @@ function Board() {
           </div>
           <div className="controls">
             {
-              user._id === board.owner._id && [
+              (user._id === board.owner._id || user.isAdmin) && [
                 <button key='1' className="btn" onClick={editBoardDialogue}>Rediger</button>,
                 <button key='2' className="btn" onClick={newListDialogue}>+ Ny Liste</button>
               ]
@@ -262,8 +262,8 @@ function Board() {
             <Members
               owner={board.owner}
               members={board.members}
-              className={user._id === board.owner._id ? '' : 'no-border-left'}
-              invite={user._id === board.owner._id ? inviteMemberPopup : undefined}
+              className={(user._id === board.owner._id) || user.isAdmin ? '' : 'no-border-left'}
+              invite={(user._id === board.owner._id) || user.isAdmin ? inviteMemberPopup : undefined}
             />
           </div>
           <Droppable
@@ -285,7 +285,7 @@ function Board() {
                       ws={ws}
                       newCardDialogue={newCardDialogue}
                       boardMembers={[...board.members, board.owner]}
-                      isOwner={user._id === board.owner._id}
+                      isOwner={user._id === board.owner._id || user.isAdmin}
                     />
                   )}
                 {provided.placeholder}

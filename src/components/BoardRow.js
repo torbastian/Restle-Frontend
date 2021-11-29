@@ -31,13 +31,20 @@ function BoardRow({ board, ws, sync }) {
     sync();
   }
 
+  function _transferOwnership(userId) {
+    TransferOwnership(ws, board._id, userId);
+    sync();
+  }
+
   function editBoardDialogue(e) {
     e.stopPropagation();
 
     createPopup(
-      <EditBoard board={board}
+      <EditBoard
+        board={board}
         cancelAction={editBoardDialogue}
         deleteAction={_deleteBoard}
+        transferOwnership={_transferOwnership}
       />,
       'Rediger Board',
       _updateBoard
